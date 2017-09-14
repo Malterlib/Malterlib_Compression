@@ -1,6 +1,26 @@
 // Copyright © 2015 Hansoft AB 
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
+%Repository "zlib"
+{
+	Repository
+	{
+		Type External
+		Remotes "upstream=https://github.com/madler/zlib.git;@(Repository.Remotes)"
+	}
+}
+
+%Repository "miniz"
+{
+	Repository
+	{
+		Type External
+		Remotes "upstream=https://github.com/richgel999/miniz.git;@(Repository.Remotes)"
+	}
+}
+
+Import "../../External/zlib/zlib.MTarget"
+
 Import "../Core/Lib_Malterlib.MTarget"
 
 %Group "{Malterlib}/{Lib_Malterlib_Compression}"

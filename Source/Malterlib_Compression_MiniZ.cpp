@@ -32,7 +32,7 @@ extern "C"
 #ifdef DCompiler_MSVC
 #	pragma warning(disable:4334)
 #endif
-	#include "../../../SDK/miniz/miniz.c"
+	#include "../../../External/miniz/miniz.c"
 }
 
 namespace NMib
