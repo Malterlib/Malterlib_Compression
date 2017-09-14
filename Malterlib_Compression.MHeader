@@ -19,6 +19,11 @@
 	}
 }
 
+Compile.SearchPath "@('../../external/zlib'->MakeAbsolute());@(Compile.SearchPath)"
+{
+	!!CompileDialect C
+}
+
 Import "../../External/zlib/zlib.MTarget"
 
 Import "../Core/Lib_Malterlib.MTarget"
