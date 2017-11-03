@@ -33,6 +33,8 @@ extern "C"
 #	pragma warning(disable:4334)
 #endif
 	#include "../../../External/miniz/miniz.c"
+	#include "../../../External/miniz/miniz_tdef.c"
+	#include "../../../External/miniz/miniz_tinfl.c"
 }
 
 namespace NMib
