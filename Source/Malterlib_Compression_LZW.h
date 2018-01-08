@@ -1,4 +1,4 @@
-﻿// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB 
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #include <Mib/Core/Core>
@@ -54,13 +54,13 @@ namespace NMib
 			void *fp_ReAllocPtr(mint _Size)
 			{
 				void *pBlock = t_CAllocator::f_Alloc(_Size);
-				return NMem::fg_MemClear(pBlock, t_CAllocator::f_Size(pBlock));
+				return NMem::fg_MemClear(pBlock, _Size);
 			}
 
 			void *fp_ReAllocPtr(void *_pBlock, aint _Size)
 			{
 				aint OldSize = t_CAllocator::f_Size(_pBlock);
-				_pBlock = t_CAllocator::f_Realloc(_pBlock, _Size);
+				_pBlock = t_CAllocator::f_Realloc(_pBlock, _Size, OldSize);
 				if(_Size > OldSize)
 				{
 					_Size = t_CAllocator::f_Size(_pBlock);
@@ -68,11 +68,6 @@ namespace NMib
 				}
 
 				return _pBlock;
-			}
-
-			void fp_FreePtr(void *_pBlock)
-			{
-				t_CAllocator::f_Free(_pBlock);
 			}
 
 		public:

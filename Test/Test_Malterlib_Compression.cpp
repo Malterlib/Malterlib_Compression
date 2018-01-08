@@ -1,4 +1,4 @@
-﻿// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB 
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #include <Mib/Compression/Huffman>
@@ -14,35 +14,35 @@ namespace
 			DMibTestSuite(CTestCategory("Compression") << CTestGroup("Unfinished"))
 			{
 				// This causes memory overwrites
-			NMib::NDataProcessing::TCCompress_Huffman<> compression;
+				NMib::NDataProcessing::TCCompress_Huffman<> Compression;
 
-			NMib::NMisc::CRandom Random;
-			uint8 pTestBuffer[2048];
-			for(aint i = 0; i < 2048; ++i)
-			{
-				pTestBuffer[i] = Random.f_Get()%256;
-			}
+				NMib::NMisc::CRandom Random;
+				uint8 pTestBuffer[2048];
+				for(aint i = 0; i < 2048; ++i)
+				{
+					pTestBuffer[i] = Random.f_Get()%256;
+				}
 
-			aint nDest;
-			void *pDest;
-			compression.f_CompressHuffman(pTestBuffer,2048,pDest,nDest);
-			
-			aint nDestUncomp;
-			void *pDestUncomp;
-			compression.f_DecompressHuffman(pDest,nDest,pDestUncomp,nDestUncomp);
+				aint nDest;
+				void *pDest;
+				Compression.f_CompressHuffman(pTestBuffer,2048,pDest,nDest);
 
-			uint8 * pTestFinalBuffer = (uint8*)pDestUncomp;
-			bint bDecompressDiffer = false;
-			for (aint i = 0; i < 2048; ++i)
-			{
-				if (pTestFinalBuffer[i] != pTestBuffer[i])
-					bDecompressDiffer = true;
-			}
+				aint nDestUncomp;
+				void *pDestUncomp;
+				Compression.f_DecompressHuffman(pDest,nDest,pDestUncomp,nDestUncomp);
 
-			DMibTest(DMibExpr(!bDecompressDiffer));
+				uint8 * pTestFinalBuffer = (uint8*)pDestUncomp;
+				bint bDecompressDiffer = false;
+				for (aint i = 0; i < 2048; ++i)
+				{
+					if (pTestFinalBuffer[i] != pTestBuffer[i])
+						bDecompressDiffer = true;
+				}
 
-			NMib::NMem::fg_Free(pDest);
-			NMib::NMem::fg_Free(pDestUncomp);
+				DMibTest(DMibExpr(!bDecompressDiffer));
+
+				NMib::NMem::fg_FreeNoSize(pDest);
+				NMib::NMem::fg_FreeNoSize(pDestUncomp);
 			};
 		}
 

@@ -1,4 +1,4 @@
-﻿// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB 
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #include <Mib/Core/Core>
@@ -165,7 +165,7 @@ namespace NMib
 				// update destination length
 				_DesLen = (pDesPtr-pDes)+(iDes+7)/8;
 				mint Size = _DesLen;
-				_pDes = t_CAllocator::f_Resize(_pDes, Size);
+				_pDes = t_CAllocator::f_Resize(_pDes, Size, 0);
 
 				return true;
 			}
