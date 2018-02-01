@@ -19,7 +19,7 @@
 	}
 }
 
-Compile.SearchPath "@('../../external/zlib'->MakeAbsolute());@(Compile.SearchPath)"
+Compile.SearchPath "@('../../External/zlib'->MakeAbsolute());@(Compile.SearchPath)"
 {
 	!!CompileDialect C
 }
