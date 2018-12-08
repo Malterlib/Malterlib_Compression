@@ -4,21 +4,19 @@
 #pragma once
 #include <Mib/Core/Core>
 
-namespace NMib
+namespace NMib::NCompression
 {
-	namespace NDataProcessing
+	class CCompress_MiniZ
 	{
+	public:
 
-		class CCompress_MiniZ
-		{
-		public:
+		NContainer::CByteVector f_Compress(NContainer::CByteVector const& _Input);
+		NContainer::CByteVector f_Decompress(NContainer::CByteVector const& _Input);
 
-			NContainer::TCVector<uint8> f_Compress(NContainer::TCVector<uint8> const& _Input);
-			NContainer::TCVector<uint8> f_Decompress(NContainer::TCVector<uint8> const& _Input);
+	private:
+	};
+}
 
-		private:
-		};
-
-	} // Namespace NDataProcessing
-
-} // Namspace NMib
+#ifndef DMibPNoShortCuts
+	using namespace NMib::NCompression;
+#endif

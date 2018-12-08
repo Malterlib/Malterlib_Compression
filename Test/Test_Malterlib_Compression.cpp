@@ -14,7 +14,7 @@ namespace
 			DMibTestSuite(CTestCategory("Compression") << CTestGroup("Unfinished"))
 			{
 				// This causes memory overwrites
-				NMib::NDataProcessing::TCCompress_Huffman<> Compression;
+				NMib::NCompression::TCCompress_Huffman<> Compression;
 
 				NMib::NMisc::CRandom Random;
 				uint8 pTestBuffer[2048];
@@ -41,8 +41,8 @@ namespace
 
 				DMibTest(DMibExpr(!bDecompressDiffer));
 
-				NMib::NMem::fg_FreeNoSize(pDest);
-				NMib::NMem::fg_FreeNoSize(pDestUncomp);
+				NMib::NMemory::fg_FreeNoSize(pDest);
+				NMib::NMemory::fg_FreeNoSize(pDestUncomp);
 			};
 		}
 
@@ -72,8 +72,8 @@ namespace
 			};
 
 			void *m_pData;
-			DMibIntrusiveLink(CDataEntry, NMib::NIntrusive::TCAVLLink<>, m_Link0);
-			DMibIntrusiveLink(CDataEntry, NMib::NIntrusive::TCAVLLink<>, m_Link1);
+			NMib::NIntrusive::TCAVLLink<> m_Link0;
+			NMib::NIntrusive::TCAVLLink<> m_Link1;
 			DMibListLinkDS_Link(CDataEntry, m_ListLink0);
 			DMibListLinkDS_Link(CDataEntry, m_ListLink1);
 			CChunk *m_pChunk;
@@ -98,8 +98,8 @@ namespace
 			int m_Length;
 			int m_Index;
 
-			NMib::NIntrusive::TCAVLTree<CDataEntry::CLinkTraits_m_Link0, CDataEntry::CSort0> m_Entries0;
-			NMib::NIntrusive::TCAVLTree<CDataEntry::CLinkTraits_m_Link1, CDataEntry::CSort1> m_Entries1;
+			NMib::NIntrusive::TCAVLTree<&CDataEntry::m_Link0, CDataEntry::CSort0> m_Entries0;
+			NMib::NIntrusive::TCAVLTree<&CDataEntry::m_Link1, CDataEntry::CSort1> m_Entries1;
 			class CSort
 			{
 			public:
@@ -113,7 +113,7 @@ namespace
 					const CDataEntry *pFirst = _Left.m_Entries0.f_GetRoot();
 					const CDataEntry *pSecond = _Right.m_Entries0.f_GetRoot();
 
-					return NMib::NMem::fg_MemCmp((uint8 *)pFirst->m_pData, (uint8 *)pSecond->m_pData, _Left.m_Length) < 0;
+					return NMib::NMemory::fg_MemCmp((uint8 *)pFirst->m_pData, (uint8 *)pSecond->m_pData, _Left.m_Length) < 0;
 				}
 				inline_small bint operator () (CChunk const &_Left, const CDataEntryKey &_Right) const
 				{
@@ -124,7 +124,7 @@ namespace
 
 					const CDataEntry *pFirst = _Left.m_Entries0.f_GetRoot();
 
-					return NMib::NMem::fg_MemCmp((uint8 *)pFirst->m_pData, (uint8 *)_Right.m_pData, _Left.m_Length) < 0;
+					return NMib::NMemory::fg_MemCmp((uint8 *)pFirst->m_pData, (uint8 *)_Right.m_pData, _Left.m_Length) < 0;
 				}
 				inline_small bint operator () (const CDataEntryKey &_Left, CChunk const &_Right) const
 				{
@@ -135,15 +135,15 @@ namespace
 
 					const CDataEntry *pSecond = _Right.m_Entries0.f_GetRoot();
 
-					return NMib::NMem::fg_MemCmp((uint8 *)_Left.m_pData, (uint8 *)pSecond->m_pData, _Left.m_Length) < 0;
+					return NMib::NMemory::fg_MemCmp((uint8 *)_Left.m_pData, (uint8 *)pSecond->m_pData, _Left.m_Length) < 0;
 				}
 			};
-			DMibIntrusiveLink(CChunk, NMib::NIntrusive::TCAVLLink<>, m_Link);
+			NMib::NIntrusive::TCAVLLink<> m_Link;
 			int m_nEntries;
 			DMibListLinkD_Link(CChunk, m_ListLink);
 		};
 
-		NIntrusive::TCAVLTree<CChunk::CLinkTraits_m_Link, CChunk::CSort> m_ChunkTree;
+		NIntrusive::TCAVLTree<&CChunk::m_Link, CChunk::CSort> m_ChunkTree;
 		int m_nChunks;
 		int m_nEntries;
 
@@ -182,8 +182,8 @@ namespace
 
 		};
 
-		NMib::NMem::TCPool<CChunk, 16384> m_ChunkPool;
-		NMib::NMem::TCPool<CDataEntry, 16384> m_DataEntryPool;
+		NMib::NMemory::TCPool<CChunk, 16384> m_ChunkPool;
+		NMib::NMemory::TCPool<CDataEntry, 16384> m_DataEntryPool;
 
 		NMib::NContainer::TCVector< DMibListLinkDS_List(CDataEntry, m_ListLink0) > m_lDataEntriesStart;
 		NMib::NContainer::TCVector< DMibListLinkDS_List(CDataEntry, m_ListLink1) > m_lDataEntriesEnd;
@@ -215,7 +215,7 @@ namespace
 
 			int Len = File.f_GetLength();
 
-			NMib::NContainer::TCVector<uint8> Data;
+			NMib::NContainer::CByteVector Data;
 
 			Data.f_SetLen(Len);
 
@@ -453,7 +453,7 @@ namespace
 				uint32 nChunks;
 				OutFile >> nChunks;
 
-				NMib::NContainer::TCVector< NMib::NContainer::TCVector<uint8> > lChunks;
+				NMib::NContainer::TCVector< NMib::NContainer::CByteVector > lChunks;
 
 				lChunks.f_SetLen(nChunks);
 

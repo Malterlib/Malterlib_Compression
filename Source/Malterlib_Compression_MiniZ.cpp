@@ -37,75 +37,69 @@ extern "C"
 	#include "../../../External/miniz/miniz_tinfl.c"
 }
 
-namespace NMib
+namespace NMib::NCompression
 {
-	namespace NDataProcessing
+	NContainer::CByteVector CCompress_MiniZ::f_Compress(NContainer::CByteVector const& _Input)
 	{
+		NContainer::CByteVector Output;
 
-		NContainer::TCVector<uint8> CCompress_MiniZ::f_Compress(NContainer::TCVector<uint8> const& _Input)
-		{
-			NContainer::TCVector<uint8> Output;
-
-			auto fl_ReceiveData = 
-				[](const void* _pBuf, int _nBytes, void *_pUser) -> mz_bool
-				{
-					NContainer::TCVector<uint8>* pOutput = (NContainer::TCVector<uint8>*)_pUser;
-
-					pOutput->f_Insert( (uint8 const*)_pBuf, _nBytes );
-
-					return MZ_TRUE;
-				};
-
-			auto bOK = tdefl_compress_mem_to_output
-							(
-									_Input.f_GetArray()
-								,	(size_t)_Input.f_GetLen()
-								,	fl_ReceiveData
-								,	&Output
-								,	128					// Fixed num probes
-							);
-
-			if (!bOK)
+		auto fl_ReceiveData =
+			[](const void* _pBuf, int _nBytes, void *_pUser) -> mz_bool
 			{
-				DMibError("Compression failed");
-			}
+				NContainer::CByteVector* pOutput = (NContainer::CByteVector*)_pUser;
 
-			return fg_Move(Output);
+				pOutput->f_Insert( (uint8 const*)_pBuf, _nBytes );
+
+				return MZ_TRUE;
+			};
+
+		auto bOK = tdefl_compress_mem_to_output
+						(
+								_Input.f_GetArray()
+							,	(size_t)_Input.f_GetLen()
+							,	fl_ReceiveData
+							,	&Output
+							,	128					// Fixed num probes
+						);
+
+		if (!bOK)
+		{
+			DMibError("Compression failed");
 		}
 
-		NContainer::TCVector<uint8> CCompress_MiniZ::f_Decompress(NContainer::TCVector<uint8> const& _Input)
-		{
-			NContainer::TCVector<uint8> Output;
-			
-			auto fl_ReceiveData = 
-				[](const void* _pBuf, int _nBytes, void *_pUser) -> int
-				{
-					NContainer::TCVector<uint8>* pOutput = (NContainer::TCVector<uint8>*)_pUser;
+		return fg_Move(Output);
+	}
 
-					pOutput->f_Insert( (uint8 const*)_pBuf, _nBytes );
+	NContainer::CByteVector CCompress_MiniZ::f_Decompress(NContainer::CByteVector const& _Input)
+	{
+		NContainer::CByteVector Output;
 
-					return 1;
-				};			
-
-			size_t nInputBytes = (size_t)_Input.f_GetLen();
-
-			auto bOK = tinfl_decompress_mem_to_callback
-							(
-									_Input.f_GetArray()
-								,	&nInputBytes
-								,	fl_ReceiveData
-								,	&Output
-								,	0
-							);
-
-			if (bOK != 1)
+		auto fl_ReceiveData =
+			[](const void* _pBuf, int _nBytes, void *_pUser) -> int
 			{
-				DMibError("Decompression failed");
-			}
+				NContainer::CByteVector* pOutput = (NContainer::CByteVector*)_pUser;
 
-			return fg_Move(Output);
+				pOutput->f_Insert( (uint8 const*)_pBuf, _nBytes );
+
+				return 1;
+			};
+
+		size_t nInputBytes = (size_t)_Input.f_GetLen();
+
+		auto bOK = tinfl_decompress_mem_to_callback
+						(
+								_Input.f_GetArray()
+							,	&nInputBytes
+							,	fl_ReceiveData
+							,	&Output
+							,	0
+						);
+
+		if (bOK != 1)
+		{
+			DMibError("Decompression failed");
 		}
 
-	} // Namespace NDataProcessing
-
-} // Namspace NMib
+		return fg_Move(Output);
+	}
+}
