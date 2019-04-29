@@ -45,7 +45,7 @@ namespace NMib::NCompression
 
 	private:
 		struct CInternal;
-		NPtr::TCUniquePointer<CInternal> mp_pInternal;
+		NStorage::TCUniquePointer<CInternal> mp_pInternal;
 	};
 
 	template <typename t_CStreamType = NStream::CBinaryStreamDefault>

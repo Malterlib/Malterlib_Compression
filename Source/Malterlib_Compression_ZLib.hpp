@@ -142,7 +142,7 @@ namespace NMib::NCompression
 		{
 			aint Pos = fp_PrepareBlock(mp_FilePos, true);
 			aint ThisTime = fg_Min(_nBytes, (mint)ETempBuffer - Pos);
-			NMem::fg_MemCopy(mp_TempBuffer + Pos, pMem, ThisTime);
+			NMemory::fg_MemCopy(mp_TempBuffer + Pos, pMem, ThisTime);
 
 			mp_FilePos += ThisTime;
 			pMem += ThisTime;
@@ -166,7 +166,7 @@ namespace NMib::NCompression
 		{
 			aint Pos = fp_PrepareBlock(mp_FilePos, false);
 			aint ThisTime = fg_Min(_nBytes, (mint)ETempBuffer - Pos);
-			NMem::fg_MemCopy(pMem, mp_TempBuffer + Pos, ThisTime);
+			NMemory::fg_MemCopy(pMem, mp_TempBuffer + Pos, ThisTime);
 
 			mp_FilePos += ThisTime;
 			pMem += ThisTime;

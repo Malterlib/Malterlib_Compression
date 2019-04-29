@@ -22,7 +22,7 @@ namespace NMib::NCompression
 			, m_OpenMode(0)
 			, m_Type(_Type)
 		{
-			NMem::fg_MemClear(m_Stream);
+			NMemory::fg_MemClear(m_Stream);
 		}
 
 		~CInternal()
