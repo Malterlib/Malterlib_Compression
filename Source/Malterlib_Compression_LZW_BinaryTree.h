@@ -79,9 +79,9 @@ namespace NMib::NCompression
 		aint m_Count;
 		aint m_Serial;
 		// flag to indicate if the tree is modified or not
-		bint m_bModified;
+		bool m_bModified;
 		// ignore repeated keys in the Add function
-		bint m_bModified;
+		bool m_bModified;
 
 		// return tree nodes count
 		inline aint f_GetCount() const

@@ -120,7 +120,7 @@ namespace NMib::NCompression
 	}
 
 	template <typename t_CStreamType>
-	void TCBinaryStream_ZLib<t_CStreamType>::f_Flush(bint _bLocalCacheOnly)
+	void TCBinaryStream_ZLib<t_CStreamType>::f_Flush(bool _bLocalCacheOnly)
 	{
 		fp_WriteChunk(true);
 	}
@@ -175,7 +175,7 @@ namespace NMib::NCompression
 	}
 
 	template <typename t_CStreamType>
-	bint TCBinaryStream_ZLib<t_CStreamType>::f_IsValid() const
+	bool TCBinaryStream_ZLib<t_CStreamType>::f_IsValid() const
 	{
 		if (!mp_pStream)
 			return false;
@@ -184,7 +184,7 @@ namespace NMib::NCompression
 	}
 
 	template <typename t_CStreamType>
-	bint TCBinaryStream_ZLib<t_CStreamType>::f_IsAtEndOfStream() const
+	bool TCBinaryStream_ZLib<t_CStreamType>::f_IsAtEndOfStream() const
 	{
 		return mp_FilePos == mp_FileLen;
 	}
@@ -214,7 +214,7 @@ namespace NMib::NCompression
 	}
 
 	template <typename t_CStreamType>
-	bint TCBinaryStream_ZLib<t_CStreamType>::f_IsValidReadPosition(NStream::CFilePos _Pos) const
+	bool TCBinaryStream_ZLib<t_CStreamType>::f_IsValidReadPosition(NStream::CFilePos _Pos) const
 	{
 		return _Pos >= 0 && _Pos < NStream::CFilePos(mp_FileLen);
 	}
@@ -232,7 +232,7 @@ namespace NMib::NCompression
 	}
 
 	template <typename t_CStreamType>
-	void TCBinaryStream_ZLib<t_CStreamType>::fp_WriteChunk(bint _bFlush)
+	void TCBinaryStream_ZLib<t_CStreamType>::fp_WriteChunk(bool _bFlush)
 	{
 		mint nBytes = fg_Min(mp_FileLen - mp_LastChunk, ETempBuffer);
 		if (nBytes)
@@ -257,7 +257,7 @@ namespace NMib::NCompression
 	}
 
 	template <typename t_CStreamType>
-	aint TCBinaryStream_ZLib<t_CStreamType>::fp_PrepareBlock(NStream::CFilePos _Pos, bint _bWrite)
+	aint TCBinaryStream_ZLib<t_CStreamType>::fp_PrepareBlock(NStream::CFilePos _Pos, bool _bWrite)
 	{
 		if (_bWrite)
 		{

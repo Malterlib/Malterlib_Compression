@@ -26,7 +26,7 @@ namespace NMib::NCompression
 			CHuffmanNode *m_pRight;
 		};
 
-		CHuffmanNode* fp_PopNode(CHuffmanNode *_pNodes[], aint _iIndex, bint _bRight)
+		CHuffmanNode* fp_PopNode(CHuffmanNode *_pNodes[], aint _iIndex, bool _bRight)
 		{
 			CHuffmanNode *pNode = _pNodes[_iIndex];
 			pNode->m_Code = _bRight;
@@ -46,7 +46,7 @@ namespace NMib::NCompression
 			}
 		}
 
-		aint fp_GetHuffmanTree(CHuffmanNode _Nodes[], bint _bSetCodes = true)
+		aint fp_GetHuffmanTree(CHuffmanNode _Nodes[], bool _bSetCodes = true)
 		{
 			CHuffmanNode *pNodes[256];
 			CHuffmanNode *pNode;
@@ -92,7 +92,7 @@ namespace NMib::NCompression
 		class CSort_FrequencyCompare
 		{
 		public:
-			bint operator()(CHuffmanNode &_Elem1, CHuffmanNode &_Elem2) const
+			bool operator()(CHuffmanNode &_Elem1, CHuffmanNode &_Elem2) const
 			{
 				return _Elem1.m_Frequency > _Elem2.m_Frequency;
 			}
@@ -101,7 +101,7 @@ namespace NMib::NCompression
 		class CSort_ASCIICompare
 		{
 		public:
-			bint operator()(CHuffmanNode &_Elem1, CHuffmanNode &_Elem2) const
+			bool operator()(CHuffmanNode &_Elem1, CHuffmanNode &_Elem2) const
 			{
 				return _Elem1.m_ByAscii < _Elem2.m_ByAscii;
 			}

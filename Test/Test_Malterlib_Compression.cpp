@@ -1,4 +1,4 @@
-// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #include <Mib/Compression/Huffman>
@@ -32,7 +32,7 @@ namespace
 				Compression.f_DecompressHuffman(pDest,nDest,pDestUncomp,nDestUncomp);
 
 				uint8 * pTestFinalBuffer = (uint8*)pDestUncomp;
-				bint bDecompressDiffer = false;
+				bool bDecompressDiffer = false;
 				for (aint i = 0; i < 2048; ++i)
 				{
 					if (pTestFinalBuffer[i] != pTestBuffer[i])

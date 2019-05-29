@@ -59,18 +59,18 @@ namespace NMib::NCompression
 
 		void f_Close(bool _bDestroy = false);
 		void f_Open(NStream::CBinaryStream *_pStream, NFile::EFileOpen _OpenFlags);
-		void f_Flush(bint _bLocalCacheOnly);
+		void f_Flush(bool _bLocalCacheOnly);
 		void f_SetCacheSize(mint _CacheSize);
 		void f_FeedBytes(const void *_pMem, mint _nBytes);
 		void f_ConsumeBytes(void *_pMem, mint _nBytes);
 
-		bint f_IsValid() const;
-		bint f_IsAtEndOfStream() const;
+		bool f_IsValid() const;
+		bool f_IsAtEndOfStream() const;
 		NStream::CFilePos f_GetPosition() const;
 		void f_SetPosition(NStream::CFilePos _Pos);
 		void f_SetPositionFromEnd(NStream::CFilePos _Pos);
 		void f_AddPosition(NStream::CFilePos _Pos);
-		bint f_IsValidReadPosition(NStream::CFilePos _Pos) const;
+		bool f_IsValidReadPosition(NStream::CFilePos _Pos) const;
 
 		NStream::CFilePos f_GetLength() const;
 		void f_SetLength(NStream::CFilePos _Length);
@@ -91,9 +91,9 @@ namespace NMib::NCompression
 			EVersion_Current = EVersion_1,
 		};
 
-		void fp_WriteChunk(bint _bFlush);
+		void fp_WriteChunk(bool _bFlush);
 		void fp_ReadChunk();
-		aint fp_PrepareBlock(NStream::CFilePos _Pos, bint _bWrite);
+		aint fp_PrepareBlock(NStream::CFilePos _Pos, bool _bWrite);
 
 		CCompress_ZLib mp_Compressor;
 		NStream::CBinaryStream *mp_pStream;
@@ -106,7 +106,7 @@ namespace NMib::NCompression
 		NStream::CFilePos mp_CompressedLen;
 
 		uint8 mp_TempBuffer[ETempBuffer];
-		bint mp_bCurrentDirty;
+		bool mp_bCurrentDirty;
 	};
 
 	NContainer::CByteVector fg_CompressZLib(NContainer::CByteVector const &_Source);
