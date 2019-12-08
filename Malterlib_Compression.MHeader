@@ -5,7 +5,7 @@
 {
 	Repository
 	{
-		Type External
+		Type "External"
 		Remotes "upstream=https://github.com/madler/zlib.git;@(Repository.Remotes)"
 	}
 }
@@ -14,14 +14,14 @@
 {
 	Repository
 	{
-		Type External
+		Type "External"
 		Remotes "upstream=https://github.com/richgel999/miniz.git;@(Repository.Remotes)"
 	}
 }
 
 Compile.SearchPath "@('../../External/zlib'->MakeAbsolute());@(Compile.SearchPath)"
 {
-	!!CompileDialect C
+	!!CompileDialect "C"
 }
 
 Import "../../External/zlib/zlib.MTarget"
@@ -30,9 +30,9 @@ Import "../Core/Lib_Malterlib.MTarget"
 
 %Group "{Malterlib}/{Lib_Malterlib_Compression}"
 {
-	%Group Compression
+	%Group "Compression"
 	{
-		%Group Include
+		%Group "Include"
 		{
 			Compile.Type "C++"
 			{
@@ -41,7 +41,7 @@ Import "../Core/Lib_Malterlib.MTarget"
 			%File "Include/Mib/Compression/^*"
 		}
 		%File "Source/*"
-		%Group Documentation
+		%Group "Documentation"
 		{
 			%File "Documentation/*"
 		}
