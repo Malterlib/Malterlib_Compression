@@ -16,11 +16,11 @@ namespace
 			{
 				NMib::NCompression::TCCompress_Huffman<> Compression;
 
-				NMib::NMisc::CRandom Random;
+				NMib::NMisc::CRandomShiftRNG Random;
 				uint8 pTestBuffer[2048];
 				for(aint i = 0; i < 2048; ++i)
 				{
-					pTestBuffer[i] = Random.f_Get()%256;
+					pTestBuffer[i] = Random.f_GetValue<uint8>();
 				}
 
 				aint nDest;
@@ -50,11 +50,11 @@ namespace
 				using namespace NMib::NContainer;
 				using namespace NMib::NStream;
 
-				NMib::NMisc::CRandom Random;
+				NMib::NMisc::CRandomShiftRNG Random;
 				CByteVector TestBuffer;
 				TestBuffer.f_SetLen(2048);
 				for(aint i = 0; i < 2048; ++i)
-					TestBuffer[i] = Random.f_Get() % 256;
+					TestBuffer[i] = Random.f_GetValue<uint8>();
 
 				CByteVector CompressedData;
 				{

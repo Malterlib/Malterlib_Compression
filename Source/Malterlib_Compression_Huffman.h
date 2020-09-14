@@ -75,8 +75,8 @@ namespace NMib::NCompression
 				for (i = iBackNode; i >= 0; i--)
 					if(pNodes[i]->m_Frequency >= pNode->m_Frequency)
 						break;
-				NMemory::fg_MemMove(pNodes+i+2, pNodes+i+1, (iBackNode-i)*sizeof(aint));
-				pNodes[i+1] = pNode;
+				NMemory::fg_MemMove(pNodes + (i + 2), pNodes + (i + 1), (iBackNode - i) * sizeof(CHuffmanNode *));
+				pNodes[i + 1] = pNode;
 				iBackNode++;
 			}
 			// set tree leaves nodes code
@@ -129,19 +129,22 @@ namespace NMib::NCompression
 			aint nNodes = fp_GetHuffmanTree(Nodes);
 			// construct compressed buffer
 			aint NodeSize = sizeof(uint32)+sizeof(uint8);
-			_DesLen = _SrcLen+nNodes*NodeSize;
+			_DesLen = _SrcLen + nNodes * NodeSize;
 
 			// dest
-			_pDes = (uint8*)t_CAllocator::f_Alloc(_DesLen);
-			uint8 *pDes = (uint8*)_pDes;
+			_pDes = (uint8 *)t_CAllocator::f_Alloc(_DesLen);
+			uint8 *pDes = (uint8 *)_pDes;
 
 			uint8 *pDesPtr = pDes;
 			NMemory::fg_MemClear(pDesPtr, _DesLen);
 			// save source buffer length at the first uint32
-			*(uint32*)pDesPtr = _SrcLen;
+			{
+				uint32 Temp = _SrcLen;
+				NMemory::fg_MemCopy(pDesPtr, &Temp, sizeof(Temp));
+			}
 			pDesPtr += sizeof(uint32);
 			// save Huffman tree leaves count-1 (as it may be 256)
-			*pDesPtr = nNodes-1;
+			*pDesPtr = nNodes - 1;
 			pDesPtr += sizeof(uint8);
 			// save Huffman tree used leaves nodes
 			for(aint iCount = 0; iCount < nNodes; iCount++)
@@ -156,11 +159,17 @@ namespace NMib::NCompression
 			// loop to write codes
 			for(aint iCount = 0; iCount < _SrcLen; iCount++)
 			{
-				*(uint32*)(pDesPtr+(iDes>>3)) |= Nodes[pSrc[iCount]].m_Code << (iDes&7);
+				uint32 Temp;
+				auto *pDestination = pDesPtr + (iDes >> 3);
+
+				NMemory::fg_MemCopy(&Temp, pDestination, sizeof(Temp));
+				Temp |= Nodes[pSrc[iCount]].m_Code << (iDes & 7);
+				NMemory::fg_MemCopy(pDestination, &Temp, sizeof(Temp));
+
 				iDes += Nodes[pSrc[iCount]].m_CodeLength;
 			}
 			// update destination length
-			_DesLen = (pDesPtr-pDes)+(iDes+7)/8;
+			_DesLen = (pDesPtr - pDes) + (iDes + 7) / 8;
 			mint Size = _DesLen;
 			_pDes = t_CAllocator::f_Resize(_pDes, Size, 0);
 
@@ -173,10 +182,14 @@ namespace NMib::NCompression
 			uint8 *pSrc = (uint8*)_pSrc;
 
 			// copy destination final length
-			_DesLen = *((uint32*)pSrc);
+			{
+				uint32 Temp;
+				NMemory::fg_MemCopy(&Temp, pSrc, sizeof(Temp));
+				_DesLen = Temp;
+			}
 
 			// allocate buffer for decompressed buffer
-			_pDes = (uint8*)t_CAllocator::f_Alloc(_DesLen+1);
+			_pDes = (uint8 *)t_CAllocator::f_Alloc(_DesLen + 1);
 			uint8 *pDes = (uint8*)_pDes;
 
 			aint nNodes = *(pSrc+sizeof(uint32))+1;
@@ -202,11 +215,14 @@ namespace NMib::NCompression
 			iSrc <<= 3;	// convert from bits to bytes
 			while(iDes < _DesLen)
 			{
-				Code = (*(uint32*)(pSrc+(iSrc>>3)))>>(iSrc&7);
+				uint32 Temp = 0;
+				aint iSrcByte = (iSrc >> 3);
+				NMemory::fg_MemCopy(&Temp, pSrc + iSrcByte, fg_Min(sizeof(Temp), mint(_SrcLen - iSrcByte)));
+				Code = Temp >> (iSrc & 7);
 				pNode = pRoot;
 				while(pNode->m_pLeft)	// if node has pLeft then it must has pRight
 				{	// node not leaf
-					pNode = (Code&1) ? pNode->m_pRight : pNode->m_pLeft;
+					pNode = (Code & 1) ? pNode->m_pRight : pNode->m_pLeft;
 					Code >>= 1;
 					iSrc++;
 				}
