@@ -6,7 +6,7 @@
 	Repository
 	{
 		Type "External"
-		Remotes "upstream=https://github.com/madler/zlib.git;@(Repository.Remotes)"
+		Remotes =+ {Name: "upstream", URL: "https://github.com/madler/zlib.git"}
 	}
 }
 
@@ -15,17 +15,16 @@
 	Repository
 	{
 		Type "External"
-		Remotes "upstream=https://github.com/richgel999/miniz.git;@(Repository.Remotes)"
+		Remotes =+ {Name: "upstream", URL: "https://github.com/richgel999/miniz.git"}
 	}
 }
 
-Compile.SearchPath "@('../../External/zlib'->MakeAbsolute());@(Compile.SearchPath)"
+Compile.SearchPath += "../../External/zlib"->MakeAbsolute()
 {
 	!!CompileDialect "C"
 }
 
 Import "../../External/zlib/zlib.MTarget"
-
 Import "../Core/Lib_Malterlib.MTarget"
 
 %Group "{Malterlib}/{Lib_Malterlib_Compression}"
@@ -56,20 +55,13 @@ Import "../Core/Lib_Malterlib.MTarget"
 
 Property
 {
-	MalterlibLibrary_Compression true
-	{
-		&
-		{
-			MalterlibLibrary_Compression ""
-			MalterlibLibrary_All true
-		}
-	}
-	MalterlibSubLibraries "Compression;@(MalterlibSubLibraries)"
+	MalterlibLibrary_Compression define bool = MalterlibLibrary_All
+	MalterlibSubLibraries =+ "Compression"
 	{
 		!!MalterlibLibrary_Compression true
 	}
-//	MalterlibSubLibrarySeparate_Lib_Malterlib_Compression true
-	MalterlibIncludeRoots "@('Include'->MakeAbsolute());@(MalterlibIncludeRoots)"
+//	MalterlibSubLibrarySeparate_Lib_Malterlib_Compression define bool = true
+	MalterlibIncludeRoots =+ "Include"->MakeAbsolute()
 	{
 		!!MalterlibLibrary_Compression true
 	}
@@ -79,7 +71,7 @@ Property
 {
 	!!MalterlibEnableInternalTests true
 	
-	MalterlibTests "Malterlib_Compression;@(MalterlibTests)"
-	MalterlibTestFiles_Malterlib_Compression "@('Test/*'->MakeAbsolute())"
+	MalterlibTests =+ "Malterlib_Compression"
+	MalterlibTestFiles_Malterlib_Compression define [type(CEntity)] = ["Test/*"->MakeAbsolute()]
 }
 
