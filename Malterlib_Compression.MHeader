@@ -19,6 +19,23 @@
 	}
 }
 
+%Repository "zstd"
+{
+	Repository
+	{
+		Type "External"
+		Remotes =+ {Name: "upstream", URL: "https://github.com/facebook/zstd.git"}
+	}
+}
+
+%Import "../../External/zstd/build/cmake/CMakeLists.txt"
+{
+	Import.CMake_Variables =+ [
+		"ZSTD_BUILD_TESTS=OFF"
+		, "ZSTD_BUILD_SHARED=OFF"
+	]
+}
+
 Compile.SearchPath += "../../External/zlib"->MakeAbsolute()
 {
 	!!CompileDialect "C"
@@ -26,6 +43,7 @@ Compile.SearchPath += "../../External/zlib"->MakeAbsolute()
 
 Import "../../External/zlib/zlib.MTarget"
 Import "../Core/Lib_Malterlib.MTarget"
+Import "LibArchive/Malterlib_Compression_LibArchive.MHeader"
 
 %Group "{Malterlib}/{Lib_Malterlib_Compression}"
 {
