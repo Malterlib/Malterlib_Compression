@@ -1,0 +1,335 @@
+Property.CMakeOutputPath_libzstd define string = `@('..'->MakeAbsolute())`->MakeAbsolute()
+%Target "Tool_libzstd_uninstall"
+{
+	Property.MalterlibTargetNameType "Normal"
+	Compile.AllowNonExisting true
+	Compile.Disabled true
+	Target.Group "External/libzstd"
+	{
+		!!Target.Group undefined
+	}
+	Target.Type "Tool"
+	Target.BaseName "libzstd_uninstall"
+	Target.BaseFileName "uninstall"
+	%Group "Linux2.6"
+	{
+		%Group "x64"
+		{
+			%Group `@(FullConfiguration)`
+			{
+				%Group "lib"
+				{
+					%Group "CMakeFiles"
+					{
+						%File `@('..'->MakeAbsolute())/lib/CMakeFiles/uninstall.rule`
+						{
+							Compile
+							{
+								Custom_CommandLine `MToolCMake -P @(`@('..'->MakeAbsolute())/lib/cmake_uninstall.cmake`->MakeAbsolute()->EscapeHost())`
+								AllowNonExisting true
+								Disabled false
+								Custom_WorkingDirectory `@('..'->MakeAbsolute())/lib`->MakeAbsolute()
+								Custom_Outputs []
+								Custom_Inputs []
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+%Target "Lib_libzstd_libzstd_static"
+{
+	Compile
+	{
+		!!Compile.Type "C"
+		SearchPath += [
+			`@('..'->MakeAbsolute())/lib`->MakeAbsolute(),
+			`@(CMakeIntermediateDirectory)/External_zstd_build_cmake`->MakeAbsolute(),
+			`@('../../../../../External/zstd/build/cmake'->MakeAbsolute())/lib`->MakeAbsolute(),
+			`@('../../../../..'->MakeAbsolute())/External/zstd/lib`->MakeAbsolute(),
+			`@('../../../../..'->MakeAbsolute())/External/zstd/lib/common`->MakeAbsolute()
+		]
+		PreprocessorDefines += [
+			"XXH_NAMESPACE=ZSTD_",
+			"ZSTD_LEGACY_SUPPORT=0",
+			"ZSTD_MULTITHREAD"
+		]
+	}
+	Property.MalterlibTargetNameType "Normal"
+	Compile.AllowNonExisting true
+	Target.Group "External/libzstd"
+	{
+		!!Target.Group undefined
+	}
+	Target.Type "StaticLibrary"
+	Target.BaseName "libzstd_libzstd_static"
+	Target.BaseFileName "libzstd_static"
+	%Group "opt"
+	{
+		%Group "lib"
+		{
+			%Group "common"
+			{
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/common/debug.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/common/entropy_common.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/common/error_private.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/common/fse_decompress.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/common/pool.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/common/threading.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/common/xxhash.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/common/zstd_common.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/common/bitstream.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/common/compiler.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/common/cpu.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/common/debug.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/common/error_private.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/common/fse.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/common/huf.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/common/mem.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/common/pool.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/common/threading.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/common/xxhash.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/common/zstd_deps.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/common/zstd_internal.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/common/zstd_trace.h`
+				{
+					Compile.Disabled true
+				}
+			}
+			%Group "compress"
+			{
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/compress/fse_compress.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/compress/hist.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/compress/huf_compress.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/compress/zstd_compress.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/compress/zstd_compress_literals.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/compress/zstd_compress_sequences.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/compress/zstd_compress_superblock.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/compress/zstd_double_fast.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/compress/zstd_fast.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/compress/zstd_lazy.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/compress/zstd_ldm.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/compress/zstd_opt.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/compress/zstdmt_compress.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/compress/hist.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/compress/zstd_compress_internal.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/compress/zstd_compress_literals.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/compress/zstd_compress_sequences.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/compress/zstd_compress_superblock.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/compress/zstd_cwksp.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/compress/zstd_double_fast.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/compress/zstd_fast.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/compress/zstd_lazy.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/compress/zstd_ldm.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/compress/zstd_ldm_geartab.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/compress/zstd_opt.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/compress/zstdmt_compress.h`
+				{
+					Compile.Disabled true
+				}
+			}
+			%Group "decompress"
+			{
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/decompress/huf_decompress.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/decompress/zstd_ddict.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/decompress/zstd_decompress.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/decompress/zstd_decompress_block.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/decompress/zstd_ddict.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/decompress/zstd_decompress_block.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/decompress/zstd_decompress_internal.h`
+				{
+					Compile.Disabled true
+				}
+			}
+			%Group "dictBuilder"
+			{
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/dictBuilder/cover.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/dictBuilder/divsufsort.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/dictBuilder/fastcover.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/dictBuilder/zdict.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/dictBuilder/cover.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/dictBuilder/divsufsort.h`
+				{
+					Compile.Disabled true
+				}
+			}
+			%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/zstd.h`
+			{
+				Compile.Disabled true
+			}
+		}
+	}
+}
