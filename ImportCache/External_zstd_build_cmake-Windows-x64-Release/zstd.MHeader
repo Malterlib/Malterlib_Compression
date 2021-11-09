@@ -65,7 +65,7 @@ Property.CMakeOutputPath_zstd define string = `@('.'->MakeAbsolute())`->MakeAbso
 	Target.Type "StaticLibrary"
 	Target.BaseName "libzstd_libzstd_static"
 	Target.BaseFileName "libzstd_static"
-	%Group "X:/"
+	%Group "C:/"
 	{
 		%Group "lib"
 		{
@@ -421,7 +421,7 @@ Property.CMakeOutputPath_zstd define string = `@('.'->MakeAbsolute())`->MakeAbso
 	Target.Type "ConsoleExecutable"
 	Target.BaseName "programs_zstd"
 	Target.BaseFileName "zstd"
-	%Group "X:/"
+	%Group "C:/"
 	{
 		%Group "zstd"
 		{

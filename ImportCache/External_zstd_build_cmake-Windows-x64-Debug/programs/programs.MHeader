@@ -48,7 +48,7 @@ Property.CMakeOutputPath_programs define string = `@('..'->MakeAbsolute())`->Mak
 	Target.Type "ConsoleExecutable"
 	Target.BaseName "programs_zstd"
 	Target.BaseFileName "zstd"
-	%Group "X:/"
+	%Group "C:/"
 	{
 		%Group "zstd"
 		{
