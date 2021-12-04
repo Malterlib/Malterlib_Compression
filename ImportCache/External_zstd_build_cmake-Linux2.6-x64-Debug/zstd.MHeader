@@ -23,7 +23,7 @@ Property.CMakeOutputPath_zstd define string = `@('.'->MakeAbsolute())`->MakeAbso
 					{
 						Compile
 						{
-							Custom_CommandLine `@(`@('../../../..'->MakeAbsolute())/Binaries/Malterlib/OSX/x64/ninja`->MakeAbsolute()->EscapeHost()) clean && rm -rf @(`@('.'->MakeAbsolute())/`->MakeAbsolute()->EscapeHost())`
+							Custom_CommandLine `@(`@('../../../..'->MakeAbsolute())/Binaries/Malterlib/OSX/arm64/ninja`->MakeAbsolute()->EscapeHost()) clean && rm -rf @(`@('.'->MakeAbsolute())/`->MakeAbsolute()->EscapeHost())`
 							AllowNonExisting true
 							Disabled false
 							Custom_WorkingDirectory `@('.'->MakeAbsolute())`->MakeAbsolute()
