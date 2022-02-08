@@ -94,6 +94,22 @@ Property.CMakeOutputPath_zstd define string = `@('.'->MakeAbsolute())`->MakeAbso
 			"ZSTD_MULTITHREAD"
 		]
 	}
+	Compile
+	{
+		!!Compile.Type "Assembler"
+		SearchPath += [
+			`@('.'->MakeAbsolute())/lib`->MakeAbsolute(),
+			`@(CMakeIntermediateDirectory)/External_zstd_build_cmake`->MakeAbsolute(),
+			`@('../../../../External/zstd/build/cmake'->MakeAbsolute())/lib`->MakeAbsolute(),
+			`@('../../../..'->MakeAbsolute())/External/zstd/lib`->MakeAbsolute(),
+			`@('../../../..'->MakeAbsolute())/External/zstd/lib/common`->MakeAbsolute()
+		]
+		PreprocessorDefines += [
+			"XXH_NAMESPACE=ZSTD_",
+			"ZSTD_LEGACY_SUPPORT=0",
+			"ZSTD_MULTITHREAD"
+		]
+	}
 	Property.MalterlibTargetNameType "Normal"
 	Compile.AllowNonExisting true
 	Target.Group "External/libzstd"
@@ -177,6 +193,10 @@ Property.CMakeOutputPath_zstd define string = `@('.'->MakeAbsolute())`->MakeAbso
 				{
 					Compile.Disabled true
 				}
+				%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/common/portability_macros.h`
+				{
+					Compile.Disabled true
+				}
 				%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/common/threading.h`
 				{
 					Compile.Disabled true
@@ -252,6 +272,10 @@ Property.CMakeOutputPath_zstd define string = `@('.'->MakeAbsolute())`->MakeAbso
 				{
 					Compile.Type "C"
 				}
+				%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/compress/clevels.h`
+				{
+					Compile.Disabled true
+				}
 				%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/compress/hist.h`
 				{
 					Compile.Disabled true
@@ -310,6 +334,10 @@ Property.CMakeOutputPath_zstd define string = `@('.'->MakeAbsolute())`->MakeAbso
 				%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/decompress/huf_decompress.c`
 				{
 					Compile.Type "C"
+				}
+				%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/decompress/huf_decompress_amd64.S`
+				{
+					Compile.Type "Assembler"
 				}
 				%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/decompress/zstd_ddict.c`
 				{

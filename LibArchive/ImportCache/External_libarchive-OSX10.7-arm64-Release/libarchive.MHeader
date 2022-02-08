@@ -661,7 +661,15 @@ Property.CMakeOutputPath_libarchive define string = `@('.'->MakeAbsolute())`->Ma
 		{
 			Compile.Type "C"
 		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_write_set_format_cpio_binary.c`
+		{
+			Compile.Type "C"
+		}
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_write_set_format_cpio_newc.c`
+		{
+			Compile.Type "C"
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_write_set_format_cpio_odc.c`
 		{
 			Compile.Type "C"
 		}
@@ -1310,7 +1318,15 @@ Property.CMakeOutputPath_libarchive define string = `@('.'->MakeAbsolute())`->Ma
 		{
 			Compile.Type "C"
 		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_write_set_format_cpio_binary.c`
+		{
+			Compile.Type "C"
+		}
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_write_set_format_cpio_newc.c`
+		{
+			Compile.Type "C"
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_write_set_format_cpio_odc.c`
 		{
 			Compile.Type "C"
 		}

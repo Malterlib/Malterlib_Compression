@@ -9,7 +9,7 @@ foreach(file ${files})
   message(STATUS "Uninstalling $ENV{DESTDIR}${file}")
   if(IS_SYMLINK "$ENV{DESTDIR}${file}" OR EXISTS "$ENV{DESTDIR}${file}")
     exec_program(
-      "../../../../../Binaries/Malterlib/OSX/arm64/MToolCMake" ARGS "-E remove \"$ENV{DESTDIR}${file}\""
+      "../../../../../Binaries/Malterlib/OSX/x64/MToolCMake" ARGS "-E remove \"$ENV{DESTDIR}${file}\""
       OUTPUT_VARIABLE rm_out
       RETURN_VALUE rm_retval
       )

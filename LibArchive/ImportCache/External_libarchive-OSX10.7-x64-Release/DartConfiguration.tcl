@@ -62,7 +62,7 @@ UpdateOptions:
 UpdateType: git
 
 # Compiler info
-Compiler: /opt/CompiledFiles/Dependencies/llvm/12.0/build/main/bin/clang++
+Compiler: ../../../../../Binaries/MalterlibLLVM/OSX/x64/bin/clang++
 CompilerVersion: 
 
 # Dynamic analysis (MemCheck)
