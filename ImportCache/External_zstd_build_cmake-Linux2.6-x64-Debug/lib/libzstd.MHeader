@@ -298,7 +298,7 @@ Property.CMakeOutputPath_libzstd define string = `@('..'->MakeAbsolute())`->Make
 				{
 					Compile.Type "C"
 				}
-				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/decompress/huf_decompress_amd64.S`
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/decompress/huf_decompress_x86_64.S`
 				{
 					Compile.Type "Assembler"
 				}
