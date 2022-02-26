@@ -11,7 +11,7 @@ BuildDirectory: .
 CostDataFile: 
 
 # Site is something like machine.domain, i.e. pragmatic.crd
-Site: winbuild02
+Site: erikwindev01
 
 # Build name is osname-revision-compiler, i.e. Linux-2.4.2-2smp-c++
 BuildName: Win32-ninja
@@ -80,7 +80,7 @@ MemoryCheckCommandOptions:
 MemoryCheckSuppressionFile: 
 
 # Coverage
-CoverageCommand: COVERAGE_COMMAND-NOTFOUND
+CoverageCommand: C:/Strawberry/c/bin/gcov.exe
 CoverageExtraFlags: -l
 
 # Testing options
