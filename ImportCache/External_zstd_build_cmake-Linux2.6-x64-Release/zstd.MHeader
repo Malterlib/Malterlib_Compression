@@ -1,41 +1,4 @@
 Property.CMakeOutputPath_zstd define string = `@('.'->MakeAbsolute())`->MakeAbsolute()
-%Target "Tool_zstd_clean-all"
-{
-	Property.MalterlibTargetNameType "Normal"
-	Compile.AllowNonExisting true
-	Compile.Disabled true
-	Target.Group "External/zstd"
-	{
-		!!Target.Group undefined
-	}
-	Target.Type "Tool"
-	Target.BaseName "zstd_clean-all"
-	Target.BaseFileName "clean-all"
-	%Group "Linux2.6"
-	{
-		%Group "x64"
-		{
-			%Group `@(FullConfiguration)`
-			{
-				%Group "CMakeFiles"
-				{
-					%File `@('.'->MakeAbsolute())/CMakeFiles/clean-all.rule`
-					{
-						Compile
-						{
-							Custom_CommandLine `@(`@('../../../..'->MakeAbsolute())/Binaries/Malterlib/OSX/x64/ninja`->MakeAbsolute()->EscapeHost()) clean && rm -rf @(`@('.'->MakeAbsolute())/`->MakeAbsolute()->EscapeHost())`
-							AllowNonExisting true
-							Disabled false
-							Custom_WorkingDirectory `@('.'->MakeAbsolute())`->MakeAbsolute()
-							Custom_Outputs []
-							Custom_Inputs []
-						}
-					}
-				}
-			}
-		}
-	}
-}
 %Target "Tool_libzstd_uninstall"
 {
 	Property.MalterlibTargetNameType "Normal"
@@ -335,7 +298,7 @@ Property.CMakeOutputPath_zstd define string = `@('.'->MakeAbsolute())`->MakeAbso
 				{
 					Compile.Type "C"
 				}
-				%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/decompress/huf_decompress_amd64.S`
+				%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/decompress/huf_decompress_x86_64.S`
 				{
 					Compile.Type "Assembler"
 				}

@@ -1,41 +1,4 @@
 Property.CMakeOutputPath_zstd define string = `@('.'->MakeAbsolute())`->MakeAbsolute()
-%Target "Tool_zstd_clean-all"
-{
-	Property.MalterlibTargetNameType "Normal"
-	Compile.AllowNonExisting true
-	Compile.Disabled true
-	Target.Group "External/zstd"
-	{
-		!!Target.Group undefined
-	}
-	Target.Type "Tool"
-	Target.BaseName "zstd_clean-all"
-	Target.BaseFileName "clean-all"
-	%Group "Linux2.6"
-	{
-		%Group "x86"
-		{
-			%Group `@(FullConfiguration)`
-			{
-				%Group "CMakeFiles"
-				{
-					%File `@('.'->MakeAbsolute())/CMakeFiles/clean-all.rule`
-					{
-						Compile
-						{
-							Custom_CommandLine `@(`@('../../../..'->MakeAbsolute())/Binaries/Malterlib/OSX/x64/ninja`->MakeAbsolute()->EscapeHost()) clean && rm -rf @(`@('.'->MakeAbsolute())/`->MakeAbsolute()->EscapeHost())`
-							AllowNonExisting true
-							Disabled false
-							Custom_WorkingDirectory `@('.'->MakeAbsolute())`->MakeAbsolute()
-							Custom_Outputs []
-							Custom_Inputs []
-						}
-					}
-				}
-			}
-		}
-	}
-}
 %Target "Tool_libzstd_uninstall"
 {
 	Property.MalterlibTargetNameType "Normal"
@@ -81,22 +44,6 @@ Property.CMakeOutputPath_zstd define string = `@('.'->MakeAbsolute())`->MakeAbso
 	Compile
 	{
 		!!Compile.Type "C"
-		SearchPath += [
-			`@('.'->MakeAbsolute())/lib`->MakeAbsolute(),
-			`@(CMakeIntermediateDirectory)/External_zstd_build_cmake`->MakeAbsolute(),
-			`@('../../../../External/zstd/build/cmake'->MakeAbsolute())/lib`->MakeAbsolute(),
-			`@('../../../..'->MakeAbsolute())/External/zstd/lib`->MakeAbsolute(),
-			`@('../../../..'->MakeAbsolute())/External/zstd/lib/common`->MakeAbsolute()
-		]
-		PreprocessorDefines += [
-			"XXH_NAMESPACE=ZSTD_",
-			"ZSTD_LEGACY_SUPPORT=0",
-			"ZSTD_MULTITHREAD"
-		]
-	}
-	Compile
-	{
-		!!Compile.Type "Assembler"
 		SearchPath += [
 			`@('.'->MakeAbsolute())/lib`->MakeAbsolute(),
 			`@(CMakeIntermediateDirectory)/External_zstd_build_cmake`->MakeAbsolute(),
@@ -334,10 +281,6 @@ Property.CMakeOutputPath_zstd define string = `@('.'->MakeAbsolute())`->MakeAbso
 				%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/decompress/huf_decompress.c`
 				{
 					Compile.Type "C"
-				}
-				%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/decompress/huf_decompress_amd64.S`
-				{
-					Compile.Type "Assembler"
 				}
 				%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/decompress/zstd_ddict.c`
 				{

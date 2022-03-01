@@ -57,22 +57,6 @@ Property.CMakeOutputPath_libzstd define string = `@('..'->MakeAbsolute())`->Make
 			"ZSTD_MULTITHREAD"
 		]
 	}
-	Compile
-	{
-		!!Compile.Type "Assembler"
-		SearchPath += [
-			`@('..'->MakeAbsolute())/lib`->MakeAbsolute(),
-			`@(CMakeIntermediateDirectory)/External_zstd_build_cmake`->MakeAbsolute(),
-			`@('../../../../../External/zstd/build/cmake'->MakeAbsolute())/lib`->MakeAbsolute(),
-			`@('../../../../..'->MakeAbsolute())/External/zstd/lib`->MakeAbsolute(),
-			`@('../../../../..'->MakeAbsolute())/External/zstd/lib/common`->MakeAbsolute()
-		]
-		PreprocessorDefines += [
-			"XXH_NAMESPACE=ZSTD_",
-			"ZSTD_LEGACY_SUPPORT=0",
-			"ZSTD_MULTITHREAD"
-		]
-	}
 	Property.MalterlibTargetNameType "Normal"
 	Compile.AllowNonExisting true
 	Target.Group "External/libzstd"
@@ -297,10 +281,6 @@ Property.CMakeOutputPath_libzstd define string = `@('..'->MakeAbsolute())`->Make
 				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/decompress/huf_decompress.c`
 				{
 					Compile.Type "C"
-				}
-				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/decompress/huf_decompress_amd64.S`
-				{
-					Compile.Type "Assembler"
 				}
 				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/decompress/zstd_ddict.c`
 				{
