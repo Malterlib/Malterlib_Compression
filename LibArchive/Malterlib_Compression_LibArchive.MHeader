@@ -88,6 +88,10 @@
 		{
 			!!PlatformFamily "Windows"
 		}
+		Warnings_UnusedButSetVariable false
+		{
+			!!GeneratorFamily "Xcode"
+		}
 	}
 
 	%Target "Com_libarchive_bsdtar"
