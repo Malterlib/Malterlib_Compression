@@ -23,7 +23,7 @@ Property.CMakeOutputPath_libarchive define string = `@('.'->MakeAbsolute())`->Ma
 					{
 						Compile
 						{
-							Custom_CommandLine `@(`@('../../../../..'->MakeAbsolute())/Binaries/Malterlib/OSX/x64/ctest`->MakeAbsolute()->EscapeHost()) -D Nightly`
+							Custom_CommandLine `@(`@('../../../../..'->MakeAbsolute())/Binaries/Malterlib/OSX/arm64/ctest`->MakeAbsolute()->EscapeHost()) -D Nightly`
 							AllowNonExisting true
 							Disabled false
 							Custom_WorkingDirectory `@('.'->MakeAbsolute())`->MakeAbsolute()
@@ -60,7 +60,7 @@ Property.CMakeOutputPath_libarchive define string = `@('.'->MakeAbsolute())`->Ma
 					{
 						Compile
 						{
-							Custom_CommandLine `@(`@('../../../../..'->MakeAbsolute())/Binaries/Malterlib/OSX/x64/ctest`->MakeAbsolute()->EscapeHost()) -D Continuous`
+							Custom_CommandLine `@(`@('../../../../..'->MakeAbsolute())/Binaries/Malterlib/OSX/arm64/ctest`->MakeAbsolute()->EscapeHost()) -D Continuous`
 							AllowNonExisting true
 							Disabled false
 							Custom_WorkingDirectory `@('.'->MakeAbsolute())`->MakeAbsolute()
@@ -97,7 +97,7 @@ Property.CMakeOutputPath_libarchive define string = `@('.'->MakeAbsolute())`->Ma
 					{
 						Compile
 						{
-							Custom_CommandLine `@(`@('../../../../..'->MakeAbsolute())/Binaries/Malterlib/OSX/x64/ctest`->MakeAbsolute()->EscapeHost()) -D Experimental`
+							Custom_CommandLine `@(`@('../../../../..'->MakeAbsolute())/Binaries/Malterlib/OSX/arm64/ctest`->MakeAbsolute()->EscapeHost()) -D Experimental`
 							AllowNonExisting true
 							Disabled false
 							Custom_WorkingDirectory `@('.'->MakeAbsolute())`->MakeAbsolute()
@@ -661,7 +661,15 @@ Property.CMakeOutputPath_libarchive define string = `@('.'->MakeAbsolute())`->Ma
 		{
 			Compile.Type "C"
 		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_write_set_format_cpio_binary.c`
+		{
+			Compile.Type "C"
+		}
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_write_set_format_cpio_newc.c`
+		{
+			Compile.Type "C"
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_write_set_format_cpio_odc.c`
 		{
 			Compile.Type "C"
 		}
@@ -738,14 +746,6 @@ Property.CMakeOutputPath_libarchive define string = `@('.'->MakeAbsolute())`->Ma
 			Compile.Disabled true
 		}
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/xxhash.c`
-		{
-			Compile.Type "C"
-		}
-		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_blake2sp_ref.c`
-		{
-			Compile.Type "C"
-		}
-		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_blake2s_ref.c`
 		{
 			Compile.Type "C"
 		}
@@ -1310,7 +1310,15 @@ Property.CMakeOutputPath_libarchive define string = `@('.'->MakeAbsolute())`->Ma
 		{
 			Compile.Type "C"
 		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_write_set_format_cpio_binary.c`
+		{
+			Compile.Type "C"
+		}
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_write_set_format_cpio_newc.c`
+		{
+			Compile.Type "C"
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_write_set_format_cpio_odc.c`
 		{
 			Compile.Type "C"
 		}
@@ -1387,14 +1395,6 @@ Property.CMakeOutputPath_libarchive define string = `@('.'->MakeAbsolute())`->Ma
 			Compile.Disabled true
 		}
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/xxhash.c`
-		{
-			Compile.Type "C"
-		}
-		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_blake2sp_ref.c`
-		{
-			Compile.Type "C"
-		}
-		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_blake2s_ref.c`
 		{
 			Compile.Type "C"
 		}
