@@ -682,10 +682,10 @@ typedef uint64_t uintmax_t;
 /* #undef HAVE_LIBBZ2 */
 
 /* Define to 1 if you have the `b2' library (-lb2). */
-#define HAVE_LIBB2 1
+/* #undef HAVE_LIBB2 */
 
 /* Define to 1 if you have the <blake2.h> header file. */
-#define HAVE_BLAKE2_H 1
+/* #undef HAVE_BLAKE2_H */
 
 /* Define to 1 if you have the `charset' library (-lcharset). */
 /* #undef HAVE_LIBCHARSET */
