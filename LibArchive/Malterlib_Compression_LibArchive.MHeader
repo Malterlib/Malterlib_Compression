@@ -41,6 +41,8 @@
 		, "ENABLE_LZMA=0"
 		, "ENABLE_BZip2=0"
 		, "ENABLE_EXPAT=0"
+		, "ENABLE_LIBB2=0"
+
 	]
 
 	Import.CMake_Variables =+ [
