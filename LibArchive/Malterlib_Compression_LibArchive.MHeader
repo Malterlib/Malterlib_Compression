@@ -64,7 +64,7 @@
 
 	Import.CMake_Variables =+ "HAVE_LZMA_STREAM_ENCODER_MT=0"
 	{
-		!!PlatformFamily "OSX"
+		!!PlatformFamily "macOS"
 	}
 
 	Import.CMake_Variables =+ "CMAKE_BUILD_WITH_INSTALL_RPATH=ON"
