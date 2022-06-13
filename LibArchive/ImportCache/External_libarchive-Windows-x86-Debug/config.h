@@ -740,7 +740,7 @@ typedef uint64_t uintmax_t;
 
 /* Define to 1 if you have the `zstd' library (-lzstd) with compression
    support. */
-/* #undef HAVE_LIBZSTD_COMPRESSOR */
+#define HAVE_LIBZSTD_COMPRESSOR 1
 
 /* Define to 1 if you have the <limits.h> header file. */
 #define HAVE_LIMITS_H 1

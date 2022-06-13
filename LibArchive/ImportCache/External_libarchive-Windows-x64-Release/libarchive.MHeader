@@ -36,43 +36,6 @@ Property.CMakeOutputPath_libarchive define string = `@('.'->MakeAbsolute())`->Ma
 		}
 	}
 }
-%Target "Tool_libarchive_Continuous"
-{
-	Property.MalterlibTargetNameType "Normal"
-	Compile.AllowNonExisting true
-	Compile.Disabled true
-	Target.Group "External/libarchive"
-	{
-		!!Target.Group undefined
-	}
-	Target.Type "Tool"
-	Target.BaseName "libarchive_Continuous"
-	Target.BaseFileName "Continuous"
-	%Group "Windows"
-	{
-		%Group "x64"
-		{
-			%Group `@(FullConfiguration)`
-			{
-				%Group "CMakeFiles"
-				{
-					%File `@('.'->MakeAbsolute())/CMakeFiles/Continuous.rule`
-					{
-						Compile
-						{
-							Custom_CommandLine `@(`@('../../../../..'->MakeAbsolute())/BuildSystem/SafeMib/Binaries/ctest.exe`->MakeAbsolute()->EscapeHost()) -D Continuous`
-							AllowNonExisting true
-							Disabled false
-							Custom_WorkingDirectory `@('.'->MakeAbsolute())`->MakeAbsolute()
-							Custom_Outputs []
-							Custom_Inputs []
-						}
-					}
-				}
-			}
-		}
-	}
-}
 %Target "Tool_libarchive_Nightly"
 {
 	Property.MalterlibTargetNameType "Normal"
@@ -98,6 +61,43 @@ Property.CMakeOutputPath_libarchive define string = `@('.'->MakeAbsolute())`->Ma
 						Compile
 						{
 							Custom_CommandLine `@(`@('../../../../..'->MakeAbsolute())/BuildSystem/SafeMib/Binaries/ctest.exe`->MakeAbsolute()->EscapeHost()) -D Nightly`
+							AllowNonExisting true
+							Disabled false
+							Custom_WorkingDirectory `@('.'->MakeAbsolute())`->MakeAbsolute()
+							Custom_Outputs []
+							Custom_Inputs []
+						}
+					}
+				}
+			}
+		}
+	}
+}
+%Target "Tool_libarchive_Continuous"
+{
+	Property.MalterlibTargetNameType "Normal"
+	Compile.AllowNonExisting true
+	Compile.Disabled true
+	Target.Group "External/libarchive"
+	{
+		!!Target.Group undefined
+	}
+	Target.Type "Tool"
+	Target.BaseName "libarchive_Continuous"
+	Target.BaseFileName "Continuous"
+	%Group "Windows"
+	{
+		%Group "x64"
+		{
+			%Group `@(FullConfiguration)`
+			{
+				%Group "CMakeFiles"
+				{
+					%File `@('.'->MakeAbsolute())/CMakeFiles/Continuous.rule`
+					{
+						Compile
+						{
+							Custom_CommandLine `@(`@('../../../../..'->MakeAbsolute())/BuildSystem/SafeMib/Binaries/ctest.exe`->MakeAbsolute()->EscapeHost()) -D Continuous`
 							AllowNonExisting true
 							Disabled false
 							Custom_WorkingDirectory `@('.'->MakeAbsolute())`->MakeAbsolute()

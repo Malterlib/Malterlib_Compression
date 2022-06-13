@@ -263,7 +263,8 @@ Import.CMake_Variables: [
 	ARCHIVE_CRYPTO_SHA512_OPENSSL=1,
 	ZSTD_INCLUDE_DIR=/External/zstd/lib,
 	ZSTD_LIBRARY=/dev/null,
-	HAVE_LIBZSTD=1
+	HAVE_LIBZSTD=1,
+	HAVE_LIBZSTD_COMPRESSOR=1
 ]
 
 Import.CMake_IncludeInHash: [
