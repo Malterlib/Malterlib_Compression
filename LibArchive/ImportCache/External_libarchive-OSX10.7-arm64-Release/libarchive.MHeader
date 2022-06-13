@@ -1,4 +1,41 @@
 Property.CMakeOutputPath_libarchive define string = `@('.'->MakeAbsolute())`->MakeAbsolute()
+%Target "Tool_libarchive_Experimental"
+{
+	Property.MalterlibTargetNameType "Normal"
+	Compile.AllowNonExisting true
+	Compile.Disabled true
+	Target.Group "External/libarchive"
+	{
+		!!Target.Group undefined
+	}
+	Target.Type "Tool"
+	Target.BaseName "libarchive_Experimental"
+	Target.BaseFileName "Experimental"
+	%Group "OSX10.7"
+	{
+		%Group "arm64"
+		{
+			%Group `@(FullConfiguration)`
+			{
+				%Group "CMakeFiles"
+				{
+					%File `@('.'->MakeAbsolute())/CMakeFiles/Experimental.rule`
+					{
+						Compile
+						{
+							Custom_CommandLine `@(`@('../../../../..'->MakeAbsolute())/Binaries/Malterlib/OSX/arm64/ctest`->MakeAbsolute()->EscapeHost()) -D Experimental`
+							AllowNonExisting true
+							Disabled false
+							Custom_WorkingDirectory `@('.'->MakeAbsolute())`->MakeAbsolute()
+							Custom_Outputs []
+							Custom_Inputs []
+						}
+					}
+				}
+			}
+		}
+	}
+}
 %Target "Tool_libarchive_Nightly"
 {
 	Property.MalterlibTargetNameType "Normal"
@@ -73,44 +110,7 @@ Property.CMakeOutputPath_libarchive define string = `@('.'->MakeAbsolute())`->Ma
 		}
 	}
 }
-%Target "Tool_libarchive_Experimental"
-{
-	Property.MalterlibTargetNameType "Normal"
-	Compile.AllowNonExisting true
-	Compile.Disabled true
-	Target.Group "External/libarchive"
-	{
-		!!Target.Group undefined
-	}
-	Target.Type "Tool"
-	Target.BaseName "libarchive_Experimental"
-	Target.BaseFileName "Experimental"
-	%Group "OSX10.7"
-	{
-		%Group "arm64"
-		{
-			%Group `@(FullConfiguration)`
-			{
-				%Group "CMakeFiles"
-				{
-					%File `@('.'->MakeAbsolute())/CMakeFiles/Experimental.rule`
-					{
-						Compile
-						{
-							Custom_CommandLine `@(`@('../../../../..'->MakeAbsolute())/Binaries/Malterlib/OSX/arm64/ctest`->MakeAbsolute()->EscapeHost()) -D Experimental`
-							AllowNonExisting true
-							Disabled false
-							Custom_WorkingDirectory `@('.'->MakeAbsolute())`->MakeAbsolute()
-							Custom_Outputs []
-							Custom_Inputs []
-						}
-					}
-				}
-			}
-		}
-	}
-}
-%Target "Lib_libarchive_archive_static"
+%Target "Dll_libarchive_archive"
 {
 	Compile
 	{
@@ -123,7 +123,7 @@ Property.CMakeOutputPath_libarchive define string = `@('.'->MakeAbsolute())`->Ma
 		]
 		PreprocessorDefines += [
 			"HAVE_CONFIG_H",
-			"LIBARCHIVE_STATIC"
+			"archive_EXPORTS"
 		]
 	}
 	Property.MalterlibTargetNameType "Normal"
@@ -132,9 +132,9 @@ Property.CMakeOutputPath_libarchive define string = `@('.'->MakeAbsolute())`->Ma
 	{
 		!!Target.Group undefined
 	}
-	Target.Type "StaticLibrary"
-	Target.BaseName "libarchive_archive_static"
-	Target.BaseFileName "archive_static"
+	Target.Type "SharedDynamicLibrary"
+	Target.BaseName "libarchive_archive"
+	Target.BaseFileName "archive"
 	%Group "libarchive"
 	{
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_acl.c`
@@ -767,7 +767,7 @@ Property.CMakeOutputPath_libarchive define string = `@('.'->MakeAbsolute())`->Ma
 		}
 	}
 }
-%Target "Dll_libarchive_archive"
+%Target "Lib_libarchive_archive_static"
 {
 	Compile
 	{
@@ -780,7 +780,7 @@ Property.CMakeOutputPath_libarchive define string = `@('.'->MakeAbsolute())`->Ma
 		]
 		PreprocessorDefines += [
 			"HAVE_CONFIG_H",
-			"archive_EXPORTS"
+			"LIBARCHIVE_STATIC"
 		]
 	}
 	Property.MalterlibTargetNameType "Normal"
@@ -789,9 +789,9 @@ Property.CMakeOutputPath_libarchive define string = `@('.'->MakeAbsolute())`->Ma
 	{
 		!!Target.Group undefined
 	}
-	Target.Type "SharedDynamicLibrary"
-	Target.BaseName "libarchive_archive"
-	Target.BaseFileName "archive"
+	Target.Type "StaticLibrary"
+	Target.BaseName "libarchive_archive_static"
+	Target.BaseFileName "archive_static"
 	%Group "libarchive"
 	{
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_acl.c`

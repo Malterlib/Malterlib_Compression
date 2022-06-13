@@ -21,6 +21,7 @@ LabelsForSubprojects:
 
 # Submission information
 SubmitURL: http://my.cdash.org/submit.php?project=libarchive
+SubmitInactivityTimeout: 
 
 # Dashboard start time
 NightlyStartTime: 01:00:00 UTC
@@ -80,7 +81,7 @@ MemoryCheckCommandOptions:
 MemoryCheckSuppressionFile: 
 
 # Coverage
-CoverageCommand: gcov
+CoverageCommand: /Applications/Xcode-13.4.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchaingcov
 CoverageExtraFlags: -l
 
 # Testing options
