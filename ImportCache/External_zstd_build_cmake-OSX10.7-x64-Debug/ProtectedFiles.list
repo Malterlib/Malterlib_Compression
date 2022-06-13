@@ -1,9 +1,0 @@
-lib/CMakeFiles/uninstall.rule
-programs/CMakeFiles/unzstd.1.rule
-programs/CMakeFiles/unzstd.rule
-programs/CMakeFiles/zstd.1.rule
-programs/CMakeFiles/zstdcat.1.rule
-programs/CMakeFiles/zstdcat.rule
-programs/CMakeFiles/zstdgrep.1.rule
-programs/CMakeFiles/zstdless.1.rule
-programs/CMakeFiles/zstdmt.rule
