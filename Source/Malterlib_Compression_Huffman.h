@@ -92,18 +92,18 @@ namespace NMib::NCompression
 		class CSort_FrequencyCompare
 		{
 		public:
-			bool operator()(CHuffmanNode &_Elem1, CHuffmanNode &_Elem2) const
+			COrdering_Partial operator()(CHuffmanNode &_Elem1, CHuffmanNode &_Elem2) const
 			{
-				return _Elem1.m_Frequency > _Elem2.m_Frequency;
+				return _Elem2.m_Frequency <=> _Elem1.m_Frequency;
 			}
 		};
 
 		class CSort_ASCIICompare
 		{
 		public:
-			bool operator()(CHuffmanNode &_Elem1, CHuffmanNode &_Elem2) const
+			COrdering_Partial operator()(CHuffmanNode &_Elem1, CHuffmanNode &_Elem2) const
 			{
-				return _Elem1.m_ByAscii < _Elem2.m_ByAscii;
+				return _Elem1.m_ByAscii <=> _Elem2.m_ByAscii;
 			}
 		};
 
