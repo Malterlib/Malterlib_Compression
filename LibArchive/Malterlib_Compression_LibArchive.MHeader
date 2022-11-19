@@ -12,8 +12,6 @@
 
 %Import "../../../External/libarchive/CMakeLists.txt"
 {
-	Property.MalterlibLinkWithBoringSSL true
-
 	Property
 	{
 		!!PlatformFamily "Windows"
@@ -94,6 +92,16 @@
 		Warnings_UnusedButSetVariable false
 		{
 			!!GeneratorFamily "Xcode"
+		}
+	}
+
+	%Target "Lib_libarchive_archive_static"
+	{
+		%Dependency "Lib_BoringSSL_decrepit"
+		{
+			!DocumentationEnabled true
+
+			Dependency.Indirect true
 		}
 	}
 

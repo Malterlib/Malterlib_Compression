@@ -1,3 +1,11 @@
-../../External/miniz d4d2db8162058d63a9827cb8f272c2d31490804e
-../../External/zlib 00a6936a03149853e6171480557f325eca25744f
-../../External/zstd c422f91b051dcb0bdd8d1b1fb80c5c47208f8f7b
+{
+	"../../External/miniz": {
+		"Hash": "d4d2db8162058d63a9827cb8f272c2d31490804e"
+	},
+	"../../External/zlib": {
+		"Hash": "00a6936a03149853e6171480557f325eca25744f"
+	},
+	"../../External/zstd": {
+		"Hash": "c422f91b051dcb0bdd8d1b1fb80c5c47208f8f7b"
+	}
+}

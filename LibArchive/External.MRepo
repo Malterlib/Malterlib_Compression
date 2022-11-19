@@ -1,1 +1,5 @@
-../../../External/libarchive f283bfd65522443acd24899902793c2ea223cc86
+{
+	"../../../External/libarchive": {
+		"Hash": "f283bfd65522443acd24899902793c2ea223cc86"
+	}
+}

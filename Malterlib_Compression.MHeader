@@ -73,12 +73,12 @@ Import "LibArchive/Malterlib_Compression_LibArchive.MHeader"
 
 Property
 {
-	MalterlibLibrary_Compression define bool = MalterlibLibrary_All
+	MalterlibLibrary_Compression: bool = MalterlibLibrary_All
 	MalterlibSubLibraries =+ "Compression"
 	{
 		!!MalterlibLibrary_Compression true
 	}
-//	MalterlibSubLibrarySeparate_Lib_Malterlib_Compression define bool = true
+//	MalterlibSubLibrarySeparate_Lib_Malterlib_Compression: bool = true
 	MalterlibIncludeRoots =+ "Include"->MakeAbsolute()
 	{
 		!!MalterlibLibrary_Compression true
@@ -90,6 +90,6 @@ Property
 	!!MalterlibEnableInternalTests true
 	
 	MalterlibTests =+ "Malterlib_Compression"
-	MalterlibTestFiles_Malterlib_Compression define [type(CEntity)] = ["Test/*"->MakeAbsolute()]
+	MalterlibTestFiles_Malterlib_Compression: [type(CEntity)] = ["Test/*"->MakeAbsolute()]
 }
 
