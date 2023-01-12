@@ -122,6 +122,7 @@ Property.CMakeOutputPath_libarchive define string = `@('.'->MakeAbsolute())`->Ma
 		]
 		PreprocessorDefines += [
 			"HAVE_CONFIG_H",
+			"__LIBARCHIVE_ENABLE_VISIBILITY",
 			"archive_EXPORTS"
 		]
 	}
@@ -393,6 +394,10 @@ Property.CMakeOutputPath_libarchive define string = `@('.'->MakeAbsolute())`->Ma
 			Compile.Type "C"
 		}
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_read_support_filter_all.c`
+		{
+			Compile.Type "C"
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_read_support_filter_by_code.c`
 		{
 			Compile.Type "C"
 		}
@@ -778,7 +783,8 @@ Property.CMakeOutputPath_libarchive define string = `@('.'->MakeAbsolute())`->Ma
 		]
 		PreprocessorDefines += [
 			"HAVE_CONFIG_H",
-			"LIBARCHIVE_STATIC"
+			"LIBARCHIVE_STATIC",
+			"__LIBARCHIVE_ENABLE_VISIBILITY"
 		]
 	}
 	Property.MalterlibTargetNameType "Normal"
@@ -1049,6 +1055,10 @@ Property.CMakeOutputPath_libarchive define string = `@('.'->MakeAbsolute())`->Ma
 			Compile.Type "C"
 		}
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_read_support_filter_all.c`
+		{
+			Compile.Type "C"
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_read_support_filter_by_code.c`
 		{
 			Compile.Type "C"
 		}
@@ -1435,7 +1445,8 @@ Property.CMakeOutputPath_libarchive define string = `@('.'->MakeAbsolute())`->Ma
 		]
 		PreprocessorDefines += [
 			"HAVE_CONFIG_H",
-			"LIBARCHIVE_STATIC"
+			"LIBARCHIVE_STATIC",
+			"__LIBARCHIVE_ENABLE_VISIBILITY"
 		]
 	}
 	Property.MalterlibTargetNameType "Normal"

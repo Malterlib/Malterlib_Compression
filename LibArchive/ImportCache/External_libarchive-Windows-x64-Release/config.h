@@ -316,13 +316,13 @@ typedef uint64_t uintmax_t;
 /* #undef ARCHIVE_XATTR_LINUX */
 
 /* Version number of bsdcpio */
-#define BSDCPIO_VERSION_STRING "3.6.1"
+#define BSDCPIO_VERSION_STRING "3.6.2"
 
 /* Version number of bsdtar */
-#define BSDTAR_VERSION_STRING "3.6.1"
+#define BSDTAR_VERSION_STRING "3.6.2"
 
 /* Version number of bsdcat */
-#define BSDCAT_VERSION_STRING "3.6.1"
+#define BSDCAT_VERSION_STRING "3.6.2"
 
 /* Define to 1 if you have the `acl_create_entry' function. */
 /* #undef HAVE_ACL_CREATE_ENTRY */
@@ -1234,10 +1234,10 @@ typedef uint64_t uintmax_t;
 #define ICONV_CONST 
 
 /* Version number of libarchive as a single integer */
-#define LIBARCHIVE_VERSION_NUMBER "3006001"
+#define LIBARCHIVE_VERSION_NUMBER "3006002"
 
 /* Version number of libarchive */
-#define LIBARCHIVE_VERSION_STRING "3.6.1"
+#define LIBARCHIVE_VERSION_STRING "3.6.2"
 
 /* Define to 1 if `lstat' dereferences a symlink specified with a trailing
    slash. */
@@ -1291,7 +1291,7 @@ typedef uint64_t uintmax_t;
 #endif /* SAFE_TO_DEFINE_EXTENSIONS */
 
 /* Version number of package */
-#define VERSION "3.6.1"
+#define VERSION "3.6.2"
 
 /* Number of bits in a file offset, on hosts where this is settable. */
 /* #undef _FILE_OFFSET_BITS */
@@ -1304,15 +1304,15 @@ typedef uint64_t uintmax_t;
 
 /* Define to control Windows SDK version */
 #ifndef NTDDI_VERSION
-#define NTDDI_VERSION 0x06010000
+#define NTDDI_VERSION 0x0A000000
 #endif // NTDDI_VERSION
 
 #ifndef _WIN32_WINNT
-#define _WIN32_WINNT 0x0601
+#define _WIN32_WINNT 0x0A00
 #endif // _WIN32_WINNT
 
 #ifndef WINVER
-#define WINVER 0x0601
+#define WINVER 0x0A00
 #endif // WINVER
 
 /* Define to empty if `const' does not conform to ANSI C. */
