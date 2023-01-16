@@ -1,4 +1,4 @@
-Property.CMakeOutputPath_libzstd define string = `@('..'->MakeAbsolute())`->MakeAbsolute()
+Property.CMakeOutputPath_libzstd: string = `@('..'->MakeAbsolute())`->MakeAbsolute()
 %Target "Lib_libzstd_libzstd_static"
 {
 	Compile

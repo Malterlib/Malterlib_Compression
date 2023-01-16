@@ -1,4 +1,4 @@
-Property.CMakeOutputPath_libarchive define string = `@('.'->MakeAbsolute())`->MakeAbsolute()
+Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 %Target "Tool_libarchive_Experimental"
 {
 	Property.MalterlibTargetNameType "Normal"

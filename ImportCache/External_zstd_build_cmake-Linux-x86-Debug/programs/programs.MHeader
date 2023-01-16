@@ -1,4 +1,4 @@
-Property.CMakeOutputPath_programs define string = `@('..'->MakeAbsolute())`->MakeAbsolute()
+Property.CMakeOutputPath_programs: string = `@('..'->MakeAbsolute())`->MakeAbsolute()
 %Target "Com_programs_zstd"
 {
 	Compile
