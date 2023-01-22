@@ -1,9 +1,9 @@
 {
 	"../../External/miniz": {
-		"Hash": "d4d2db8162058d63a9827cb8f272c2d31490804e"
+		"Hash": "79422dde329c037d547679f9680b4ac613e67b51"
 	},
 	"../../External/zlib": {
-		"Hash": "00a6936a03149853e6171480557f325eca25744f"
+		"Hash": "7ac2604a8636d9cb1ff6dadee64588f279746cbb"
 	},
 	"../../External/zstd": {
 		"Hash": "c422f91b051dcb0bdd8d1b1fb80c5c47208f8f7b"

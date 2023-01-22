@@ -17,6 +17,12 @@
 		Type "External"
 		Remotes =+ {Name: "upstream", URL: "https://github.com/richgel999/miniz.git"}
 	}
+
+	Compile
+	{
+		!!CompileDialect "C"
+		Analyzer false
+	}
 }
 
 %Repository "zstd"
@@ -34,6 +40,12 @@
 		"ZSTD_BUILD_TESTS=OFF"
 		, "ZSTD_BUILD_SHARED=OFF"
 	]
+
+	Compile
+	{
+		!!CompileDialect "C"
+		Analyzer false
+	}
 }
 
 Compile.SearchPath += "../../External/zlib"->MakeAbsolute()

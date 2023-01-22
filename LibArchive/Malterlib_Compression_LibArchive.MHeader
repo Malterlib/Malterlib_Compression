@@ -85,6 +85,9 @@
 	{
 		!!CompileDialect "C"
 		PrefixHeader undefined
+
+		Analyzer false
+
 		Warnings "Off"
 		{
 			!!PlatformFamily "Windows"

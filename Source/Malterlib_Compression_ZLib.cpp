@@ -284,9 +284,9 @@ namespace NMib::NCompression
 		while (SourceBytes)
 		{
 			mint ToWrite = (mint)fg_Min(SourceBytes, NStream::CFilePos(8192));
-			NStream::CFilePos OutBytesWritten;
 			_SourceStream.f_ConsumeBytes(Buffer, ToWrite);
 			SourceBytes -= ToWrite;
+			NStream::CFilePos OutBytesWritten = 0;
 			Compress.f_FeedBytes(&_DestinationStream, OutBytesWritten, Buffer, ToWrite, SourceBytes == 0 ? ECompressZlibFlush_Finish : ECompressZlibFlush_None);
 		}
 	}
