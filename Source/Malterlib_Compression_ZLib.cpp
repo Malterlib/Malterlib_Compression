@@ -120,7 +120,7 @@ namespace NMib::NCompression
 		void f_ConsumeBytes(NStream::CBinaryStream *_pInStream, NStream::CFilePos _InStreamLength, void const *_pMem, mint _nBytes, ECompressZlibFlush _Flush)
 		{
 			if (f_TryConsumeBytes(_pInStream, _InStreamLength, _pMem, _nBytes, _Flush) != _nBytes)
- 				DMibError("Ran out of compressed data");
+				DMibError("Ran out of compressed data");
 		}
 
 		mint f_TryConsumeBytes(NStream::CBinaryStream *_pInStream, NStream::CFilePos _InStreamLength, void const *_pMem, mint _nBytes, ECompressZlibFlush _Flush)
