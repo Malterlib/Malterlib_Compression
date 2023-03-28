@@ -46,6 +46,36 @@
 		!!CompileDialect "C"
 		Analyzer false
 	}
+
+	%Target "Lib_libzstd_libzstd_static"
+	{
+		%Group "opt"
+		{
+			%Group "lib"
+			{
+				%Group "decompress"
+				{
+					%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/decompress/huf_decompress_x86_64.S`
+					{
+						&
+						{
+							Architecture "x64"
+							!PlatformFamily "Windows"
+						}
+
+						Compile.Type "Assembler"
+						{
+							&
+							{
+								Architecture "x64"
+								!PlatformFamily "Windows"
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 Compile.SearchPath += "../../External/zlib"->MakeAbsolute()

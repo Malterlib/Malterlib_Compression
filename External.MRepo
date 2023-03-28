@@ -1,11 +1,11 @@
 {
 	"../../External/miniz": {
-		"Hash": "79422dde329c037d547679f9680b4ac613e67b51"
+		"Hash": "f4c40c87a8901001bde404472ad2754ac970315a"
 	},
 	"../../External/zlib": {
-		"Hash": "7ac2604a8636d9cb1ff6dadee64588f279746cbb"
+		"Hash": "91a8ad6f61b95e3da9744fe5d3bc424ee9b476e0"
 	},
 	"../../External/zstd": {
-		"Hash": "c422f91b051dcb0bdd8d1b1fb80c5c47208f8f7b"
+		"Hash": "98aedec451bc6d5ef848b3ed2a09a23017eaad54"
 	}
 }
