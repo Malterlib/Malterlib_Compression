@@ -52,7 +52,7 @@ add_library(zstd::libzstd_static STATIC IMPORTED)
 # Import target "zstd::libzstd_static" for configuration "Release"
 set_property(TARGET zstd::libzstd_static APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(zstd::libzstd_static PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "ASM;C"
+  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "C"
   IMPORTED_LOCATION_RELEASE "lib/libzstd.a"
   )
 

@@ -12,11 +12,13 @@ Property.CMakeOutputPath_programs: string = `@('..'->MakeAbsolute())`->MakeAbsol
 			`@('../../../../..'->MakeAbsolute())/External/zstd/lib`->MakeAbsolute(),
 			`@('../../../../..'->MakeAbsolute())/External/zstd/lib/common`->MakeAbsolute(),
 			`@('../../../../..'->MakeAbsolute())/External/zstd/lib/compress`->MakeAbsolute(),
-			`@('../../../../..'->MakeAbsolute())/External/zstd/lib/dictBuilder`->MakeAbsolute()
+			`@('../../../../..'->MakeAbsolute())/External/zstd/lib/dictBuilder`->MakeAbsolute(),
+			`@('../../../../..'->MakeAbsolute())/External/zstd/programs/legacy`->MakeAbsolute(),
+			`@('../../../../..'->MakeAbsolute())/External/zstd/lib/legacy`->MakeAbsolute()
 		]
 		PreprocessorDefines += [
 			"XXH_NAMESPACE=ZSTD_",
-			"ZSTD_LEGACY_SUPPORT=0",
+			"ZSTD_LEGACY_SUPPORT=5",
 			"ZSTD_MULTITHREAD"
 		]
 	}
@@ -31,11 +33,13 @@ Property.CMakeOutputPath_programs: string = `@('..'->MakeAbsolute())`->MakeAbsol
 			`@('../../../../..'->MakeAbsolute())/External/zstd/lib`->MakeAbsolute(),
 			`@('../../../../..'->MakeAbsolute())/External/zstd/lib/common`->MakeAbsolute(),
 			`@('../../../../..'->MakeAbsolute())/External/zstd/lib/compress`->MakeAbsolute(),
-			`@('../../../../..'->MakeAbsolute())/External/zstd/lib/dictBuilder`->MakeAbsolute()
+			`@('../../../../..'->MakeAbsolute())/External/zstd/lib/dictBuilder`->MakeAbsolute(),
+			`@('../../../../..'->MakeAbsolute())/External/zstd/programs/legacy`->MakeAbsolute(),
+			`@('../../../../..'->MakeAbsolute())/External/zstd/lib/legacy`->MakeAbsolute()
 		]
 		PreprocessorDefines += [
 			"XXH_NAMESPACE=ZSTD_",
-			"ZSTD_LEGACY_SUPPORT=0",
+			"ZSTD_LEGACY_SUPPORT=5",
 			"ZSTD_MULTITHREAD"
 		]
 	}
@@ -67,6 +71,10 @@ Property.CMakeOutputPath_programs: string = `@('..'->MakeAbsolute())`->MakeAbsol
 					Compile.Type "C"
 				}
 				%File `@('../../../../..'->MakeAbsolute())/External/zstd/programs/fileio.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/programs/fileio_asyncio.c`
 				{
 					Compile.Type "C"
 				}
