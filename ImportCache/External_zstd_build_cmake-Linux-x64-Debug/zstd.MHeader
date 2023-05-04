@@ -403,6 +403,7 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 						{
 							Compile
 							{
+								Type "Custom"
 								Custom_CommandLine `MToolCMake -P @(`@('.'->MakeAbsolute())/lib/cmake_uninstall.cmake`->MakeAbsolute()->EscapeHost())`
 								AllowNonExisting true
 								Disabled false
@@ -523,6 +524,7 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 						{
 							Compile
 							{
+								Type "Custom"
 								Custom_CommandLine `MToolCMake -E create_symlink zstd zstdcat`
 								AllowNonExisting true
 								Disabled false
@@ -569,6 +571,7 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 						{
 							Compile
 							{
+								Type "Custom"
 								Custom_CommandLine `MToolCMake -E create_symlink zstd unzstd`
 								AllowNonExisting true
 								Disabled false
@@ -615,6 +618,7 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 						{
 							Compile
 							{
+								Type "Custom"
 								Custom_CommandLine `MToolCMake -E copy @(`@('../../../../External/zstd/build/cmake'->MakeAbsolute())/../../programs/zstd.1`->MakeAbsolute()->EscapeHost()) .`
 								AllowNonExisting true
 								Disabled false
@@ -655,6 +659,7 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 						{
 							Compile
 							{
+								Type "Custom"
 								Custom_CommandLine `MToolCMake -E copy @(`@('../../../../External/zstd/build/cmake'->MakeAbsolute())/../../programs/zstdgrep.1`->MakeAbsolute()->EscapeHost()) .`
 								AllowNonExisting true
 								Disabled false
@@ -695,6 +700,7 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 						{
 							Compile
 							{
+								Type "Custom"
 								Custom_CommandLine `MToolCMake -E copy @(`@('../../../../External/zstd/build/cmake'->MakeAbsolute())/../../programs/zstdless.1`->MakeAbsolute()->EscapeHost()) .`
 								AllowNonExisting true
 								Disabled false
@@ -735,6 +741,7 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 						{
 							Compile
 							{
+								Type "Custom"
 								Custom_CommandLine `MToolCMake -E create_symlink zstd.1 zstdcat.1`
 								AllowNonExisting true
 								Disabled false
@@ -779,6 +786,7 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 						{
 							Compile
 							{
+								Type "Custom"
 								Custom_CommandLine `MToolCMake -E create_symlink zstd.1 unzstd.1`
 								AllowNonExisting true
 								Disabled false
@@ -885,6 +893,7 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 						{
 							Compile
 							{
+								Type "Custom"
 								Custom_CommandLine `MToolCMake -E create_symlink zstd zstdmt`
 								AllowNonExisting true
 								Disabled false

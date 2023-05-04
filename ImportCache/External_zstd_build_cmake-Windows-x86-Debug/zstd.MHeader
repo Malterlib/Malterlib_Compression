@@ -401,6 +401,7 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 						{
 							Compile
 							{
+								Type "Custom"
 								Custom_CommandLine `MToolCMake -P @(`@('.'->MakeAbsolute())/lib/cmake_uninstall.cmake`->MakeAbsolute()->EscapeHost())`
 								AllowNonExisting true
 								Disabled false

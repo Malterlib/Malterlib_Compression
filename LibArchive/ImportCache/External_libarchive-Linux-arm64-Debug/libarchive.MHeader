@@ -23,6 +23,7 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 					{
 						Compile
 						{
+							Type "Custom"
 							Custom_CommandLine `@(`@('../../../../..'->MakeAbsolute())/Binaries/Malterlib/macOS/arm64/ctest`->MakeAbsolute()->EscapeHost()) -D Experimental`
 							AllowNonExisting true
 							Disabled false
@@ -60,6 +61,7 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 					{
 						Compile
 						{
+							Type "Custom"
 							Custom_CommandLine `@(`@('../../../../..'->MakeAbsolute())/Binaries/Malterlib/macOS/arm64/ctest`->MakeAbsolute()->EscapeHost()) -D Nightly`
 							AllowNonExisting true
 							Disabled false
@@ -97,6 +99,7 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 					{
 						Compile
 						{
+							Type "Custom"
 							Custom_CommandLine `@(`@('../../../../..'->MakeAbsolute())/Binaries/Malterlib/macOS/arm64/ctest`->MakeAbsolute()->EscapeHost()) -D Continuous`
 							AllowNonExisting true
 							Disabled false
