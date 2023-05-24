@@ -1,0 +1,9 @@
+../../../../External/zstd/build/cmake/CMakeLists.txt
+../../../../External/zstd/build/cmake/CMakeModules/AddZstdCompilationFlags.cmake
+../../../../External/zstd/build/cmake/CMakeModules/GetZstdLibraryVersion.cmake
+../../../../External/zstd/build/cmake/CMakeModules/JoinPaths.cmake
+../../../../External/zstd/build/cmake/lib/CMakeLists.txt
+../../../../External/zstd/build/cmake/lib/cmake_uninstall.cmake.in
+../../../../External/zstd/build/cmake/programs/CMakeLists.txt
+../../../../External/zstd/build/cmake/zstdConfig.cmake
+../../../../External/zstd/lib/libzstd.pc.in
