@@ -96,6 +96,14 @@
 		{
 			!!GeneratorFamily "Xcode"
 		}
+		Warnings_SingleBitBitfieldConstantConversion false
+		{
+			&
+			{
+				GeneratorFamily "Xcode"
+				MalterlibDefaultCompiler true
+			}
+		}
 	}
 
 	%Target "Lib_libarchive_archive_static"
