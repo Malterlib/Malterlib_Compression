@@ -96,6 +96,10 @@
 		{
 			!!GeneratorFamily "Xcode"
 		}
+		Warnings_SingleBitBitfieldConstantConversion false
+		{
+			!!GeneratorFamily "Xcode"
+		}
 	}
 
 	%Target "Lib_libarchive_archive_static"
