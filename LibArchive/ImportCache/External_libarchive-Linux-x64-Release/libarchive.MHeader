@@ -1533,3 +1533,73 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 	}
 	%Dependency "Lib_libarchive_archive_static"
 }
+%Target "Com_libarchive_bsdunzip"
+{
+	Compile
+	{
+		!!Compile.Type "C"
+		SearchPath += [
+			`@('../../../../../External/libarchive'->MakeAbsolute())/libarchive`->MakeAbsolute(),
+			`@('.'->MakeAbsolute())`->MakeAbsolute(),
+			`@('../../../../..'->MakeAbsolute())/External/zstd/lib`->MakeAbsolute(),
+			`@('../../../../../External/libarchive'->MakeAbsolute())/libarchive_fe`->MakeAbsolute()
+		]
+		PreprocessorDefines += [
+			"HAVE_CONFIG_H",
+			"LIBARCHIVE_STATIC",
+			"__LIBARCHIVE_ENABLE_VISIBILITY"
+		]
+	}
+	Property.MalterlibTargetNameType "Normal"
+	Compile.AllowNonExisting true
+	Target.Group "External/libarchive"
+	{
+		!!Target.Group undefined
+	}
+	Target.Type "ConsoleExecutable"
+	Target.BaseName "libarchive_bsdunzip"
+	Target.BaseFileName "bsdunzip"
+	%Group "unzip"
+	{
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/unzip/bsdunzip.c`
+		{
+			Compile.Type "C"
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/unzip/bsdunzip_platform.h`
+		{
+			Compile.Disabled true
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/unzip/la_getline.c`
+		{
+			Compile.Type "C"
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/unzip/la_queue.h`
+		{
+			Compile.Disabled true
+		}
+	}
+	%Group "libarchive_fe"
+	{
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive_fe/err.c`
+		{
+			Compile.Type "C"
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive_fe/err.h`
+		{
+			Compile.Disabled true
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive_fe/lafe_platform.h`
+		{
+			Compile.Disabled true
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive_fe/passphrase.c`
+		{
+			Compile.Type "C"
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive_fe/passphrase.h`
+		{
+			Compile.Disabled true
+		}
+	}
+	%Dependency "Lib_libarchive_archive_static"
+}

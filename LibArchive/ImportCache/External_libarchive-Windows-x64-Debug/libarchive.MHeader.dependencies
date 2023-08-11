@@ -19,3 +19,5 @@
 ../../../../../External/libarchive/libarchive/test/CMakeLists.txt
 ../../../../../External/libarchive/tar/CMakeLists.txt
 ../../../../../External/libarchive/tar/test/CMakeLists.txt
+../../../../../External/libarchive/unzip/CMakeLists.txt
+../../../../../External/libarchive/unzip/test/CMakeLists.txt
