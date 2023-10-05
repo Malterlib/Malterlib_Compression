@@ -1569,9 +1569,17 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 		{
 			Compile.Type "C"
 		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/unzip/bsdunzip.h`
+		{
+			Compile.Disabled true
+		}
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/unzip/bsdunzip_platform.h`
 		{
 			Compile.Disabled true
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/unzip/cmdline.c`
+		{
+			Compile.Type "C"
 		}
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/unzip/la_getline.c`
 		{
