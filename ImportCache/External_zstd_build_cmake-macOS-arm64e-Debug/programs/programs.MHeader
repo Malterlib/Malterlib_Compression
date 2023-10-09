@@ -12,11 +12,13 @@ Property.CMakeOutputPath_programs: string = `@('..'->MakeAbsolute())`->MakeAbsol
 			`@('../../../../..'->MakeAbsolute())/External/zstd/lib`->MakeAbsolute(),
 			`@('../../../../..'->MakeAbsolute())/External/zstd/lib/common`->MakeAbsolute(),
 			`@('../../../../..'->MakeAbsolute())/External/zstd/lib/compress`->MakeAbsolute(),
-			`@('../../../../..'->MakeAbsolute())/External/zstd/lib/dictBuilder`->MakeAbsolute()
+			`@('../../../../..'->MakeAbsolute())/External/zstd/lib/dictBuilder`->MakeAbsolute(),
+			`@('../../../../..'->MakeAbsolute())/External/zstd/programs/legacy`->MakeAbsolute(),
+			`@('../../../../..'->MakeAbsolute())/External/zstd/lib/legacy`->MakeAbsolute()
 		]
 		PreprocessorDefines += [
 			"XXH_NAMESPACE=ZSTD_",
-			"ZSTD_LEGACY_SUPPORT=0",
+			"ZSTD_LEGACY_SUPPORT=5",
 			"ZSTD_MULTITHREAD"
 		]
 	}
@@ -46,6 +48,10 @@ Property.CMakeOutputPath_programs: string = `@('..'->MakeAbsolute())`->MakeAbsol
 				Compile.Type "C"
 			}
 			%File `@('../../../../..'->MakeAbsolute())/External/zstd/programs/fileio.c`
+			{
+				Compile.Type "C"
+			}
+			%File `@('../../../../..'->MakeAbsolute())/External/zstd/programs/fileio_asyncio.c`
 			{
 				Compile.Type "C"
 			}
@@ -99,6 +105,7 @@ Property.CMakeOutputPath_programs: string = `@('..'->MakeAbsolute())`->MakeAbsol
 						{
 							Compile
 							{
+								Type "Custom"
 								Custom_CommandLine `MToolCMake -E create_symlink zstd zstdcat`
 								AllowNonExisting true
 								Disabled false
@@ -145,6 +152,7 @@ Property.CMakeOutputPath_programs: string = `@('..'->MakeAbsolute())`->MakeAbsol
 						{
 							Compile
 							{
+								Type "Custom"
 								Custom_CommandLine `MToolCMake -E create_symlink zstd unzstd`
 								AllowNonExisting true
 								Disabled false
@@ -191,6 +199,7 @@ Property.CMakeOutputPath_programs: string = `@('..'->MakeAbsolute())`->MakeAbsol
 						{
 							Compile
 							{
+								Type "Custom"
 								Custom_CommandLine `MToolCMake -E copy @(`@('../../../../../External/zstd/build/cmake'->MakeAbsolute())/../../programs/zstd.1`->MakeAbsolute()->EscapeHost()) .`
 								AllowNonExisting true
 								Disabled false
@@ -231,6 +240,7 @@ Property.CMakeOutputPath_programs: string = `@('..'->MakeAbsolute())`->MakeAbsol
 						{
 							Compile
 							{
+								Type "Custom"
 								Custom_CommandLine `MToolCMake -E copy @(`@('../../../../../External/zstd/build/cmake'->MakeAbsolute())/../../programs/zstdgrep.1`->MakeAbsolute()->EscapeHost()) .`
 								AllowNonExisting true
 								Disabled false
@@ -271,6 +281,7 @@ Property.CMakeOutputPath_programs: string = `@('..'->MakeAbsolute())`->MakeAbsol
 						{
 							Compile
 							{
+								Type "Custom"
 								Custom_CommandLine `MToolCMake -E copy @(`@('../../../../../External/zstd/build/cmake'->MakeAbsolute())/../../programs/zstdless.1`->MakeAbsolute()->EscapeHost()) .`
 								AllowNonExisting true
 								Disabled false
@@ -311,6 +322,7 @@ Property.CMakeOutputPath_programs: string = `@('..'->MakeAbsolute())`->MakeAbsol
 						{
 							Compile
 							{
+								Type "Custom"
 								Custom_CommandLine `MToolCMake -E create_symlink zstd.1 zstdcat.1`
 								AllowNonExisting true
 								Disabled false
@@ -355,6 +367,7 @@ Property.CMakeOutputPath_programs: string = `@('..'->MakeAbsolute())`->MakeAbsol
 						{
 							Compile
 							{
+								Type "Custom"
 								Custom_CommandLine `MToolCMake -E create_symlink zstd.1 unzstd.1`
 								AllowNonExisting true
 								Disabled false
@@ -386,11 +399,13 @@ Property.CMakeOutputPath_programs: string = `@('..'->MakeAbsolute())`->MakeAbsol
 			`@('../../../../..'->MakeAbsolute())/External/zstd/lib`->MakeAbsolute(),
 			`@('../../../../..'->MakeAbsolute())/External/zstd/lib/common`->MakeAbsolute(),
 			`@('../../../../..'->MakeAbsolute())/External/zstd/lib/compress`->MakeAbsolute(),
-			`@('../../../../..'->MakeAbsolute())/External/zstd/lib/dictBuilder`->MakeAbsolute()
+			`@('../../../../..'->MakeAbsolute())/External/zstd/lib/dictBuilder`->MakeAbsolute(),
+			`@('../../../../..'->MakeAbsolute())/External/zstd/programs/legacy`->MakeAbsolute(),
+			`@('../../../../..'->MakeAbsolute())/External/zstd/lib/legacy`->MakeAbsolute()
 		]
 		PreprocessorDefines += [
 			"XXH_NAMESPACE=ZSTD_",
-			"ZSTD_LEGACY_SUPPORT=0",
+			"ZSTD_LEGACY_SUPPORT=5",
 			"ZSTD_NOBENCH",
 			"ZSTD_NODICT",
 			"ZSTD_NOTRACE"
@@ -425,6 +440,10 @@ Property.CMakeOutputPath_programs: string = `@('..'->MakeAbsolute())`->MakeAbsol
 			{
 				Compile.Type "C"
 			}
+			%File `@('../../../../..'->MakeAbsolute())/External/zstd/programs/fileio_asyncio.c`
+			{
+				Compile.Type "C"
+			}
 		}
 	}
 	%Dependency "Lib_libzstd_libzstd_static"
@@ -455,6 +474,7 @@ Property.CMakeOutputPath_programs: string = `@('..'->MakeAbsolute())`->MakeAbsol
 						{
 							Compile
 							{
+								Type "Custom"
 								Custom_CommandLine `MToolCMake -E create_symlink zstd zstdmt`
 								AllowNonExisting true
 								Disabled false

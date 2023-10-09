@@ -9,11 +9,12 @@ Property.CMakeOutputPath_libzstd: string = `@('..'->MakeAbsolute())`->MakeAbsolu
 			`@(CMakeIntermediateDirectory)/External_zstd_build_cmake`->MakeAbsolute(),
 			`@('../../../../../External/zstd/build/cmake'->MakeAbsolute())/lib`->MakeAbsolute(),
 			`@('../../../../..'->MakeAbsolute())/External/zstd/lib`->MakeAbsolute(),
-			`@('../../../../..'->MakeAbsolute())/External/zstd/lib/common`->MakeAbsolute()
+			`@('../../../../..'->MakeAbsolute())/External/zstd/lib/common`->MakeAbsolute(),
+			`@('../../../../..'->MakeAbsolute())/External/zstd/lib/legacy`->MakeAbsolute()
 		]
 		PreprocessorDefines += [
 			"XXH_NAMESPACE=ZSTD_",
-			"ZSTD_LEGACY_SUPPORT=0",
+			"ZSTD_LEGACY_SUPPORT=5",
 			"ZSTD_MULTITHREAD"
 		]
 	}
@@ -63,6 +64,14 @@ Property.CMakeOutputPath_libzstd: string = `@('..'->MakeAbsolute())`->MakeAbsolu
 				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/common/zstd_common.c`
 				{
 					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/common/allocations.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/common/bits.h`
+				{
+					Compile.Disabled true
 				}
 				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/common/bitstream.h`
 				{
@@ -294,6 +303,69 @@ Property.CMakeOutputPath_libzstd: string = `@('..'->MakeAbsolute())`->MakeAbsolu
 					Compile.Disabled true
 				}
 			}
+			%Group "legacy"
+			{
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/legacy/zstd_v01.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/legacy/zstd_v02.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/legacy/zstd_v03.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/legacy/zstd_v04.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/legacy/zstd_v05.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/legacy/zstd_v06.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/legacy/zstd_v07.c`
+				{
+					Compile.Type "C"
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/legacy/zstd_legacy.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/legacy/zstd_v01.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/legacy/zstd_v02.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/legacy/zstd_v03.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/legacy/zstd_v04.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/legacy/zstd_v05.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/legacy/zstd_v06.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/legacy/zstd_v07.h`
+				{
+					Compile.Disabled true
+				}
+			}
 			%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/zstd.h`
 			{
 				Compile.Disabled true
@@ -327,6 +399,7 @@ Property.CMakeOutputPath_libzstd: string = `@('..'->MakeAbsolute())`->MakeAbsolu
 						{
 							Compile
 							{
+								Type "Custom"
 								Custom_CommandLine `MToolCMake -P @(`@('..'->MakeAbsolute())/lib/cmake_uninstall.cmake`->MakeAbsolute()->EscapeHost())`
 								AllowNonExisting true
 								Disabled false
