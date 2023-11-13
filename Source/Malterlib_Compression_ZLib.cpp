@@ -291,6 +291,15 @@ namespace NMib::NCompression
 		}
 	}
 
+	NContainer::CByteVector fg_CompressGZip(NContainer::CByteVector const &_SourceData, ECompressZlibLevel _Level)
+	{
+		NStream::CBinaryStreamMemoryConstRef<> SourceStream(_SourceData);
+		NStream::CBinaryStreamMemory<> DestStream;
+		fg_CompressGZip(SourceStream, DestStream, _Level);
+
+		return DestStream.f_MoveVector();
+	}
+	
 	void fg_CompressGZip(NStr::CStr const &_SourceFile, NStream::CBinaryStream &_DestinationStream, ECompressZlibLevel _Level)
 	{
 		NFile::TCBinaryStreamFile<> SourceStream;
@@ -312,9 +321,9 @@ namespace NMib::NCompression
 		fg_CompressGZip(SourceStream, _DestinationFile, _Level);
 	}
 
-	void fg_DecompressGZip(NStream::CBinaryStream &_SourceStream, NStream::CBinaryStream &_DestinationStream, ECompressZlibLevel _Level)
+	void fg_DecompressGZip(NStream::CBinaryStream &_SourceStream, NStream::CBinaryStream &_DestinationStream)
 	{
-		CCompress_ZLib Compress(_Level, ECompressZlibType_GZip);
+		CCompress_ZLib Compress(ECompressZlibLevel_Best, ECompressZlibType_GZip);
 
 		uint8 Buffer[8192];
 
@@ -328,24 +337,33 @@ namespace NMib::NCompression
 		}
 	}
 
-	void fg_DecompressGZip(NStr::CStr const &_SourceFile, NStream::CBinaryStream &_DestinationStream, ECompressZlibLevel _Level)
+	void fg_DecompressGZip(NStr::CStr const &_SourceFile, NStream::CBinaryStream &_DestinationStream)
 	{
 		NFile::TCBinaryStreamFile<> SourceStream;
 		SourceStream.f_Open(_SourceFile, NFile::EFileOpen_Read | NFile::EFileOpen_ShareAll);
-		fg_DecompressGZip(SourceStream, _DestinationStream, _Level);
+		fg_DecompressGZip(SourceStream, _DestinationStream);
 	}
 
-	void fg_DecompressGZip(NStream::CBinaryStream &_SourceStream, NStr::CStr const &_DestinationFile, ECompressZlibLevel _Level)
+	void fg_DecompressGZip(NStream::CBinaryStream &_SourceStream, NStr::CStr const &_DestinationFile)
 	{
 		NFile::TCBinaryStreamFile<> DestinationStream;
 		DestinationStream.f_Open(_DestinationFile, NFile::EFileOpen_Write | NFile::EFileOpen_ShareAll);
-		fg_DecompressGZip(_SourceStream, DestinationStream, _Level);
+		fg_DecompressGZip(_SourceStream, DestinationStream);
 	}
 
-	void fg_DecompressGZip(NStr::CStr const &_SourceFile, NStr::CStr const &_DestinationFile, ECompressZlibLevel _Level)
+	void fg_DecompressGZip(NStr::CStr const &_SourceFile, NStr::CStr const &_DestinationFile)
 	{
 		NFile::TCBinaryStreamFile<> SourceStream;
 		SourceStream.f_Open(_SourceFile, NFile::EFileOpen_Read | NFile::EFileOpen_ShareAll);
-		fg_DecompressGZip(SourceStream, _DestinationFile, _Level);
+		fg_DecompressGZip(SourceStream, _DestinationFile);
+	}
+
+	NContainer::CByteVector fg_DecompressGZip(NContainer::CByteVector const &_SourceData)
+	{
+		NStream::CBinaryStreamMemoryConstRef<> SourceStream(_SourceData);
+		NStream::CBinaryStreamMemory<> DestStream;
+		fg_DecompressGZip(SourceStream, DestStream);
+
+		return DestStream.f_MoveVector();
 	}
 }

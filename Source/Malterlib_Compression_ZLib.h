@@ -116,11 +116,13 @@ namespace NMib::NCompression
 	void fg_CompressGZip(NStr::CStr const &_SourceFile, NStream::CBinaryStream &_DestinationStream, ECompressZlibLevel _Level = ECompressZlibLevel_Best);
 	void fg_CompressGZip(NStream::CBinaryStream &_SourceStream, NStr::CStr const &_DestinationFile, ECompressZlibLevel _Level = ECompressZlibLevel_Best);
 	void fg_CompressGZip(NStr::CStr const &_SourceFile, NStr::CStr const &_DestinationFile, ECompressZlibLevel _Level = ECompressZlibLevel_Best);
+	NContainer::CByteVector fg_CompressGZip(NContainer::CByteVector const &_SourceData, ECompressZlibLevel _Level = ECompressZlibLevel_Best);
 
-	void fg_DecompressGZip(NStream::CBinaryStream &_SourceStream, NStream::CBinaryStream &_DestinationStream, ECompressZlibLevel _Level = ECompressZlibLevel_Best);
-	void fg_DecompressGZip(NStr::CStr const &_SourceFile, NStream::CBinaryStream &_DestinationStream, ECompressZlibLevel _Level = ECompressZlibLevel_Best);
-	void fg_DecompressGZip(NStream::CBinaryStream &_SourceStream, NStr::CStr const &_DestinationFile, ECompressZlibLevel _Level = ECompressZlibLevel_Best);
-	void fg_DecompressGZip(NStr::CStr const &_SourceFile, NStr::CStr const &_DestinationFile, ECompressZlibLevel _Level = ECompressZlibLevel_Best);
+	void fg_DecompressGZip(NStream::CBinaryStream &_SourceStream, NStream::CBinaryStream &_DestinationStream);
+	void fg_DecompressGZip(NStr::CStr const &_SourceFile, NStream::CBinaryStream &_DestinationStream);
+	void fg_DecompressGZip(NStream::CBinaryStream &_SourceStream, NStr::CStr const &_DestinationFile);
+	void fg_DecompressGZip(NStr::CStr const &_SourceFile, NStr::CStr const &_DestinationFile);
+	NContainer::CByteVector fg_DecompressGZip(NContainer::CByteVector const &_SourceData);
 }
 
 #include "Malterlib_Compression_ZLib.hpp"
