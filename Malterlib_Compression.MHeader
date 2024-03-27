@@ -30,6 +30,7 @@
 	Repository
 	{
 		Type "External"
+		DefaultUpstreamBranch "dev"
 		Remotes =+ {Name: "upstream", URL: "https://github.com/facebook/zstd.git"}
 	}
 }
