@@ -74,7 +74,8 @@ namespace NMib::NCompression
 
 		NStream::CFilePos f_GetLength() const;
 		void f_SetLength(NStream::CFilePos _Length);
-
+		mint f_ContainerLengthLimit() const;
+		
 	protected:
 		DMibStreamImplementProtected(TCBinaryStream_ZLib);
 

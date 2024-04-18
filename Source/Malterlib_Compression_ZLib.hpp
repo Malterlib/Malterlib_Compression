@@ -226,6 +226,12 @@ namespace NMib::NCompression
 	}
 
 	template <typename t_CStreamType>
+	mint TCBinaryStream_ZLib<t_CStreamType>::f_ContainerLengthLimit() const
+	{
+		return NStream::fg_CapLengthLimit(f_GetLength() - f_GetPosition());
+	}
+
+	template <typename t_CStreamType>
 	void TCBinaryStream_ZLib<t_CStreamType>::f_SetLength(NStream::CFilePos _Length)
 	{
 		DMibError("Not supported");
