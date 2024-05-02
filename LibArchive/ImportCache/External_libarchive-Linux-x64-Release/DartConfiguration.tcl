@@ -81,7 +81,7 @@ MemoryCheckCommandOptions:
 MemoryCheckSuppressionFile: 
 
 # Coverage
-CoverageCommand: gcov
+CoverageCommand: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchaingcov
 CoverageExtraFlags: -l
 
 # Testing options

@@ -138,7 +138,7 @@ Import.CMake_Variables: [
 	ZSTD_INCLUDE_DIR=/External/zstd/lib,
 	ZSTD_LIBRARY=Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/libSystem.B.tbd,
 	HAVE_LIBZSTD=1,
-	HAVE_LIBZSTD_COMPRESSOR=1,
+	HAVE_ZSTD_compressStream=1,
 	HAVE_LZMA_STREAM_ENCODER_MT=0
 ]
 

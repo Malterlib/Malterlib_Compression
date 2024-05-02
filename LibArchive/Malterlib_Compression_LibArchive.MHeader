@@ -57,7 +57,7 @@
 		`ZSTD_INCLUDE_DIR=@("../../../External/zstd/lib"->MakeAbsolute())`
 		, `ZSTD_LIBRARY=@(Malterlib_DummmyLibrary)`
 		, "HAVE_LIBZSTD=1"
-		, "HAVE_LIBZSTD_COMPRESSOR=1"
+		, "HAVE_ZSTD_compressStream=1"
 	]
 
 	Import.CMake_Variables =+ "HAVE_LZMA_STREAM_ENCODER_MT=0"

@@ -135,7 +135,7 @@ Import.CMake_Variables: [
 	ZSTD_INCLUDE_DIR=/External/zstd/lib,
 	ZSTD_LIBRARY=/Binaries/MalterlibSDK/Linux/x64/Linux.sdk/lib/libc.so,
 	HAVE_LIBZSTD=1,
-	HAVE_LIBZSTD_COMPRESSOR=1,
+	HAVE_ZSTD_compressStream=1,
 	CMAKE_BUILD_WITH_INSTALL_RPATH=ON
 ]
 

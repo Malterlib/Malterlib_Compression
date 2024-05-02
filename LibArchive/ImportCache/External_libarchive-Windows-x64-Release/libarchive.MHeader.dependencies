@@ -8,6 +8,7 @@
 ../../../../../External/libarchive/build/cmake/CheckTypeExists.cmake
 ../../../../../External/libarchive/build/cmake/CreatePkgConfigFile.cmake
 ../../../../../External/libarchive/build/cmake/FindLIBGCC.cmake
+../../../../../External/libarchive/build/cmake/FindPCRE2POSIX.cmake
 ../../../../../External/libarchive/build/cmake/FindPCREPOSIX.cmake
 ../../../../../External/libarchive/build/cmake/config.h.in
 ../../../../../External/libarchive/build/pkgconfig/libarchive.pc.in
