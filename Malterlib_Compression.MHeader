@@ -46,6 +46,10 @@
 	{
 		!!CompileDialect "C"
 		Analyzer false
+		Warnings_UnusedFunction false
+		{
+			!!Compiler "Clang"
+		}
 	}
 
 	%Target "Lib_libzstd_libzstd_static"

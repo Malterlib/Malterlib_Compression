@@ -94,22 +94,17 @@
 		}
 		Warnings_UnusedButSetVariable false
 		{
-			!!GeneratorFamily "Xcode"
+			!!Compiler "Clang"
 		}
 		Warnings_SingleBitBitfieldConstantConversion false
 		{
-			!!GeneratorFamily "Xcode"
+			!!Compiler "Clang"
 		}
 	}
 
 	%Target "Lib_libarchive_archive_static"
 	{
-		%Dependency "Lib_BoringSSL_decrepit"
-		{
-			!DocumentationEnabled true
-
-			Dependency.Indirect true
-		}
+		Target.ExtraGroups =+ "{Malterlib}/{Lib_Malterlib_Cryptography}/{DependOnBoringSSL}"
 	}
 
 	%Target "Com_libarchive_bsdtar"
