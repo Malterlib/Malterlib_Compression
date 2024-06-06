@@ -35,6 +35,22 @@
 	}
 }
 
+%Group "{Malterlib}/{Lib_libzstd_libzstd_static}/{TargetInjection}"
+{
+	!DocumentationEnabled true
+
+	Compile
+	{
+		&
+		{
+			!DocumentationEnabled true
+			CompileDialect "C"
+		}
+
+		SearchPath += "../../External/zstd/lib"->MakeAbsolute()
+	}
+}
+
 %Import "../../External/zstd/build/cmake/CMakeLists.txt"
 {
 	Import.CMake_Variables =+ [
@@ -54,6 +70,11 @@
 
 	%Target "Lib_libzstd_libzstd_static"
 	{
+		Target
+		{
+			DependencyInjectionGroups =+ "{Malterlib}/{Lib_libzstd_libzstd_static}/{TargetInjection}"
+		}
+
 		%Group "opt"
 		{
 			%Group "lib"
