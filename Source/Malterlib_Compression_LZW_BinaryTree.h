@@ -21,8 +21,6 @@ namespace NMib::NCompression
 		}
 		~TCLZWBinaryTreeNode()
 		{
-			if(m_pEqualIDs)
-				delete m_pEqualIDs;
 		}
 	public:
 		CTreeNode *m_pParent;
@@ -36,7 +34,7 @@ namespace NMib::NCompression
 		// node ID
 		aint m_Identifier;
 		// node repeated keys' IDs
-		NContainer::TCVector<aint> *m_pEqualIDs;
+		TCUniquePointer<NContainer::TCVector<aint>> m_pEqualIDs;
 
 		const CTreeNode &operator = (const CTreeNode &_Right)
 		{
@@ -47,7 +45,7 @@ namespace NMib::NCompression
 			if(_Right.m_pEqualIDs)
 			{
 				if(m_pEqualIDs == nullptr)
-					m_pEqualIDs = new vector<int>;
+					m_pEqualIDs = fg_Construct();
 				*m_pEqualIDs = *_Right.m_pEqualIDs;
 			}
 			return *this;
@@ -116,7 +114,7 @@ namespace NMib::NCompression
 					// update pointer pNode to its parent
 					pNode = pNode->m_pParent;
 					// delete the saved pNode
-					delete pTemp;
+					fp_DeleteNode(pTemp);
 				}
 			}
 			m_Count = m_Serial = 0;
@@ -145,7 +143,7 @@ namespace NMib::NCompression
 						if(m_bModified == false)
 						{
 							if(_pNode->m_pEqualIDs == nullptr)
-								_pNode->m_pEqualIDs = new NContainer::TCVector<aint>;
+								_pNode->m_pEqualIDs = fg_Construct();
 							_pNode->m_pEqualIDs->f_Insert(_ID == -1 ? m_Serial : _ID);
 							m_Serial++;
 							m_Count++;
@@ -250,18 +248,23 @@ namespace NMib::NCompression
 			{	// copy spliced _pNode
 				*_pNode = *pSplice;
 				// delete the spliced _pNode
-				delete pSplice;
+				fp_DeleteNode(pSplice);
 			}
 			else
-				// delete the _pNode
-				delete _pNode;
+				fp_DeleteNode(_pNode);
+
 			m_Count--;
 		}
 
 	protected:
+		void fp_DeleteNode(CTreeNode *_pNode)
+		{
+			fg_DeleteObject(NMemory::CDefaultAllocator(), _pNode);
+		}
+
 		virtual CTreeNode* fp_NewNode()
 		{
-			return new CTreeNode();
+			return fg_ConstructObject(NMemory::CDefaultAllocator(), CTreeNode();
 		}
 	};
 }
