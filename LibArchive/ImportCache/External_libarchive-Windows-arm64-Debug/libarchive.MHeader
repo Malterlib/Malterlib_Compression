@@ -121,7 +121,8 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 		SearchPath += [
 			`@('../../../../../External/libarchive'->MakeAbsolute())/libarchive`->MakeAbsolute(),
 			`@('.'->MakeAbsolute())`->MakeAbsolute(),
-			`@('../../../../..'->MakeAbsolute())/External/zstd/lib`->MakeAbsolute()
+			`@('../../../../..'->MakeAbsolute())/External/zstd/lib`->MakeAbsolute(),
+			`@('../../../../..'->MakeAbsolute())/External/boringssl/include`->MakeAbsolute()
 		]
 		PreprocessorDefines += [
 			"HAVE_CONFIG_H",
@@ -802,7 +803,8 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 		SearchPath += [
 			`@('../../../../../External/libarchive'->MakeAbsolute())/libarchive`->MakeAbsolute(),
 			`@('.'->MakeAbsolute())`->MakeAbsolute(),
-			`@('../../../../..'->MakeAbsolute())/External/zstd/lib`->MakeAbsolute()
+			`@('../../../../..'->MakeAbsolute())/External/zstd/lib`->MakeAbsolute(),
+			`@('../../../../..'->MakeAbsolute())/External/boringssl/include`->MakeAbsolute()
 		]
 		PreprocessorDefines += [
 			"HAVE_CONFIG_H",
@@ -1484,6 +1486,7 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 			`@('../../../../../External/libarchive'->MakeAbsolute())/libarchive`->MakeAbsolute(),
 			`@('.'->MakeAbsolute())`->MakeAbsolute(),
 			`@('../../../../..'->MakeAbsolute())/External/zstd/lib`->MakeAbsolute(),
+			`@('../../../../..'->MakeAbsolute())/External/boringssl/include`->MakeAbsolute(),
 			`@('../../../../../External/libarchive'->MakeAbsolute())/libarchive_fe`->MakeAbsolute()
 		]
 		PreprocessorDefines += [
