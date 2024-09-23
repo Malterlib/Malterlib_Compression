@@ -81,7 +81,7 @@
 			{
 				%Group "decompress"
 				{
-					%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/decompress/huf_decompress_x86_64.S`
+					%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/decompress/huf_decompress_amd64.S`
 					{
 						&
 						{
