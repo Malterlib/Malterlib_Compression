@@ -35,26 +35,6 @@ Property.CMakeOutputPath_programs: string = `@('..'->MakeAbsolute())`->MakeAbsol
 	{
 		%Group "programs"
 		{
-			%File `@('../../../../..'->MakeAbsolute())/External/zstd/programs/zstdcli.c`
-			{
-				Compile.Type "C"
-			}
-			%File `@('../../../../..'->MakeAbsolute())/External/zstd/programs/util.c`
-			{
-				Compile.Type "C"
-			}
-			%File `@('../../../../..'->MakeAbsolute())/External/zstd/programs/timefn.c`
-			{
-				Compile.Type "C"
-			}
-			%File `@('../../../../..'->MakeAbsolute())/External/zstd/programs/fileio.c`
-			{
-				Compile.Type "C"
-			}
-			%File `@('../../../../..'->MakeAbsolute())/External/zstd/programs/fileio_asyncio.c`
-			{
-				Compile.Type "C"
-			}
 			%File `@('../../../../..'->MakeAbsolute())/External/zstd/programs/benchfn.c`
 			{
 				Compile.Type "C"
@@ -68,6 +48,30 @@ Property.CMakeOutputPath_programs: string = `@('..'->MakeAbsolute())`->MakeAbsol
 				Compile.Type "C"
 			}
 			%File `@('../../../../..'->MakeAbsolute())/External/zstd/programs/dibio.c`
+			{
+				Compile.Type "C"
+			}
+			%File `@('../../../../..'->MakeAbsolute())/External/zstd/programs/fileio.c`
+			{
+				Compile.Type "C"
+			}
+			%File `@('../../../../..'->MakeAbsolute())/External/zstd/programs/fileio_asyncio.c`
+			{
+				Compile.Type "C"
+			}
+			%File `@('../../../../..'->MakeAbsolute())/External/zstd/programs/lorem.c`
+			{
+				Compile.Type "C"
+			}
+			%File `@('../../../../..'->MakeAbsolute())/External/zstd/programs/timefn.c`
+			{
+				Compile.Type "C"
+			}
+			%File `@('../../../../..'->MakeAbsolute())/External/zstd/programs/util.c`
+			{
+				Compile.Type "C"
+			}
+			%File `@('../../../../..'->MakeAbsolute())/External/zstd/programs/zstdcli.c`
 			{
 				Compile.Type "C"
 			}

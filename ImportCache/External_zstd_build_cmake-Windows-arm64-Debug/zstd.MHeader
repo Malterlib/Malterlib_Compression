@@ -7,10 +7,7 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 		SearchPath += [
 			`@('.'->MakeAbsolute())/lib`->MakeAbsolute(),
 			`@(CMakeIntermediateDirectory)/External_zstd_build_cmake`->MakeAbsolute(),
-			`@('../../../../External/zstd/build/cmake'->MakeAbsolute())/lib`->MakeAbsolute(),
-			`@('../../../..'->MakeAbsolute())/External/zstd/lib`->MakeAbsolute(),
-			`@('../../../..'->MakeAbsolute())/External/zstd/lib/common`->MakeAbsolute(),
-			`@('../../../..'->MakeAbsolute())/External/zstd/lib/legacy`->MakeAbsolute()
+			`@('../../../../External/zstd/build/cmake'->MakeAbsolute())/lib`->MakeAbsolute()
 		]
 		PreprocessorDefines += [
 			"XXH_NAMESPACE=ZSTD_",
@@ -368,7 +365,15 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 					Compile.Disabled true
 				}
 			}
+			%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/zdict.h`
+			{
+				Compile.Disabled true
+			}
 			%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/zstd.h`
+			{
+				Compile.Disabled true
+			}
+			%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/zstd_errors.h`
 			{
 				Compile.Disabled true
 			}
@@ -420,27 +425,6 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 {
 	Compile
 	{
-		!!Compile.Type "WindowsResource"
-		SearchPath += [
-			`@('.'->MakeAbsolute())/programs`->MakeAbsolute(),
-			`@(CMakeIntermediateDirectory)/External_zstd_build_cmake`->MakeAbsolute(),
-			`@('../../../../External/zstd/build/cmake'->MakeAbsolute())/programs`->MakeAbsolute(),
-			`@('../../../..'->MakeAbsolute())/External/zstd/programs`->MakeAbsolute(),
-			`@('../../../..'->MakeAbsolute())/External/zstd/lib`->MakeAbsolute(),
-			`@('../../../..'->MakeAbsolute())/External/zstd/lib/common`->MakeAbsolute(),
-			`@('../../../..'->MakeAbsolute())/External/zstd/lib/compress`->MakeAbsolute(),
-			`@('../../../..'->MakeAbsolute())/External/zstd/lib/dictBuilder`->MakeAbsolute(),
-			`@('../../../..'->MakeAbsolute())/External/zstd/programs/legacy`->MakeAbsolute(),
-			`@('../../../..'->MakeAbsolute())/External/zstd/lib/legacy`->MakeAbsolute()
-		]
-		PreprocessorDefines += [
-			"XXH_NAMESPACE=ZSTD_",
-			"ZSTD_LEGACY_SUPPORT=5",
-			"ZSTD_MULTITHREAD"
-		]
-	}
-	Compile
-	{
 		!!Compile.Type "C"
 		SearchPath += [
 			`@('.'->MakeAbsolute())/programs`->MakeAbsolute(),
@@ -471,63 +455,51 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 	Target.BaseFileName "zstd"
 	%Group "C:/"
 	{
-		%Group "zstd"
+		%Group "programs"
 		{
-			%Group "programs"
+			%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/benchfn.c`
 			{
-				%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/zstdcli.c`
-				{
-					Compile.Type "C"
-				}
-				%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/util.c`
-				{
-					Compile.Type "C"
-				}
-				%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/timefn.c`
-				{
-					Compile.Type "C"
-				}
-				%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/fileio.c`
-				{
-					Compile.Type "C"
-				}
-				%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/fileio_asyncio.c`
-				{
-					Compile.Type "C"
-				}
-				%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/benchfn.c`
-				{
-					Compile.Type "C"
-				}
-				%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/benchzstd.c`
-				{
-					Compile.Type "C"
-				}
-				%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/datagen.c`
-				{
-					Compile.Type "C"
-				}
-				%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/dibio.c`
-				{
-					Compile.Type "C"
-				}
-				%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/zstdcli_trace.c`
-				{
-					Compile.Type "C"
-				}
+				Compile.Type "C"
 			}
-			%Group "build"
+			%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/benchzstd.c`
 			{
-				%Group "VS2010"
-				{
-					%Group "zstd"
-					{
-						%File `@('../../../..'->MakeAbsolute())/External/zstd/build/VS2010/zstd/zstd.rc`
-						{
-							Compile.Type "WindowsResource"
-						}
-					}
-				}
+				Compile.Type "C"
+			}
+			%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/datagen.c`
+			{
+				Compile.Type "C"
+			}
+			%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/dibio.c`
+			{
+				Compile.Type "C"
+			}
+			%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/fileio.c`
+			{
+				Compile.Type "C"
+			}
+			%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/fileio_asyncio.c`
+			{
+				Compile.Type "C"
+			}
+			%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/lorem.c`
+			{
+				Compile.Type "C"
+			}
+			%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/timefn.c`
+			{
+				Compile.Type "C"
+			}
+			%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/util.c`
+			{
+				Compile.Type "C"
+			}
+			%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/zstdcli.c`
+			{
+				Compile.Type "C"
+			}
+			%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/zstdcli_trace.c`
+			{
+				Compile.Type "C"
 			}
 		}
 	}

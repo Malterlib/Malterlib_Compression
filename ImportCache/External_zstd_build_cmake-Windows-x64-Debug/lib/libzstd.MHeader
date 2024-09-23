@@ -7,10 +7,7 @@ Property.CMakeOutputPath_libzstd: string = `@('..'->MakeAbsolute())`->MakeAbsolu
 		SearchPath += [
 			`@('..'->MakeAbsolute())/lib`->MakeAbsolute(),
 			`@(CMakeIntermediateDirectory)/External_zstd_build_cmake`->MakeAbsolute(),
-			`@('../../../../../External/zstd/build/cmake'->MakeAbsolute())/lib`->MakeAbsolute(),
-			`@('../../../../..'->MakeAbsolute())/External/zstd/lib`->MakeAbsolute(),
-			`@('../../../../..'->MakeAbsolute())/External/zstd/lib/common`->MakeAbsolute(),
-			`@('../../../../..'->MakeAbsolute())/External/zstd/lib/legacy`->MakeAbsolute()
+			`@('../../../../../External/zstd/build/cmake'->MakeAbsolute())/lib`->MakeAbsolute()
 		]
 		PreprocessorDefines += [
 			"XXH_NAMESPACE=ZSTD_",
@@ -368,7 +365,15 @@ Property.CMakeOutputPath_libzstd: string = `@('..'->MakeAbsolute())`->MakeAbsolu
 					Compile.Disabled true
 				}
 			}
+			%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/zdict.h`
+			{
+				Compile.Disabled true
+			}
 			%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/zstd.h`
+			{
+				Compile.Disabled true
+			}
+			%File `@('../../../../..'->MakeAbsolute())/External/zstd/lib/zstd_errors.h`
 			{
 				Compile.Disabled true
 			}

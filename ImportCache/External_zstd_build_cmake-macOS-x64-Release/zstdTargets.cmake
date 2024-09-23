@@ -15,11 +15,15 @@ cmake_policy(VERSION 2.8.3...3.26)
 # Commands may need to know the format version.
 set(CMAKE_IMPORT_FILE_VERSION 1)
 
+if(CMAKE_VERSION VERSION_LESS 3.0.0)
+  message(FATAL_ERROR "This file relies on consumers using CMake 3.0.0 or greater.")
+endif()
+
 # Protect against multiple inclusion, which would fail when already imported targets are added once more.
 set(_cmake_targets_defined "")
 set(_cmake_targets_not_defined "")
 set(_cmake_expected_targets "")
-foreach(_cmake_expected_target IN ITEMS zstd::libzstd_static)
+foreach(_cmake_expected_target IN ITEMS zstd::libzstd_static zstd::libzstd)
   list(APPEND _cmake_expected_targets "${_cmake_expected_target}")
   if(TARGET "${_cmake_expected_target}")
     list(APPEND _cmake_targets_defined "${_cmake_expected_target}")
@@ -49,10 +53,21 @@ unset(_cmake_expected_targets)
 # Create imported target zstd::libzstd_static
 add_library(zstd::libzstd_static STATIC IMPORTED)
 
+set_target_properties(zstd::libzstd_static PROPERTIES
+  INTERFACE_INCLUDE_DIRECTORIES "../../../../External/zstd/build/cmake/../../lib"
+)
+
+# Create imported target zstd::libzstd
+add_library(zstd::libzstd INTERFACE IMPORTED)
+
+set_target_properties(zstd::libzstd PROPERTIES
+  INTERFACE_LINK_LIBRARIES "zstd::libzstd_static"
+)
+
 # Import target "zstd::libzstd_static" for configuration "Release"
 set_property(TARGET zstd::libzstd_static APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(zstd::libzstd_static PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "C"
+  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "ASM;C"
   IMPORTED_LOCATION_RELEASE "lib/libzstd.a"
   )
 

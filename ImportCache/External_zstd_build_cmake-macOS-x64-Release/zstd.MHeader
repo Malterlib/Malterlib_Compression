@@ -7,10 +7,21 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 		SearchPath += [
 			`@('.'->MakeAbsolute())/lib`->MakeAbsolute(),
 			`@(CMakeIntermediateDirectory)/External_zstd_build_cmake`->MakeAbsolute(),
-			`@('../../../../External/zstd/build/cmake'->MakeAbsolute())/lib`->MakeAbsolute(),
-			`@('../../../..'->MakeAbsolute())/External/zstd/lib`->MakeAbsolute(),
-			`@('../../../..'->MakeAbsolute())/External/zstd/lib/common`->MakeAbsolute(),
-			`@('../../../..'->MakeAbsolute())/External/zstd/lib/legacy`->MakeAbsolute()
+			`@('../../../../External/zstd/build/cmake'->MakeAbsolute())/lib`->MakeAbsolute()
+		]
+		PreprocessorDefines += [
+			"XXH_NAMESPACE=ZSTD_",
+			"ZSTD_LEGACY_SUPPORT=5",
+			"ZSTD_MULTITHREAD"
+		]
+	}
+	Compile
+	{
+		!!Compile.Type "Assembler"
+		SearchPath += [
+			`@('.'->MakeAbsolute())/lib`->MakeAbsolute(),
+			`@(CMakeIntermediateDirectory)/External_zstd_build_cmake`->MakeAbsolute(),
+			`@('../../../../External/zstd/build/cmake'->MakeAbsolute())/lib`->MakeAbsolute()
 		]
 		PreprocessorDefines += [
 			"XXH_NAMESPACE=ZSTD_",
@@ -251,10 +262,6 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 				{
 					Compile.Type "C"
 				}
-				%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/decompress/huf_decompress_x86_64.S`
-				{
-					Compile.Type "C"
-				}
 				%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/decompress/zstd_ddict.c`
 				{
 					Compile.Type "C"
@@ -266,6 +273,10 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 				%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/decompress/zstd_decompress_block.c`
 				{
 					Compile.Type "C"
+				}
+				%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/decompress/huf_decompress_amd64.S`
+				{
+					Compile.Type "Assembler"
 				}
 				%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/decompress/zstd_ddict.h`
 				{
@@ -370,7 +381,15 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 					Compile.Disabled true
 				}
 			}
+			%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/zdict.h`
+			{
+				Compile.Disabled true
+			}
 			%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/zstd.h`
+			{
+				Compile.Disabled true
+			}
+			%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/zstd_errors.h`
 			{
 				Compile.Disabled true
 			}
@@ -454,26 +473,6 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 	{
 		%Group "programs"
 		{
-			%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/zstdcli.c`
-			{
-				Compile.Type "C"
-			}
-			%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/util.c`
-			{
-				Compile.Type "C"
-			}
-			%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/timefn.c`
-			{
-				Compile.Type "C"
-			}
-			%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/fileio.c`
-			{
-				Compile.Type "C"
-			}
-			%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/fileio_asyncio.c`
-			{
-				Compile.Type "C"
-			}
 			%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/benchfn.c`
 			{
 				Compile.Type "C"
@@ -487,6 +486,30 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 				Compile.Type "C"
 			}
 			%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/dibio.c`
+			{
+				Compile.Type "C"
+			}
+			%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/fileio.c`
+			{
+				Compile.Type "C"
+			}
+			%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/fileio_asyncio.c`
+			{
+				Compile.Type "C"
+			}
+			%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/lorem.c`
+			{
+				Compile.Type "C"
+			}
+			%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/timefn.c`
+			{
+				Compile.Type "C"
+			}
+			%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/util.c`
+			{
+				Compile.Type "C"
+			}
+			%File `@('../../../..'->MakeAbsolute())/External/zstd/programs/zstdcli.c`
 			{
 				Compile.Type "C"
 			}
