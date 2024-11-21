@@ -9,5 +9,5 @@ Version: 3.7.5
 Cflags: -I${includedir}
 Cflags.private: -DLIBARCHIVE_STATIC
 Libs: -L${libdir} -larchive
-Libs.private:  -lkernel32 -lbcrypt -lkernel32
+Libs.private:  -ldelayimp -lbcrypt -ldelayimp
 Requires.private: 
