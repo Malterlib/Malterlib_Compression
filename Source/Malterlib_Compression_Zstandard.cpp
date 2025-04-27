@@ -9,7 +9,7 @@
 
 namespace NMib::NCompression
 {
-	NContainer::CByteVector fg_CompressZstandard(NContainer::CByteVector const &_Source, int _CompressionLevel)
+	NContainer::CByteVector fg_CompressZstandard(NContainer::CByteVector const &_Source, int32 _CompressionLevel)
 	{
 		using namespace NMib::NStr;
 

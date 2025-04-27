@@ -7,7 +7,7 @@
 
 namespace NMib::NCompression
 {
-	NContainer::CByteVector fg_CompressZstandard(NContainer::CByteVector const &_Source, int _CompressionLevel = 8);
+	NContainer::CByteVector fg_CompressZstandard(NContainer::CByteVector const &_Source, int32 _CompressionLevel = 8);
 	NContainer::CByteVector fg_DecompressZstandard(NContainer::CByteVector const &_Source);
 }
 
