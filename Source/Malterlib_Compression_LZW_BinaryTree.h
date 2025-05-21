@@ -9,7 +9,7 @@ namespace NMib::NCompression
 	class TCLZWBinaryTreeNode
 	{
 	public:
-		typedef TCLZWBinaryTreeNode<t_CKey, t_CData> CTreeNode;
+		using CTreeNode = TCLZWBinaryTreeNode<t_CKey, t_CData>;
 		TCLZWBinaryTreeNode()
 		{
 			m_pParent = nullptr;
