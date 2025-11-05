@@ -105,18 +105,31 @@
 	%Target "Lib_libarchive_archive_static"
 	{
 		Target.ExtraGroups =+ "{Malterlib}/{Lib_Malterlib_Cryptography}/{DependOnBoringSSL}"
+		%Dependency "xmllite.lib"
+		{
+			!!PlatformFamily "Windows"
+
+			Dependency
+			{
+				Type "Library"
+				Indirect true
+			}
+		}
+		%Dependency "acl"
+		{
+			!!PlatformFamily "Linux"
+
+			Dependency
+			{
+				Type "Library"
+				Indirect true
+			}
+		}
 	}
 
 	%Target "Com_libarchive_bsdtar"
 	{
 		Property.ProductName "BSD Tar"
-		Target
-		{
-			LinkWithLibraries += "-lacl"
-			{
-				!!PlatformFamily "Linux"
-			}
-		}
 		%Group "Source"
 		{
 			%File "Source/AllowInvalidExit.cpp"

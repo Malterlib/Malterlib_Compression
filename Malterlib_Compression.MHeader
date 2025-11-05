@@ -1,4 +1,4 @@
-// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 %Repository "zlib"
@@ -61,10 +61,16 @@
 	Compile
 	{
 		!!CompileDialect "C"
+
 		Analyzer false
 		Warnings_UnusedFunction false
 		{
 			!!Compiler "Clang"
+		}
+
+		PreprocessorDefines += "_GNU_SOURCE=1"
+		{
+			!!PlatformFamily "Linux"
 		}
 	}
 
@@ -81,7 +87,7 @@
 			{
 				%Group "decompress"
 				{
-					%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/decompress/huf_decompress_amd64.S`
+					%File `@('../..'->MakeAbsolute())/External/zstd/lib/decompress/huf_decompress_amd64.S`
 					{
 						&
 						{
@@ -156,7 +162,7 @@ Property
 Property
 {
 	!!MalterlibEnableInternalTests true
-	
+
 	MalterlibTests =+ "Malterlib_Compression"
 	MalterlibTestFiles_Malterlib_Compression: [type(CEntity)] = ["Test/*"->MakeAbsolute()]
 }
