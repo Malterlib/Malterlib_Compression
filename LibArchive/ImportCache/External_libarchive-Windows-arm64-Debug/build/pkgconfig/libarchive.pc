@@ -5,9 +5,9 @@ includedir=${prefix}/include
 
 Name: libarchive
 Description: library that can create and read several streaming archive formats
-Version: 3.7.5
+Version: 3.8.2
 Cflags: -I${includedir}
 Cflags.private: -DLIBARCHIVE_STATIC
 Libs: -L${libdir} -larchive
-Libs.private:  -ldelayimp -lbcrypt -ldelayimp
+Libs.private:  -ldelayimp -lbcrypt -ldelayimp -lxmllite -luuid
 Requires.private: 

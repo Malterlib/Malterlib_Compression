@@ -15,20 +15,6 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 			"ZSTD_MULTITHREAD"
 		]
 	}
-	Compile
-	{
-		!!Compile.Type "Assembler"
-		SearchPath += [
-			`@('.'->MakeAbsolute())/lib`->MakeAbsolute(),
-			`@(CMakeIntermediateDirectory)/External_zstd_build_cmake`->MakeAbsolute(),
-			`@('../../../../External/zstd/build/cmake'->MakeAbsolute())/lib`->MakeAbsolute()
-		]
-		PreprocessorDefines += [
-			"XXH_NAMESPACE=ZSTD_",
-			"ZSTD_LEGACY_SUPPORT=5",
-			"ZSTD_MULTITHREAD"
-		]
-	}
 	Property.MalterlibTargetNameType "Normal"
 	Compile.AllowNonExisting true
 	Target.Group "External/libzstd"
@@ -195,6 +181,10 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 				{
 					Compile.Type "C"
 				}
+				%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/compress/zstd_preSplit.c`
+				{
+					Compile.Type "C"
+				}
 				%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/compress/zstdmt_compress.c`
 				{
 					Compile.Type "C"
@@ -251,6 +241,10 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 				{
 					Compile.Disabled true
 				}
+				%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/compress/zstd_preSplit.h`
+				{
+					Compile.Disabled true
+				}
 				%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/compress/zstdmt_compress.h`
 				{
 					Compile.Disabled true
@@ -273,10 +267,6 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 				%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/decompress/zstd_decompress_block.c`
 				{
 					Compile.Type "C"
-				}
-				%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/decompress/huf_decompress_amd64.S`
-				{
-					Compile.Type "Assembler"
 				}
 				%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/decompress/zstd_ddict.h`
 				{

@@ -225,14 +225,6 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 		{
 			Compile.Type "C"
 		}
-		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_getdate.c`
-		{
-			Compile.Type "C"
-		}
-		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_getdate.h`
-		{
-			Compile.Disabled true
-		}
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_hmac.c`
 		{
 			Compile.Type "C"
@@ -269,6 +261,10 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 		{
 			Compile.Type "C"
 		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_parse_date.c`
+		{
+			Compile.Type "C"
+		}
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_pathmatch.c`
 		{
 			Compile.Type "C"
@@ -282,6 +278,10 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 			Compile.Disabled true
 		}
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_platform_acl.h`
+		{
+			Compile.Disabled true
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_platform_stat.h`
 		{
 			Compile.Disabled true
 		}
@@ -540,6 +540,14 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_string_sprintf.c`
 		{
 			Compile.Type "C"
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_time.c`
+		{
+			Compile.Type "C"
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_time_private.h`
+		{
+			Compile.Disabled true
 		}
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_util.c`
 		{
@@ -907,14 +915,6 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 		{
 			Compile.Type "C"
 		}
-		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_getdate.c`
-		{
-			Compile.Type "C"
-		}
-		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_getdate.h`
-		{
-			Compile.Disabled true
-		}
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_hmac.c`
 		{
 			Compile.Type "C"
@@ -951,6 +951,10 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 		{
 			Compile.Type "C"
 		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_parse_date.c`
+		{
+			Compile.Type "C"
+		}
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_pathmatch.c`
 		{
 			Compile.Type "C"
@@ -964,6 +968,10 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 			Compile.Disabled true
 		}
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_platform_acl.h`
+		{
+			Compile.Disabled true
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_platform_stat.h`
 		{
 			Compile.Disabled true
 		}
@@ -1222,6 +1230,14 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_string_sprintf.c`
 		{
 			Compile.Type "C"
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_time.c`
+		{
+			Compile.Type "C"
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_time_private.h`
+		{
+			Compile.Disabled true
 		}
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_util.c`
 		{
@@ -1553,11 +1569,11 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 	}
 	%Group "libarchive_fe"
 	{
-		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive_fe/err.c`
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive_fe/lafe_err.c`
 		{
 			Compile.Type "C"
 		}
-		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive_fe/err.h`
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive_fe/lafe_err.h`
 		{
 			Compile.Disabled true
 		}

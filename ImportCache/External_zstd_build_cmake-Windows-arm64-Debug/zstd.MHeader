@@ -183,6 +183,10 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 				{
 					Compile.Type "C"
 				}
+				%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/compress/zstd_preSplit.c`
+				{
+					Compile.Type "C"
+				}
 				%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/compress/zstdmt_compress.c`
 				{
 					Compile.Type "C"
@@ -236,6 +240,10 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 					Compile.Disabled true
 				}
 				%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/compress/zstd_opt.h`
+				{
+					Compile.Disabled true
+				}
+				%File `@('../../../..'->MakeAbsolute())/External/zstd/lib/compress/zstd_preSplit.h`
 				{
 					Compile.Disabled true
 				}
