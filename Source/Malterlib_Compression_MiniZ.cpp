@@ -1,4 +1,4 @@
-// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #include <Mib/Core/Core>
@@ -16,7 +16,7 @@
 
 #ifdef DArchitecture_x64
 	#define MINIZ_HAS_64BIT_REGISTERS 1
-#else 
+#else
 	#define MINIZ_HAS_64BIT_REGISTERS 0
 #endif
 */

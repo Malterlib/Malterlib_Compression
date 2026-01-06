@@ -185,7 +185,7 @@ namespace NMib::NCompression
 			OutputData.f_SetLen(OutputBuffer.pos, false);
 			co_yield fg_Move(OutputData);
 		}
-		
+
 		co_return {};
 	}
 }

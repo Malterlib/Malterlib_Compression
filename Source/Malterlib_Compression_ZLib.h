@@ -1,4 +1,4 @@
-// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #pragma once
@@ -75,7 +75,7 @@ namespace NMib::NCompression
 		NStream::CFilePos f_GetLength() const;
 		void f_SetLength(NStream::CFilePos _Length);
 		mint f_ContainerLengthLimit() const;
-		
+
 	protected:
 		DMibStreamImplementProtected(TCBinaryStream_ZLib);
 

@@ -1,4 +1,4 @@
-// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #include <Mib/Core/Core>
@@ -299,7 +299,7 @@ namespace NMib::NCompression
 
 		return DestStream.f_MoveVector();
 	}
-	
+
 	void fg_CompressGZip(NStr::CStr const &_SourceFile, NStream::CBinaryStream &_DestinationStream, ECompressZlibLevel _Level)
 	{
 		NFile::TCBinaryStreamFile<> SourceStream;

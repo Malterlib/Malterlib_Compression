@@ -66,7 +66,7 @@ namespace
 								auto fStreamData = [InTestBuffer = TestBuffer]() -> TCAsyncGenerator<CIOByteVector>
 									{
 										co_await NConcurrency::fg_ContinueRunningOnActor(NConcurrency::fg_ConcurrentActorHighCPU());
-										
+
 										mint Len = InTestBuffer.f_GetLen();
 										auto *pBuffer = InTestBuffer.f_GetArray();
 										while (Len)
