@@ -70,7 +70,6 @@
 		&
 		{
 			PlatformFamily "Linux"
-			!HostPlatformFamily "Linux"
 		}
 	}
 
