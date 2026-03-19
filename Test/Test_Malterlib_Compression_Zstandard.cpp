@@ -12,7 +12,7 @@ namespace
 	using namespace NMib::NConcurrency;
 	using namespace NMib::NStream;
 
-	constexpr mint gc_TestSize = NFile::gc_IdealIoSize * 16 + 125;
+	constexpr umint gc_TestSize = NFile::gc_IdealIoSize * 16 + 125;
 
 	constexpr uint32 gc_CompressionLevel = 1;
 
@@ -53,11 +53,11 @@ namespace
 			};
 			DMibTestCategory("Streaming")
 			{
-				for (mint iKnownSize = 0; iKnownSize < 2; ++iKnownSize)
+				for (umint iKnownSize = 0; iKnownSize < 2; ++iKnownSize)
 				{
 					DMibTestCategory(iKnownSize == 0 ? "Unknown size" : "Known size")
 					{
-						for (mint iMultiThreaded = 0; iMultiThreaded < 2; ++iMultiThreaded)
+						for (umint iMultiThreaded = 0; iMultiThreaded < 2; ++iMultiThreaded)
 						{
 							DMibTestSuite(iMultiThreaded == 0 ? "Serial" : "Parallel") -> TCFuture<void>
 							{
@@ -67,7 +67,7 @@ namespace
 									{
 										co_await NConcurrency::fg_ContinueRunningOnActor(NConcurrency::fg_ConcurrentActorHighCPU());
 
-										mint Len = InTestBuffer.f_GetLen();
+										umint Len = InTestBuffer.f_GetLen();
 										auto *pBuffer = InTestBuffer.f_GetArray();
 										while (Len)
 										{

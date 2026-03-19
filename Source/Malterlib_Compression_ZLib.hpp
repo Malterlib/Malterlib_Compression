@@ -126,13 +126,13 @@ namespace NMib::NCompression
 	}
 
 	template <typename t_CStreamType>
-	void TCBinaryStream_ZLib<t_CStreamType>::f_SetCacheSize(mint _CacheSize)
+	void TCBinaryStream_ZLib<t_CStreamType>::f_SetCacheSize(umint _CacheSize)
 	{
 		mp_pStream->f_SetCacheSize(_CacheSize);
 	}
 
 	template <typename t_CStreamType>
-	void TCBinaryStream_ZLib<t_CStreamType>::f_FeedBytes(void const *_pMem, mint _nBytes)
+	void TCBinaryStream_ZLib<t_CStreamType>::f_FeedBytes(void const *_pMem, umint _nBytes)
 	{
 		if (!(mp_OpenFlags & NFile::EFileOpen_Write))
 			DMibErrorFile("File was not opened for write.");
@@ -141,7 +141,7 @@ namespace NMib::NCompression
 		while (_nBytes)
 		{
 			aint Pos = fp_PrepareBlock(mp_FilePos, true);
-			aint ThisTime = fg_Min(_nBytes, (mint)ETempBuffer - Pos);
+			aint ThisTime = fg_Min(_nBytes, (umint)ETempBuffer - Pos);
 			NMemory::fg_MemCopy(mp_TempBuffer + Pos, pMem, ThisTime);
 
 			mp_FilePos += ThisTime;
@@ -153,7 +153,7 @@ namespace NMib::NCompression
 	}
 
 	template <typename t_CStreamType>
-	void TCBinaryStream_ZLib<t_CStreamType>::f_ConsumeBytes(void *_pMem, mint _nBytes)
+	void TCBinaryStream_ZLib<t_CStreamType>::f_ConsumeBytes(void *_pMem, umint _nBytes)
 	{
 		if (!(mp_OpenFlags & NFile::EFileOpen_Read))
 			DMibErrorFile("File was not opened for read.");
@@ -165,7 +165,7 @@ namespace NMib::NCompression
 		while (_nBytes)
 		{
 			aint Pos = fp_PrepareBlock(mp_FilePos, false);
-			aint ThisTime = fg_Min(_nBytes, (mint)ETempBuffer - Pos);
+			aint ThisTime = fg_Min(_nBytes, (umint)ETempBuffer - Pos);
 			NMemory::fg_MemCopy(pMem, mp_TempBuffer + Pos, ThisTime);
 
 			mp_FilePos += ThisTime;
@@ -226,7 +226,7 @@ namespace NMib::NCompression
 	}
 
 	template <typename t_CStreamType>
-	mint TCBinaryStream_ZLib<t_CStreamType>::f_ContainerLengthLimit() const
+	umint TCBinaryStream_ZLib<t_CStreamType>::f_ContainerLengthLimit() const
 	{
 		return NStream::fg_CapLengthLimit(f_GetLength() - f_GetPosition());
 	}
@@ -240,7 +240,7 @@ namespace NMib::NCompression
 	template <typename t_CStreamType>
 	void TCBinaryStream_ZLib<t_CStreamType>::fp_WriteChunk(bool _bFlush)
 	{
-		mint nBytes = fg_Min(mp_FileLen - mp_LastChunk, ETempBuffer);
+		umint nBytes = fg_Min(mp_FileLen - mp_LastChunk, ETempBuffer);
 		if (nBytes)
 		{
 			NMib::NStream::CFilePos nBytesWritten;
@@ -254,7 +254,7 @@ namespace NMib::NCompression
 	template <typename t_CStreamType>
 	void TCBinaryStream_ZLib<t_CStreamType>::fp_ReadChunk()
 	{
-		mint nBytes = fg_Min(mp_FileLen - mp_LastChunk, ETempBuffer);
+		umint nBytes = fg_Min(mp_FileLen - mp_LastChunk, ETempBuffer);
 		if (nBytes)
 		{
 			mp_LastChunk += nBytes;

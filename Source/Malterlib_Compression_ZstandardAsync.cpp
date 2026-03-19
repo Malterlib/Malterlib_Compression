@@ -40,7 +40,7 @@ namespace NMib::NCompression
 		if (auto Result = ZSTD_CCtx_setParameter(pZstdStream, ZSTD_c_nbWorkers, _Options.m_CompressionThreads); ZSTD_isError(Result))
 			co_return DMibErrorInstance("Failed to set zstd workers: {}"_f << ZSTD_getErrorName(Result));
 
-		if (_Options.m_KnownSize != TCLimitsInt<mint>::mc_Max)
+		if (_Options.m_KnownSize != TCLimitsInt<umint>::mc_Max)
 		{
 			if (auto Result = ZSTD_CCtx_setPledgedSrcSize(pZstdStream, _Options.m_KnownSize); ZSTD_isError(Result))
 				co_return DMibErrorInstance("Failed to set zstd pledged source size: {}"_f << ZSTD_getErrorName(Result));

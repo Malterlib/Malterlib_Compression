@@ -39,9 +39,9 @@ namespace NMib::NCompression
 		~CCompress_ZLib();
 
 		void f_Clear();
-		void f_FeedBytes(NStream::CBinaryStream *_pOutStream, NStream::CFilePos &o_BytesWritten, const void *_pMem, mint _nBytes, ECompressZlibFlush _Flush);
-		void f_ConsumeBytes(NStream::CBinaryStream *_pInStream, NStream::CFilePos _StreamLength, const void *_pMem, mint _nBytes, ECompressZlibFlush _Flush);
-		mint f_TryConsumeBytes(NStream::CBinaryStream *_pInStream, NStream::CFilePos _StreamLength, const void *_pMem, mint _nBytes, ECompressZlibFlush _Flush);
+		void f_FeedBytes(NStream::CBinaryStream *_pOutStream, NStream::CFilePos &o_BytesWritten, const void *_pMem, umint _nBytes, ECompressZlibFlush _Flush);
+		void f_ConsumeBytes(NStream::CBinaryStream *_pInStream, NStream::CFilePos _StreamLength, const void *_pMem, umint _nBytes, ECompressZlibFlush _Flush);
+		umint f_TryConsumeBytes(NStream::CBinaryStream *_pInStream, NStream::CFilePos _StreamLength, const void *_pMem, umint _nBytes, ECompressZlibFlush _Flush);
 
 	private:
 		struct CInternal;
@@ -60,9 +60,9 @@ namespace NMib::NCompression
 		void f_Close(bool _bDestroy = false);
 		void f_Open(NStream::CBinaryStream *_pStream, NFile::EFileOpen _OpenFlags);
 		void f_Flush(bool _bLocalCacheOnly);
-		void f_SetCacheSize(mint _CacheSize);
-		void f_FeedBytes(const void *_pMem, mint _nBytes);
-		void f_ConsumeBytes(void *_pMem, mint _nBytes);
+		void f_SetCacheSize(umint _CacheSize);
+		void f_FeedBytes(const void *_pMem, umint _nBytes);
+		void f_ConsumeBytes(void *_pMem, umint _nBytes);
 
 		bool f_IsValid() const;
 		bool f_IsAtEndOfStream() const;
@@ -74,7 +74,7 @@ namespace NMib::NCompression
 
 		NStream::CFilePos f_GetLength() const;
 		void f_SetLength(NStream::CFilePos _Length);
-		mint f_ContainerLengthLimit() const;
+		umint f_ContainerLengthLimit() const;
 
 	protected:
 		DMibStreamImplementProtected(TCBinaryStream_ZLib);

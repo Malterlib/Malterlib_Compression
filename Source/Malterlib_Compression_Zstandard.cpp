@@ -13,11 +13,11 @@ namespace NMib::NCompression
 	{
 		using namespace NMib::NStr;
 
-		mint NeededSize = ZSTD_compressBound(_Source.f_GetLen());
+		umint NeededSize = ZSTD_compressBound(_Source.f_GetLen());
 		NContainer::CByteVector CompressedData;
 		CompressedData.f_SetLen(NeededSize);
 
-		mint CompressedSize = ZSTD_compress(CompressedData.f_GetArray(), NeededSize, _Source.f_GetArray(), _Source.f_GetLen(), _CompressionLevel);
+		umint CompressedSize = ZSTD_compress(CompressedData.f_GetArray(), NeededSize, _Source.f_GetArray(), _Source.f_GetLen(), _CompressionLevel);
 
 		if (ZSTD_isError(CompressedSize))
 			DMibError("Failed to compress with zstd: {}"_f << ZSTD_getErrorName(CompressedSize));
@@ -31,12 +31,12 @@ namespace NMib::NCompression
 	{
 		using namespace NMib::NStr;
 
-		mint DecompressedSize = fg_Max(_Source.f_GetLen(), 16u) * 20u;
+		umint DecompressedSize = fg_Max(_Source.f_GetLen(), 16u) * 20u;
 
 		NContainer::CByteVector DecompressedData;
 		DecompressedData.f_SetLen(DecompressedSize);
 
-		mint DecompressResult = ZSTD_decompress(DecompressedData.f_GetArray(), DecompressedSize, _Source.f_GetArray(), _Source.f_GetLen());
+		umint DecompressResult = ZSTD_decompress(DecompressedData.f_GetArray(), DecompressedSize, _Source.f_GetArray(), _Source.f_GetLen());
 
 		for (; ZSTD_getErrorCode(DecompressResult) == ZSTD_error_dstSize_tooSmall;)
 		{

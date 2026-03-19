@@ -48,7 +48,7 @@ namespace NMib::NCompression
 			}
 		};
 
-		void *fp_ReAllocPtr(mint _Size)
+		void *fp_ReAllocPtr(umint _Size)
 		{
 			void *pBlock = t_CAllocator::f_Alloc(_Size);
 			return NMemory::fg_MemClear(pBlock, _Size);

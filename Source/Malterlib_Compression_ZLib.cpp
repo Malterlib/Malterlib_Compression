@@ -33,7 +33,7 @@ namespace NMib::NCompression
 				inflateEnd(&m_Stream);
 		}
 
-		void f_FeedBytes(NStream::CBinaryStream *_pOutStream, NStream::CFilePos &_OutBytesWritten, void const *_pMem, mint _nBytes, ECompressZlibFlush _Flush)
+		void f_FeedBytes(NStream::CBinaryStream *_pOutStream, NStream::CFilePos &_OutBytesWritten, void const *_pMem, umint _nBytes, ECompressZlibFlush _Flush)
 		{
 			if (m_OpenMode != 1)
 			{
@@ -75,7 +75,7 @@ namespace NMib::NCompression
 
 			if (_Flush == ECompressZlibFlush_Sync)
 			{
-				mint Len = ETempBuffer - m_Stream.avail_out;
+				umint Len = ETempBuffer - m_Stream.avail_out;
 				_pOutStream->f_FeedBytes(m_TempBuffer, Len);
 
 				do
@@ -84,7 +84,7 @@ namespace NMib::NCompression
 					m_Stream.avail_out = ETempBuffer;
 
 					int Error = deflate(&m_Stream, Z_SYNC_FLUSH);
-					mint Len = ETempBuffer - m_Stream.avail_out;
+					umint Len = ETempBuffer - m_Stream.avail_out;
 
 					_pOutStream->f_FeedBytes(m_TempBuffer, Len);
 					_OutBytesWritten += Len;
@@ -104,7 +104,7 @@ namespace NMib::NCompression
 				while (Error != Z_STREAM_END)
 				{
 					Error = deflate(&m_Stream, Z_FINISH);
-					mint Len = ETempBuffer - m_Stream.avail_out;
+					umint Len = ETempBuffer - m_Stream.avail_out;
 					_pOutStream->f_FeedBytes(m_TempBuffer, Len);
 					_OutBytesWritten += Len;
 
@@ -117,13 +117,13 @@ namespace NMib::NCompression
 			}
 		}
 
-		void f_ConsumeBytes(NStream::CBinaryStream *_pInStream, NStream::CFilePos _InStreamLength, void const *_pMem, mint _nBytes, ECompressZlibFlush _Flush)
+		void f_ConsumeBytes(NStream::CBinaryStream *_pInStream, NStream::CFilePos _InStreamLength, void const *_pMem, umint _nBytes, ECompressZlibFlush _Flush)
 		{
 			if (f_TryConsumeBytes(_pInStream, _InStreamLength, _pMem, _nBytes, _Flush) != _nBytes)
 				DMibError("Ran out of compressed data");
 		}
 
-		mint f_TryConsumeBytes(NStream::CBinaryStream *_pInStream, NStream::CFilePos _InStreamLength, void const *_pMem, mint _nBytes, ECompressZlibFlush _Flush)
+		umint f_TryConsumeBytes(NStream::CBinaryStream *_pInStream, NStream::CFilePos _InStreamLength, void const *_pMem, umint _nBytes, ECompressZlibFlush _Flush)
 		{
 			if (m_OpenMode != 2)
 			{
@@ -170,7 +170,7 @@ namespace NMib::NCompression
 					DMibError("Compression error: {}"_f << Error);
 			}
 
-			mint Return = _nBytes - m_Stream.avail_out;
+			umint Return = _nBytes - m_Stream.avail_out;
 
 			if (_Flush == ECompressZlibFlush_Sync)
 			{
@@ -234,17 +234,17 @@ namespace NMib::NCompression
 		mp_pInternal = fg_Construct(Level, Type);
 	}
 
-	void CCompress_ZLib::f_FeedBytes(NStream::CBinaryStream * _pOutStream, NStream::CFilePos &_BytesWritten, void const *_pMem, mint _nBytes, ECompressZlibFlush _Flush)
+	void CCompress_ZLib::f_FeedBytes(NStream::CBinaryStream * _pOutStream, NStream::CFilePos &_BytesWritten, void const *_pMem, umint _nBytes, ECompressZlibFlush _Flush)
 	{
 		mp_pInternal->f_FeedBytes(_pOutStream, _BytesWritten, _pMem, _nBytes, _Flush);
 	}
 
-	void CCompress_ZLib::f_ConsumeBytes(NStream::CBinaryStream *_pInStream, NStream::CFilePos _StreamLength, void const *_pMem, mint _nBytes, ECompressZlibFlush _Flush)
+	void CCompress_ZLib::f_ConsumeBytes(NStream::CBinaryStream *_pInStream, NStream::CFilePos _StreamLength, void const *_pMem, umint _nBytes, ECompressZlibFlush _Flush)
 	{
 		mp_pInternal->f_ConsumeBytes(_pInStream, _StreamLength, _pMem, _nBytes, _Flush);
 	}
 
-	mint CCompress_ZLib::f_TryConsumeBytes(NStream::CBinaryStream *_pInStream, NStream::CFilePos _StreamLength, const void *_pMem, mint _nBytes, ECompressZlibFlush _Flush)
+	umint CCompress_ZLib::f_TryConsumeBytes(NStream::CBinaryStream *_pInStream, NStream::CFilePos _StreamLength, const void *_pMem, umint _nBytes, ECompressZlibFlush _Flush)
 	{
 		return mp_pInternal->f_TryConsumeBytes(_pInStream, _StreamLength, _pMem, _nBytes, _Flush);
 	}
@@ -283,7 +283,7 @@ namespace NMib::NCompression
 		NStream::CFilePos SourceBytes = _SourceStream.f_GetLength();
 		while (SourceBytes)
 		{
-			mint ToWrite = (mint)fg_Min(SourceBytes, NStream::CFilePos(8192));
+			umint ToWrite = (umint)fg_Min(SourceBytes, NStream::CFilePos(8192));
 			_SourceStream.f_ConsumeBytes(Buffer, ToWrite);
 			SourceBytes -= ToWrite;
 			NStream::CFilePos OutBytesWritten = 0;
@@ -330,7 +330,7 @@ namespace NMib::NCompression
 		NStream::CFilePos SourceBytes = _SourceStream.f_GetLength();
 		while (true)
 		{
-			mint nRead = Compress.f_TryConsumeBytes(&_SourceStream, SourceBytes, Buffer, 8192, ECompressZlibFlush_None);
+			umint nRead = Compress.f_TryConsumeBytes(&_SourceStream, SourceBytes, Buffer, 8192, ECompressZlibFlush_None);
 			_DestinationStream.f_FeedBytes(Buffer, nRead);
 			if (nRead < 8192)
 				break;

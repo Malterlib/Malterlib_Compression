@@ -11,9 +11,9 @@ namespace NMib::NCompression
 {
 	struct CZStandardCompressionOptions
 	{
-		uint64 m_KnownSize = TCLimitsInt<mint>::mc_Max; // Specify size if known to make decompression more efficient
+		uint64 m_KnownSize = TCLimitsInt<umint>::mc_Max; // Specify size if known to make decompression more efficient
 		int32 m_CompressionLevel = 8;
-		mint m_CompressionThreads = NSys::fg_Thread_GetPhysicalCores(); // The number of threads to use for compression
+		umint m_CompressionThreads = NSys::fg_Thread_GetPhysicalCores(); // The number of threads to use for compression
 	};
 
 	NConcurrency::TCAsyncGenerator<NContainer::CIOByteVector> fg_CompressZstandardAsync

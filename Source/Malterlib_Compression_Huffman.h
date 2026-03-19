@@ -170,7 +170,7 @@ namespace NMib::NCompression
 			}
 			// update destination length
 			_DesLen = (pDesPtr - pDes) + (iDes + 7) / 8;
-			mint Size = _DesLen;
+			umint Size = _DesLen;
 			_pDes = t_CAllocator::f_Resize(_pDes, Size, 0);
 
 			return true;
@@ -217,7 +217,7 @@ namespace NMib::NCompression
 			{
 				uint32 Temp = 0;
 				aint iSrcByte = (iSrc >> 3);
-				NMemory::fg_MemCopy(&Temp, pSrc + iSrcByte, fg_Min(sizeof(Temp), mint(_SrcLen - iSrcByte)));
+				NMemory::fg_MemCopy(&Temp, pSrc + iSrcByte, fg_Min(sizeof(Temp), umint(_SrcLen - iSrcByte)));
 				Code = Temp >> (iSrc & 7);
 				pNode = pRoot;
 				while(pNode->m_pLeft)	// if node has pLeft then it must has pRight
