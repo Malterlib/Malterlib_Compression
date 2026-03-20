@@ -6,15 +6,8 @@
 
 namespace NMib::NCompression
 {
-	class CCompress_MiniZ
-	{
-	public:
-
-		NContainer::CByteVector f_Compress(NContainer::CByteVector const& _Input);
-		NContainer::CByteVector f_Decompress(NContainer::CByteVector const& _Input);
-
-	private:
-	};
+	NContainer::CByteVector fg_CompressMiniZ(NContainer::CByteVector const& _Input);
+	NContainer::CByteVector fg_DecompressMiniZ(NContainer::CByteVector const& _Input);
 }
 
 #ifndef DMibPNoShortCuts

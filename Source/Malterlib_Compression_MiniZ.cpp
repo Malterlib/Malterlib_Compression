@@ -39,65 +39,123 @@ extern "C"
 
 namespace NMib::NCompression
 {
-	NContainer::CByteVector CCompress_MiniZ::f_Compress(NContainer::CByteVector const& _Input)
+	using namespace NMib::NStr;
+
+	namespace
+	{
+		NStr::CStr fsg_TdeflStatusStr(tdefl_status _Status)
+		{
+			switch (_Status)
+			{
+			case TDEFL_STATUS_BAD_PARAM: return "bad parameter";
+			case TDEFL_STATUS_PUT_BUF_FAILED: return "output buffer write failed";
+			case TDEFL_STATUS_OKAY: return "incomplete (not finished)";
+			case TDEFL_STATUS_DONE: return "done";
+			}
+			return CStr(CStr::CFormat("unknown status ({})") << (int)_Status);
+		}
+
+		NStr::CStr fsg_TinflStatusStr(tinfl_status _Status)
+		{
+			switch (_Status)
+			{
+			case TINFL_STATUS_FAILED_CANNOT_MAKE_PROGRESS: return "cannot make progress (corrupted or truncated input)";
+			case TINFL_STATUS_BAD_PARAM: return "bad parameter";
+			case TINFL_STATUS_ADLER32_MISMATCH: return "adler32 checksum mismatch";
+			case TINFL_STATUS_FAILED: return "failed (corrupted data)";
+			case TINFL_STATUS_DONE: return "done";
+			case TINFL_STATUS_NEEDS_MORE_INPUT: return "truncated input";
+			case TINFL_STATUS_HAS_MORE_OUTPUT: return "has more output";
+			}
+			return CStr(CStr::CFormat("unknown status ({})") << (int)_Status);
+		}
+	}
+
+	NContainer::CByteVector fg_CompressMiniZ(NContainer::CByteVector const &_Input)
 	{
 		NContainer::CByteVector Output;
 
-		auto fl_ReceiveData =
-			[](const void* _pBuf, int _nBytes, void *_pUser) -> mz_bool
+		auto fReceiveData = [](void const *_pBuf, int _nBytes, void *_pUser) -> mz_bool
 			{
-				NContainer::CByteVector* pOutput = (NContainer::CByteVector*)_pUser;
-
-				pOutput->f_Insert( (uint8 const*)_pBuf, _nBytes );
-
+				auto *pOutput = (NContainer::CByteVector *)_pUser;
+				pOutput->f_Insert((uint8 const *)_pBuf, _nBytes);
 				return MZ_TRUE;
-			};
+			}
+		;
 
-		auto bOK = tdefl_compress_mem_to_output
-						(
-								_Input.f_GetArray()
-							,	(size_t)_Input.f_GetLen()
-							,	fl_ReceiveData
-							,	&Output
-							,	128					// Fixed num probes
-						);
+		tdefl_compressor *pComp = tdefl_compressor_alloc();
+		if (!pComp)
+			DMibError("MiniZ compression failed: unable to allocate compressor");
 
-		if (!bOK)
-		{
-			DMibError("Compression failed");
-		}
+		auto CompCleanup = g_OnScopeExit / [&]
+			{
+				tdefl_compressor_free(pComp);
+			}
+		;
+
+		tdefl_status InitStatus = tdefl_init(pComp, fReceiveData, &Output, TDEFL_DEFAULT_MAX_PROBES);
+		if (InitStatus != TDEFL_STATUS_OKAY)
+			DMibError("MiniZ compression initialization failed: {}"_f << fsg_TdeflStatusStr(InitStatus));
+
+		tdefl_status CompressStatus = tdefl_compress_buffer(pComp, _Input.f_GetArray(), (size_t)_Input.f_GetLen(), TDEFL_FINISH);
+		if (CompressStatus != TDEFL_STATUS_DONE)
+			DMibError("MiniZ compression failed: {} (input size: {} bytes)"_f << fsg_TdeflStatusStr(CompressStatus) << _Input.f_GetLen());
 
 		return fg_Move(Output);
 	}
 
-	NContainer::CByteVector CCompress_MiniZ::f_Decompress(NContainer::CByteVector const& _Input)
+	NContainer::CByteVector fg_DecompressMiniZ(NContainer::CByteVector const &_Input)
 	{
 		NContainer::CByteVector Output;
 
-		auto fl_ReceiveData =
-			[](const void* _pBuf, int _nBytes, void *_pUser) -> int
+		size_t nInputSize = (size_t)_Input.f_GetLen();
+		size_t nInputOfs = 0;
+
+		tinfl_decompressor Decomp;
+		tinfl_init(&Decomp);
+
+		mz_uint8 *pDict = (mz_uint8 *)MZ_MALLOC(TINFL_LZ_DICT_SIZE);
+		if (!pDict)
+			DMibError("MiniZ decompression failed: unable to allocate dictionary buffer");
+
+		auto DictCleanup = g_OnScopeExit / [&]
 			{
-				NContainer::CByteVector* pOutput = (NContainer::CByteVector*)_pUser;
+				MZ_FREE(pDict);
+			}
+		;
 
-				pOutput->f_Insert( (uint8 const*)_pBuf, _nBytes );
+		NMemory::fg_MemClear(pDict, TINFL_LZ_DICT_SIZE);
+		size_t nDictOfs = 0;
 
-				return 1;
-			};
-
-		size_t nInputBytes = (size_t)_Input.f_GetLen();
-
-		auto bOK = tinfl_decompress_mem_to_callback
-						(
-								_Input.f_GetArray()
-							,	&nInputBytes
-							,	fl_ReceiveData
-							,	&Output
-							,	0
-						);
-
-		if (bOK != 1)
+		for (;;)
 		{
-			DMibError("Decompression failed");
+			size_t nInBufSize = nInputSize - nInputOfs;
+			size_t nDstBufSize = TINFL_LZ_DICT_SIZE - nDictOfs;
+
+			tinfl_status Status = tinfl_decompress
+				(
+					&Decomp
+					, (mz_uint8 const *)_Input.f_GetArray() + nInputOfs
+					, &nInBufSize
+					, pDict
+					, pDict + nDictOfs
+					, &nDstBufSize
+					, 0
+				)
+			;
+
+			nInputOfs += nInBufSize;
+
+			if (nDstBufSize)
+				Output.f_Insert(pDict + nDictOfs, nDstBufSize);
+
+			if (Status == TINFL_STATUS_DONE)
+				break;
+
+			if (Status != TINFL_STATUS_HAS_MORE_OUTPUT)
+				DMibError("MiniZ decompression failed: {} (input size: {} bytes, consumed: {} bytes, output so far: {} bytes)"_f << fsg_TinflStatusStr(Status) << nInputSize << nInputOfs << Output.f_GetLen());
+
+			nDictOfs = (nDictOfs + nDstBufSize) & (TINFL_LZ_DICT_SIZE - 1);
 		}
 
 		return fg_Move(Output);
