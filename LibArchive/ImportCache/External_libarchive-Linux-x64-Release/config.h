@@ -406,10 +406,10 @@ typedef uint64_t uintmax_t;
 #define HAVE_CHROOT 1
 
 /* Define to 1 if you have the `closefrom' function. */
-/* #undef HAVE_CLOSEFROM */
+#define HAVE_CLOSEFROM 1
 
 /* Define to 1 if you have the `close_range' function. */
-/* #undef HAVE_CLOSE_RANGE */
+#define HAVE_CLOSE_RANGE 1
 
 /* Define to 1 if you have the <copyfile.h> header file. */
 /* #undef HAVE_COPYFILE_H */
@@ -694,7 +694,7 @@ typedef uint64_t uintmax_t;
 /* #undef HAVE_LCHFLAGS */
 
 /* Define to 1 if you have the `lchmod' function. */
-/* #undef HAVE_LCHMOD */
+#define HAVE_LCHMOD 1
 
 /* Define to 1 if you have the `lchown' function. */
 #define HAVE_LCHOWN 1
@@ -1346,10 +1346,10 @@ typedef uint64_t uintmax_t;
 /* #undef TIME_WITH_SYS_TIME */
 
 /* Version number of package */
-#define LIBATTR_PKGCONFIG_VERSION "2.4.48"
+#define LIBATTR_PKGCONFIG_VERSION "2.5.1"
 
 /* Version number of package */
-#define LIBACL_PKGCONFIG_VERSION "2.2.53"
+#define LIBACL_PKGCONFIG_VERSION "2.3.1"
 
 /* Version number of package */
 /* #undef LIBRICHACL_PKGCONFIG_VERSION */

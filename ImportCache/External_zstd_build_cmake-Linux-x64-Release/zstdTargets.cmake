@@ -51,7 +51,6 @@ add_library(zstd::libzstd_static STATIC IMPORTED)
 
 set_target_properties(zstd::libzstd_static PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES "../../../../External/zstd/build/cmake/../../lib"
-  INTERFACE_LINK_LIBRARIES "-pthread"
 )
 
 # Create imported target zstd::libzstd

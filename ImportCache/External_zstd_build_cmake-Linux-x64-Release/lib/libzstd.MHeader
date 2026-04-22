@@ -38,7 +38,7 @@ Property.CMakeOutputPath_libzstd: string = `@('..'->MakeAbsolute())`->MakeAbsolu
 	Target.Type "StaticLibrary"
 	Target.BaseName "libzstd_libzstd_static"
 	Target.BaseFileName "libzstd_static"
-	%Group "opt"
+	%Group "Source"
 	{
 		%Group "lib"
 		{

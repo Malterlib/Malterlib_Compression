@@ -12,5 +12,5 @@ Description: fast lossless compression algorithm library
 URL: https://facebook.github.io/zstd/
 Version: 1.5.7
 Libs: -L${libdir} -lzstd 
-Libs.private: -pthread
+Libs.private: 
 Cflags: -I${includedir} 

@@ -31,7 +31,7 @@ Property.CMakeOutputPath_programs: string = `@('..'->MakeAbsolute())`->MakeAbsol
 	Target.Type "ConsoleExecutable"
 	Target.BaseName "programs_zstd"
 	Target.BaseFileName "zstd"
-	%Group "opt"
+	%Group "Source"
 	{
 		%Group "programs"
 		{
@@ -424,7 +424,7 @@ Property.CMakeOutputPath_programs: string = `@('..'->MakeAbsolute())`->MakeAbsol
 	Target.Type "ConsoleExecutable"
 	Target.BaseName "programs_zstd-frugal"
 	Target.BaseFileName "zstd-frugal"
-	%Group "opt"
+	%Group "Source"
 	{
 		%Group "programs"
 		{
