@@ -7,6 +7,9 @@
 	{
 		Type "External"
 		Remotes =+ {Name: "upstream", URL: "https://github.com/madler/zlib.git"}
+		{
+			!!MalterlibAddUpstreams true
+		}
 	}
 }
 
@@ -16,6 +19,9 @@
 	{
 		Type "External"
 		Remotes =+ {Name: "upstream", URL: "https://github.com/richgel999/miniz.git"}
+		{
+			!!MalterlibAddUpstreams true
+		}
 	}
 
 	Compile
@@ -32,6 +38,9 @@
 		Type "External"
 		DefaultUpstreamBranch "dev"
 		Remotes =+ {Name: "upstream", URL: "https://github.com/facebook/zstd.git"}
+		{
+			!!MalterlibAddUpstreams true
+		}
 	}
 }
 

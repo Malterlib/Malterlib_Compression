@@ -7,6 +7,9 @@
 	{
 		Type "External"
 		Remotes =+ {Name: "upstream", URL: "https://github.com/libarchive/libarchive.git"}
+		{
+			!!MalterlibAddUpstreams true
+		}
 	}
 }
 
