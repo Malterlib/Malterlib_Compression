@@ -63,7 +63,7 @@ UpdateOptions:
 UpdateType: git
 
 # Compiler info
-Compiler: 
+Compiler: ../../../../../Binaries/MalterlibLLVM/Windows/x64/bin/clang-cl.exe
 CompilerVersion: 
 
 # Dynamic analysis (MemCheck)

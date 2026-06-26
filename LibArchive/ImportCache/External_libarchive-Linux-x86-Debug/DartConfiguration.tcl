@@ -11,7 +11,7 @@ BuildDirectory: .
 CostDataFile: 
 
 # Site is something like machine.domain, i.e. pragmatic.crd
-Site: ubuntu-linux-2404
+Site: erikimacpro02
 
 # Build name is osname-revision-compiler, i.e. Linux-2.4.2-2smp-c++
 BuildName: Linux-clang++
@@ -27,8 +27,8 @@ SubmitInactivityTimeout:
 NightlyStartTime: 01:00:00 UTC
 
 # Commands for the build/test/submit cycle
-ConfigureCommand: "../../../../../Binaries/Malterlib/Linux/arm64/MToolCMake" "../../../../../External/libarchive"
-MakeCommand: ../../../../../Binaries/Malterlib/Linux/arm64/MToolCMake --build . --config "${CTEST_CONFIGURATION_TYPE}"
+ConfigureCommand: "../../../../../Binaries/Malterlib/Linux/x64/MToolCMake" "../../../../../External/libarchive"
+MakeCommand: ../../../../../Binaries/Malterlib/Linux/x64/MToolCMake --build . --config "${CTEST_CONFIGURATION_TYPE}"
 DefaultCTestConfigurationType: Release
 
 # version control
@@ -63,7 +63,7 @@ UpdateOptions:
 UpdateType: git
 
 # Compiler info
-Compiler: ../../../../../Binaries/MalterlibLLVM/Linux/arm64/bin/clang++
+Compiler: ../../../../../Binaries/MalterlibLLVM/Linux/x64/bin/clang++
 CompilerVersion: 
 
 # Dynamic analysis (MemCheck)

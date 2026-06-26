@@ -890,7 +890,7 @@ typedef uint64_t uintmax_t;
 /* #undef HAVE_MEMBERSHIP_H */
 
 /* Define to 1 if you have the `memmove' function. */
-/* #undef HAVE_MEMMOVE */
+#define HAVE_MEMMOVE 1
 
 /* Define to 1 if you have the <memory.h> header file. */
 #define HAVE_MEMORY_H 1
