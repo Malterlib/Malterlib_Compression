@@ -43,6 +43,7 @@
 		, "ENABLE_BZip2=0"
 		, "ENABLE_EXPAT=0"
 		, "ENABLE_LIBB2=0"
+		, "ENABLE_WERROR=0"
 
 	]
 
