@@ -81,6 +81,14 @@
 		{
 			!!PlatformFamily "Linux"
 		}
+
+		// zstd's programs use the POSIX spelling of CRT functions (fileno, chmod, ...).
+		// platform.h defines this itself, but that is too late since the prefix header
+		// has already pulled in the CRT headers.
+		PreprocessorDefines += "_CRT_NONSTDC_NO_WARNINGS=1"
+		{
+			!!PlatformFamily "Windows"
+		}
 	}
 
 	%Target "Lib_libzstd_libzstd_static"
@@ -116,6 +124,11 @@
 				}
 			}
 		}
+	}
+
+	%Target "Com_programs_zstd"
+	{
+		%Dependency "Lib_Malterlib"
 	}
 }
 
