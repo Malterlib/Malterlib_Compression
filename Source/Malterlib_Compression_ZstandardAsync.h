@@ -11,21 +11,18 @@ namespace NMib::NCompression
 {
 	struct CZStandardCompressionOptions
 	{
-		uint64 m_KnownSize = TCLimitsInt<umint>::mc_Max; // Specify size if known to make decompression more efficient
+		uint64 m_KnownSize = TCLimitsInt<umint>::mc_Max;                 // Specify size if known to make decompression more efficient
 		int32 m_CompressionLevel = 8;
 		umint m_CompressionThreads = NSys::fg_Thread_GetPhysicalCores(); // The number of threads to use for compression
 	};
 
-	NConcurrency::TCAsyncGenerator<NContainer::CIOByteVector> fg_CompressZstandardAsync
-		(
-			NConcurrency::TCAsyncGenerator<NContainer::CIOByteVector> _InputData
-			, CZStandardCompressionOptions _Options = {}
-		)
+	auto fg_CompressZstandardAsync(NConcurrency::TCAsyncGenerator<NContainer::CIOByteVector> _InputData, CZStandardCompressionOptions _Options = {})
+		-> NConcurrency::TCAsyncGenerator<NContainer::CIOByteVector>
 	;
 
 	NConcurrency::TCAsyncGenerator<NContainer::CIOByteVector> fg_DecompressZstandardAsync(NConcurrency::TCAsyncGenerator<NContainer::CIOByteVector> _InputData);
 }
 
 #ifndef DMibPNoShortCuts
-	using namespace NMib::NCompression;
+using namespace NMib::NCompression;
 #endif

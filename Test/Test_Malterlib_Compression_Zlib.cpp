@@ -148,12 +148,7 @@ namespace
 					DMibTestCategory("GarbageData")
 					{
 						uint8 Data[] = {0xFF, 0xFE, 0xFD, 0xFC, 0xFB, 0xFA, 0xF9, 0xF8};
-						DMibExpectException
-							(
-								fg_DecompressZLib(fMakeByteVector(Data, sizeof(Data)))
-								, DMibErrorInstance("End of stream Overrun")
-							)
-						;
+						DMibExpectException(fg_DecompressZLib(fMakeByteVector(Data, sizeof(Data))), DMibErrorInstance("End of stream Overrun"));
 					};
 
 					DMibTestCategory("TruncatedCompressedStream")
@@ -165,23 +160,13 @@ namespace
 						CByteVector Compressed = fg_CompressZLib(fMakeByteVector(Source, sizeof(Source)));
 						Compressed.f_SetLen(Compressed.f_GetLen() / 2);
 
-						DMibExpectException
-							(
-								fg_DecompressZLib(Compressed)
-								, DMibErrorInstance("End of stream Overrun")
-							)
-						;
+						DMibExpectException(fg_DecompressZLib(Compressed), DMibErrorInstance("End of stream Overrun"));
 					};
 
 					DMibTestCategory("SingleByte")
 					{
 						uint8 Data[] = {0x00};
-						DMibExpectException
-							(
-								fg_DecompressZLib(fMakeByteVector(Data, sizeof(Data)))
-								, DMibErrorInstance("End of stream Overrun")
-							)
-						;
+						DMibExpectException(fg_DecompressZLib(fMakeByteVector(Data, sizeof(Data))), DMibErrorInstance("End of stream Overrun"));
 					};
 				};
 			};
@@ -309,12 +294,7 @@ namespace
 					DMibTestCategory("GarbageData")
 					{
 						uint8 Data[] = {0xFF, 0xFE, 0xFD, 0xFC, 0xFB, 0xFA, 0xF9, 0xF8};
-						DMibExpectException
-							(
-								fg_DecompressGZip(fMakeByteVector(Data, sizeof(Data)))
-								, DMibErrorInstance("Compression error: -3")
-							)
-						;
+						DMibExpectException(fg_DecompressGZip(fMakeByteVector(Data, sizeof(Data))), DMibErrorInstance("Compression error: -3"));
 					};
 				};
 			};
@@ -674,12 +654,7 @@ namespace
 						ZLibStream.f_Open(&BackingStream, NMib::NFile::EFileOpen_Write);
 
 						uint8 Buf[1];
-						DMibExpectException
-							(
-								ZLibStream.f_ConsumeBytes(Buf, 1)
-								, DMibImpExceptionInstance(NMib::NFile::CExceptionFile, "File was not opened for read.")
-							)
-						;
+						DMibExpectException(ZLibStream.f_ConsumeBytes(Buf, 1), DMibImpExceptionInstance(NMib::NFile::CExceptionFile, "File was not opened for read."));
 						ZLibStream.f_Close();
 					};
 
@@ -700,12 +675,7 @@ namespace
 						ZLibStream.f_Open(&BackingStream, NMib::NFile::EFileOpen_Read);
 
 						uint8 Buf[] = {0};
-						DMibExpectException
-							(
-								ZLibStream.f_FeedBytes(Buf, 1)
-								, DMibImpExceptionInstance(NMib::NFile::CExceptionFile, "File was not opened for write.")
-							)
-						;
+						DMibExpectException(ZLibStream.f_FeedBytes(Buf, 1), DMibImpExceptionInstance(NMib::NFile::CExceptionFile, "File was not opened for write."));
 						ZLibStream.f_Close();
 					};
 
@@ -725,12 +695,7 @@ namespace
 						ZLibStream.f_Open(&BackingStream, NMib::NFile::EFileOpen_Read);
 
 						uint8 Buf[16];
-						DMibExpectException
-							(
-								ZLibStream.f_ConsumeBytes(Buf, 16)
-								, DMibImpExceptionInstance(NMib::NFile::CExceptionFile, "Would read past end of file.")
-							)
-						;
+						DMibExpectException(ZLibStream.f_ConsumeBytes(Buf, 16), DMibImpExceptionInstance(NMib::NFile::CExceptionFile, "Would read past end of file."));
 						ZLibStream.f_Close();
 					};
 
@@ -740,12 +705,7 @@ namespace
 						TCBinaryStream_ZLib<> ZLibStream;
 						ZLibStream.f_Open(&BackingStream, NMib::NFile::EFileOpen_Write);
 
-						DMibExpectException
-							(
-								ZLibStream.f_SetLength(100)
-								, DMibErrorInstance("Not supported")
-							)
-						;
+						DMibExpectException(ZLibStream.f_SetLength(100), DMibErrorInstance("Not supported"));
 						ZLibStream.f_Close();
 					};
 
@@ -850,12 +810,7 @@ namespace
 
 						CCompress_ZLib Decompressor;
 						uint8 Buf[64];
-						DMibExpectException
-							(
-								Decompressor.f_ConsumeBytes(&CompressedStream, 0, Buf, sizeof(Buf), ECompressZlibFlush_None)
-								, DMibErrorInstance("Ran out of compressed data")
-							)
-						;
+						DMibExpectException(Decompressor.f_ConsumeBytes(&CompressedStream, 0, Buf, sizeof(Buf), ECompressZlibFlush_None), DMibErrorInstance("Ran out of compressed data"));
 					};
 
 					DMibTestCategory("GarbageDataDirectDecompress")
@@ -867,12 +822,7 @@ namespace
 
 						CCompress_ZLib Decompressor;
 						uint8 Buf[4];
-						DMibExpectException
-							(
-								Decompressor.f_ConsumeBytes(&GarbageStream, 0, Buf, sizeof(Buf), ECompressZlibFlush_None)
-								, DMibErrorInstance("Compression error: -3")
-							)
-						;
+						DMibExpectException(Decompressor.f_ConsumeBytes(&GarbageStream, 0, Buf, sizeof(Buf), ECompressZlibFlush_None), DMibErrorInstance("Compression error: -3"));
 					};
 				};
 			};

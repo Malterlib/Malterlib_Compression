@@ -14,5 +14,5 @@ namespace NMib::NCompression
 }
 
 #ifndef DMibPNoShortCuts
-	using namespace NMib::NCompression;
+using namespace NMib::NCompression;
 #endif

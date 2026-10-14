@@ -244,12 +244,7 @@ namespace
 					DMibTestCategory("GarbageData")
 					{
 						uint8 Data[] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
-						DMibExpectException
-							(
-								fg_DecompressZstandard(f_MakeByteVector(Data, sizeof(Data)))
-								, DMibErrorInstance("Failed to decompress with zstd: Src size is incorrect")
-							)
-						;
+						DMibExpectException(fg_DecompressZstandard(f_MakeByteVector(Data, sizeof(Data))), DMibErrorInstance("Failed to decompress with zstd: Src size is incorrect"));
 					};
 
 					DMibTestCategory("TruncatedFrame")
@@ -262,12 +257,7 @@ namespace
 						// Truncate the compressed data
 						Compressed.f_SetLen(Compressed.f_GetLen() / 2);
 
-						DMibExpectException
-							(
-								fg_DecompressZstandard(Compressed)
-								, DMibErrorInstance("Failed to decompress with zstd: Src size is incorrect")
-							)
-						;
+						DMibExpectException(fg_DecompressZstandard(Compressed), DMibErrorInstance("Failed to decompress with zstd: Src size is incorrect"));
 					};
 
 					DMibTestCategory("CorruptedData")
@@ -446,12 +436,7 @@ namespace
 							.f_Wrap()
 						;
 
-						DMibExpectException
-							(
-								Result.f_Access()
-								, DMibErrorInstance("Error decompressing data: Unknown frame descriptor")
-							)
-						;
+						DMibExpectException(Result.f_Access(), DMibErrorInstance("Error decompressing data: Unknown frame descriptor"));
 
 						co_return {};
 					};
@@ -489,12 +474,7 @@ namespace
 							.f_Wrap()
 						;
 
-						DMibExpectException
-							(
-								Result.f_Access()
-								, DMibErrorInstance("Error decompressing data (end): No progress was made")
-							)
-						;
+						DMibExpectException(Result.f_Access(), DMibErrorInstance("Error decompressing data (end): No progress was made"));
 
 						co_return {};
 					};

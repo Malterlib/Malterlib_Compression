@@ -9,15 +9,15 @@ namespace NMib::NCompression
 {
 	enum ECompressZlibLevel
 	{
-		ECompressZlibLevel_Fastest = 1,
-		ECompressZlibLevel_2,
-		ECompressZlibLevel_3,
-		ECompressZlibLevel_4,
-		ECompressZlibLevel_5,
-		ECompressZlibLevel_6,
-		ECompressZlibLevel_7,
-		ECompressZlibLevel_8,
-		ECompressZlibLevel_Best = 9,
+		ECompressZlibLevel_Fastest = 1
+		, ECompressZlibLevel_2
+		, ECompressZlibLevel_3
+		, ECompressZlibLevel_4
+		, ECompressZlibLevel_5
+		, ECompressZlibLevel_6
+		, ECompressZlibLevel_7
+		, ECompressZlibLevel_8
+		, ECompressZlibLevel_Best  = 9
 	};
 
 	enum ECompressZlibType
@@ -28,9 +28,9 @@ namespace NMib::NCompression
 
 	enum ECompressZlibFlush
 	{
-		ECompressZlibFlush_None,
-		ECompressZlibFlush_Sync,
-		ECompressZlibFlush_Finish,
+		ECompressZlibFlush_None
+		, ECompressZlibFlush_Sync
+		, ECompressZlibFlush_Finish
 	};
 
 	struct CCompress_ZLib
@@ -39,9 +39,9 @@ namespace NMib::NCompression
 		~CCompress_ZLib();
 
 		void f_Clear();
-		void f_FeedBytes(NStream::CBinaryStream *_pOutStream, NStream::CFilePos &o_BytesWritten, const void *_pMem, umint _nBytes, ECompressZlibFlush _Flush);
-		void f_ConsumeBytes(NStream::CBinaryStream *_pInStream, NStream::CFilePos _StreamLength, const void *_pMem, umint _nBytes, ECompressZlibFlush _Flush);
-		umint f_TryConsumeBytes(NStream::CBinaryStream *_pInStream, NStream::CFilePos _StreamLength, const void *_pMem, umint _nBytes, ECompressZlibFlush _Flush);
+		void f_FeedBytes(NStream::CBinaryStream *_pOutStream, NStream::CFilePos &o_BytesWritten, void const *_pMem, umint _nBytes, ECompressZlibFlush _Flush);
+		void f_ConsumeBytes(NStream::CBinaryStream *_pInStream, NStream::CFilePos _StreamLength, void const *_pMem, umint _nBytes, ECompressZlibFlush _Flush);
+		umint f_TryConsumeBytes(NStream::CBinaryStream *_pInStream, NStream::CFilePos _StreamLength, void const *_pMem, umint _nBytes, ECompressZlibFlush _Flush);
 
 	private:
 		struct CInternal;
@@ -61,7 +61,7 @@ namespace NMib::NCompression
 		void f_Open(NStream::CBinaryStream *_pStream, NFile::EFileOpen _OpenFlags);
 		void f_Flush(bool _bLocalCacheOnly);
 		void f_SetCacheSize(umint _CacheSize);
-		void f_FeedBytes(const void *_pMem, umint _nBytes);
+		void f_FeedBytes(void const *_pMem, umint _nBytes);
 		void f_ConsumeBytes(void *_pMem, umint _nBytes);
 
 		bool f_IsValid() const;
@@ -82,14 +82,14 @@ namespace NMib::NCompression
 	private:
 		enum
 		{
-			ETempBuffer = 4*1024,
+			ETempBuffer = 4 * 1024
 		};
 
 		enum EVersion
 		{
-			EVersion_0	= 0,
-			EVersion_1	= 1,
-			EVersion_Current = EVersion_1,
+			EVersion_0         = 0
+			, EVersion_1       = 1
+			, EVersion_Current = EVersion_1
 		};
 
 		void fp_WriteChunk(bool _bFlush);
@@ -129,5 +129,5 @@ namespace NMib::NCompression
 #include "Malterlib_Compression_ZLib.hpp"
 
 #ifndef DMibPNoShortCuts
-	using namespace NMib::NCompression;
+using namespace NMib::NCompression;
 #endif
