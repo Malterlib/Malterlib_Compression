@@ -95,7 +95,7 @@ namespace NMib::NCompression
 
 				*mp_pStream >> Version;
 
-				switch(Version)
+				switch (Version)
 				{
 				case EVersion_1:
 					{
@@ -104,8 +104,7 @@ namespace NMib::NCompression
 						mp_CompressedLen += mp_StartPos;
 					}
 					break;
-				default:
-					DMibErrorFile("Invalid zlib stream version");
+				default: DMibErrorFile("Invalid zlib stream version");
 				}
 			}
 			else
@@ -114,9 +113,7 @@ namespace NMib::NCompression
 			mp_FileLen = FileLen;
 		}
 		else
-		{
 			DMibErrorFile("You must open the file either with read or write access not both at the same time");
-		}
 	}
 
 	template <typename t_CStreamType>
@@ -286,7 +283,6 @@ namespace NMib::NCompression
 
 			if (_Pos < (mp_LastChunk - ETempBuffer))
 				DMibErrorFile("Cannot seek backwards in stream");
-
 
 			NStream::CFilePos TargetPos = fg_Min(NMib::fg_AlignDown(_Pos, ETempBuffer) + ETempBuffer, mp_FileLen);
 			while (mp_LastChunk < TargetPos)

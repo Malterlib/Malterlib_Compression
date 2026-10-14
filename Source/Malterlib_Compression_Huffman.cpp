@@ -27,12 +27,12 @@ namespace NMib::NCompression
 
 		struct CSort_FrequencyCompare
 		{
-			COrdering_Partial operator()(CHuffmanNode &_Elem1, CHuffmanNode &_Elem2) const;
+			COrdering_Partial operator () (CHuffmanNode &_Elem1, CHuffmanNode &_Elem2) const;
 		};
 
 		struct CSort_ASCIICompare
 		{
-			COrdering_Partial operator()(CHuffmanNode &_Elem1, CHuffmanNode &_Elem2) const;
+			COrdering_Partial operator () (CHuffmanNode &_Elem1, CHuffmanNode &_Elem2) const;
 		};
 
 		auto fg_PopNode(CHuffmanNode *_pNodes[], umint _iIndex, bool _bRight) -> CHuffmanNode *
@@ -82,26 +82,30 @@ namespace NMib::NCompression
 				// insert parent node depending on its frequency
 				smint i;
 				for (i = iBackNode; i >= 0; i--)
+				{
 					if (pNodes[i]->m_Frequency >= pNode->m_Frequency)
 						break;
+				}
 				NMemory::fg_MemMove(pNodes + (i + 2), pNodes + (i + 1), (iBackNode - i) * sizeof(CHuffmanNode *));
 				pNodes[i + 1] = pNode;
 				iBackNode++;
 			}
 			// set tree leaves nodes code
 			if (_bSetCodes)
+			{
 				for (umint iCount = 0; iCount < nNodes; iCount++)
 					fg_SetNodeCode(&_Nodes[iCount]);
+			}
 
 			return nNodes;
 		}
 
-		COrdering_Partial CSort_FrequencyCompare::operator()(CHuffmanNode &_Elem1, CHuffmanNode &_Elem2) const
+		COrdering_Partial CSort_FrequencyCompare::operator () (CHuffmanNode &_Elem1, CHuffmanNode &_Elem2) const
 		{
 			return _Elem2.m_Frequency <=> _Elem1.m_Frequency;
 		}
 
-		COrdering_Partial CSort_ASCIICompare::operator()(CHuffmanNode &_Elem1, CHuffmanNode &_Elem2) const
+		COrdering_Partial CSort_ASCIICompare::operator () (CHuffmanNode &_Elem1, CHuffmanNode &_Elem2) const
 		{
 			return _Elem1.m_ByAscii <=> _Elem2.m_ByAscii;
 		}
@@ -309,8 +313,8 @@ namespace NMib::NCompression
 			Temp = fg_ByteSwapLE(Temp);
 			Code = Temp >> (iSrcBits & 7);
 			pNode = pRoot;
-			while (pNode->m_pLeft)	// if node has pLeft then it must has pRight
-			{	// node not leaf
+			while (pNode->m_pLeft) // if node has pLeft then it must has pRight
+			{ // node not leaf
 				if (iSrcBits >= nSrcBits)
 					fThrowMalformed();
 				pNode = (Code & 1) ? pNode->m_pRight : pNode->m_pLeft;

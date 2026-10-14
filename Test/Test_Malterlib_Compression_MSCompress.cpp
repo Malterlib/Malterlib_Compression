@@ -7,7 +7,7 @@
 #include <Mib/File/File>
 
 #ifdef DPlatformFamily_Windows
-	#include <Mib/Process/ProcessLaunchActor>
+#	include <Mib/Process/ProcessLaunchActor>
 #endif
 
 namespace
@@ -363,35 +363,20 @@ namespace
 					DMibTestCategory("GarbageData")
 					{
 						uint8 Data[] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E};
-						DMibExpectException
-							(
-								fg_DecompressMSCompress(f_MakeByteVector(Data, sizeof(Data)))
-								, DMibErrorInstance("Not a valid MS-compressed file: invalid SZDD signature")
-							)
-						;
+						DMibExpectException(fg_DecompressMSCompress(f_MakeByteVector(Data, sizeof(Data))), DMibErrorInstance("Not a valid MS-compressed file: invalid SZDD signature"));
 					};
 
 					DMibTestCategory("TruncatedHeader")
 					{
 						// Valid magic but truncated
 						uint8 Data[] = {0x53, 0x5A, 0x44, 0x44, 0x88, 0xF0};
-						DMibExpectException
-							(
-								fg_DecompressMSCompress(f_MakeByteVector(Data, sizeof(Data)))
-								, DMibErrorInstance("Not a valid MS-compressed file: file too small")
-							)
-						;
+						DMibExpectException(fg_DecompressMSCompress(f_MakeByteVector(Data, sizeof(Data))), DMibErrorInstance("Not a valid MS-compressed file: file too small"));
 					};
 
 					DMibTestCategory("BadMagicConstant")
 					{
 						uint8 Data[14] = {0x53, 0x5A, 0x44, 0x44, 0x00, 0x00, 0x00, 0x00, 0x41, 0x00, 0x00, 0x00, 0x00, 0x00};
-						DMibExpectException
-							(
-								fg_DecompressMSCompress(f_MakeByteVector(Data, sizeof(Data)))
-								, DMibErrorInstance("Not a valid MS-compressed file: invalid magic constant")
-							)
-						;
+						DMibExpectException(fg_DecompressMSCompress(f_MakeByteVector(Data, sizeof(Data))), DMibErrorInstance("Not a valid MS-compressed file: invalid magic constant"));
 					};
 
 					DMibTestCategory("KWAJFormat")
@@ -423,9 +408,10 @@ namespace
 						// Control byte 0xFF = all 8 bits set = 8 literals expected
 						uint8 Data[] =
 							{
-								0x53, 0x5A, 0x44, 0x44, 0x88, 0xF0, 0x27, 0x33, 0x41, 0x00, 0x0A, 0x00, 0x00, 0x00  // header, size=10
-								, 0xFF  // control: 8 literals
-								, 0x41  // only 1 literal, truncated
+								// malterlib-format rows
+								0x53, 0x5A, 0x44, 0x44, 0x88, 0xF0, 0x27, 0x33, 0x41, 0x00, 0x0A, 0x00, 0x00, 0x00 // header, size=10
+								, 0xFF // control: 8 literals
+								, 0x41 // only 1 literal, truncated
 							}
 						;
 
@@ -443,9 +429,10 @@ namespace
 						// Control byte 0x00 = all bits clear = 8 back-references, each needing 2 bytes
 						uint8 Data[] =
 							{
-								0x53, 0x5A, 0x44, 0x44, 0x88, 0xF0, 0x27, 0x33, 0x41, 0x00, 0x0A, 0x00, 0x00, 0x00  // header, size=10
-								, 0x00  // control: 8 back-references
-								, 0x00  // only 1 byte, need 2 for a back-ref
+								// malterlib-format rows
+								0x53, 0x5A, 0x44, 0x44, 0x88, 0xF0, 0x27, 0x33, 0x41, 0x00, 0x0A, 0x00, 0x00, 0x00 // header, size=10
+								, 0x00 // control: 8 back-references
+								, 0x00 // only 1 byte, need 2 for a back-ref
 							}
 						;
 
@@ -717,12 +704,7 @@ namespace
 							.f_Wrap()
 						;
 
-						DMibExpectException
-							(
-								Result.f_Access()
-								, DMibErrorInstance("Not a valid MS-compressed file: invalid SZDD signature")
-							)
-						;
+						DMibExpectException(Result.f_Access(), DMibErrorInstance("Not a valid MS-compressed file: invalid SZDD signature"));
 
 						co_return {};
 					};
@@ -754,12 +736,7 @@ namespace
 							.f_Wrap()
 						;
 
-						DMibExpectException
-							(
-								Result.f_Access()
-								, DMibErrorInstance("Not a valid MS-compressed file: file too small")
-							)
-						;
+						DMibExpectException(Result.f_Access(), DMibErrorInstance("Not a valid MS-compressed file: file too small"));
 
 						co_return {};
 					};
@@ -791,12 +768,7 @@ namespace
 							.f_Wrap()
 						;
 
-						DMibExpectException
-							(
-								Result.f_Access()
-								, DMibErrorInstance("Not a valid MS-compressed file: invalid magic constant")
-							)
-						;
+						DMibExpectException(Result.f_Access(), DMibErrorInstance("Not a valid MS-compressed file: invalid magic constant"));
 
 						co_return {};
 					};
@@ -828,12 +800,7 @@ namespace
 							.f_Wrap()
 						;
 
-						DMibExpectException
-							(
-								Result.f_Access()
-								, DMibErrorInstance("MS-compressed file uses KWAJ format (version 6.22) which is not supported")
-							)
-						;
+						DMibExpectException(Result.f_Access(), DMibErrorInstance("MS-compressed file uses KWAJ format (version 6.22) which is not supported"));
 
 						co_return {};
 					};
@@ -866,12 +833,7 @@ namespace
 							.f_Wrap()
 						;
 
-						DMibExpectException
-							(
-								Result.f_Access()
-								, DMibErrorInstance("MSCompress async compression requires m_KnownSize to be set")
-							)
-						;
+						DMibExpectException(Result.f_Access(), DMibErrorInstance("MSCompress async compression requires m_KnownSize to be set"));
 
 						co_return {};
 					};
@@ -904,12 +866,7 @@ namespace
 							.f_Wrap()
 						;
 
-						DMibExpectException
-							(
-								Result.f_Access()
-								, DMibErrorInstance("Not a valid MS-compressed file: unsupported compression type 0x42")
-							)
-						;
+						DMibExpectException(Result.f_Access(), DMibErrorInstance("Not a valid MS-compressed file: unsupported compression type 0x42"));
 
 						co_return {};
 					};
@@ -943,12 +900,7 @@ namespace
 							.f_Wrap()
 						;
 
-						DMibExpectException
-							(
-								Result.f_Access()
-								, DMibErrorInstance("MSCompress: actual input size (10) does not match m_KnownSize (5)")
-							)
-						;
+						DMibExpectException(Result.f_Access(), DMibErrorInstance("MSCompress: actual input size (10) does not match m_KnownSize (5)"));
 
 						co_return {};
 					};
@@ -959,6 +911,7 @@ namespace
 						// processes 1 literal then exits loop (no more data), hitting the size check
 						uint8 Data[] =
 							{
+								// malterlib-format rows
 								0x53, 0x5A, 0x44, 0x44, 0x88, 0xF0, 0x27, 0x33, 0x41, 0x00, 0x0A, 0x00, 0x00, 0x00
 								, 0xFF, 0x41
 							}
@@ -987,12 +940,7 @@ namespace
 							.f_Wrap()
 						;
 
-						DMibExpectException
-							(
-								Result.f_Access()
-								, DMibErrorInstance("Truncated MS-compressed data: decompressed 1 bytes but expected 10")
-							)
-						;
+						DMibExpectException(Result.f_Access(), DMibErrorInstance("Truncated MS-compressed data: decompressed 1 bytes but expected 10"));
 
 						co_return {};
 					};
@@ -1002,6 +950,7 @@ namespace
 						// Control byte 0x00 (8 back-refs) but only 1 data byte — truncated in carry handler
 						uint8 Data[] =
 							{
+								// malterlib-format rows
 								0x53, 0x5A, 0x44, 0x44, 0x88, 0xF0, 0x27, 0x33, 0x41, 0x00, 0x0A, 0x00, 0x00, 0x00
 								, 0x00, 0x00
 							}
@@ -1030,12 +979,7 @@ namespace
 							.f_Wrap()
 						;
 
-						DMibExpectException
-							(
-								Result.f_Access()
-								, DMibErrorInstance("Truncated MS-compressed data: unexpected end of stream in back-reference")
-							)
-						;
+						DMibExpectException(Result.f_Access(), DMibErrorInstance("Truncated MS-compressed data: unexpected end of stream in back-reference"));
 
 						co_return {};
 					};
@@ -1068,12 +1012,7 @@ namespace
 							.f_Wrap()
 						;
 
-						DMibExpectException
-							(
-								Result.f_Access()
-								, DMibErrorInstance("Truncated MS-compressed data: decompressed 0 bytes but expected 100")
-							)
-						;
+						DMibExpectException(Result.f_Access(), DMibErrorInstance("Truncated MS-compressed data: decompressed 0 bytes but expected 100"));
 
 						co_return {};
 					};

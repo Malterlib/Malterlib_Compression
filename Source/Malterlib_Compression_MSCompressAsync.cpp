@@ -8,12 +8,8 @@
 
 namespace NMib::NCompression
 {
-
-	NConcurrency::TCAsyncGenerator<NContainer::CIOByteVector> fg_CompressMSCompressAsync
-		(
-			NConcurrency::TCAsyncGenerator<NContainer::CIOByteVector> _InputData
-			, CMSCompressAsyncOptions _Options
-		)
+	auto fg_CompressMSCompressAsync(NConcurrency::TCAsyncGenerator<NContainer::CIOByteVector> _InputData, CMSCompressAsyncOptions _Options)
+		-> NConcurrency::TCAsyncGenerator<NContainer::CIOByteVector>
 	{
 		using namespace NStr;
 
@@ -192,11 +188,7 @@ namespace NMib::NCompression
 		co_return {};
 	}
 
-	NConcurrency::TCAsyncGenerator<NContainer::CIOByteVector> fg_DecompressMSCompressAsync
-		(
-			NConcurrency::TCAsyncGenerator<NContainer::CIOByteVector> _InputData
-			, umint _nMaxDecompressedLen
-		)
+	NConcurrency::TCAsyncGenerator<NContainer::CIOByteVector> fg_DecompressMSCompressAsync(NConcurrency::TCAsyncGenerator<NContainer::CIOByteVector> _InputData, umint _nMaxDecompressedLen)
 	{
 		using namespace NStr;
 
@@ -303,9 +295,7 @@ namespace NMib::NCompression
 				nCarryLen = 0;
 			}
 			else
-			{
 				pPayload = pChunk + iChunkPos;
-			}
 
 			umint iPayloadPos = 0;
 

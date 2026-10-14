@@ -40,12 +40,7 @@ namespace
 
 				auto fExpectMalformedLZW = [&](uint8 const *_pData, aint _nLen)
 					{
-						DMibExpectException
-							(
-								fg_DecompressLZW(fMakeByteVector(_pData, _nLen))
-								, DMibErrorInstance("Malformed LZW compressed data")
-							)
-						;
+						DMibExpectException(fg_DecompressLZW(fMakeByteVector(_pData, _nLen)), DMibErrorInstance("Malformed LZW compressed data"));
 					}
 				;
 
@@ -240,12 +235,7 @@ namespace
 						CByteVector Compressed = fg_CompressLZW(fMakeByteVector(Data, sizeof(Data)));
 						Compressed.f_SetLen(Compressed.f_GetLen() - 1);
 
-						DMibExpectException
-							(
-								fg_DecompressLZW(Compressed)
-								, DMibErrorInstance("Malformed LZW compressed data")
-							)
-						;
+						DMibExpectException(fg_DecompressLZW(Compressed), DMibErrorInstance("Malformed LZW compressed data"));
 					};
 
 					DMibTestCategory("TrailingByte")
@@ -271,12 +261,7 @@ namespace
 						uint8 Data[] = {0x10, 0x20, 0x10, 0x20, 0x10};
 						CByteVector Compressed = fg_CompressLZW(fMakeByteVector(Data, sizeof(Data)));
 
-						DMibExpectException
-							(
-								fg_DecompressLZW(Compressed, 4)
-								, DMibErrorInstance("LZW decompression output exceeds maximum buffer length")
-							)
-						;
+						DMibExpectException(fg_DecompressLZW(Compressed, 4), DMibErrorInstance("LZW decompression output exceeds maximum buffer length"));
 					};
 				};
 			};

@@ -32,9 +32,9 @@ extern "C"
 #ifdef DCompiler_MSVC
 #	pragma warning(disable:4334)
 #endif
-	#include "../../../External/miniz/miniz.c"
-	#include "../../../External/miniz/miniz_tdef.c"
-	#include "../../../External/miniz/miniz_tinfl.c"
+#include "../../../External/miniz/miniz.c"
+#include "../../../External/miniz/miniz_tdef.c"
+#include "../../../External/miniz/miniz_tinfl.c"
 }
 
 namespace NMib::NCompression
@@ -132,17 +132,7 @@ namespace NMib::NCompression
 			size_t nInBufSize = nInputSize - nInputOfs;
 			size_t nDstBufSize = TINFL_LZ_DICT_SIZE - nDictOfs;
 
-			tinfl_status Status = tinfl_decompress
-				(
-					&Decomp
-					, (mz_uint8 const *)_Input.f_GetArray() + nInputOfs
-					, &nInBufSize
-					, pDict
-					, pDict + nDictOfs
-					, &nDstBufSize
-					, 0
-				)
-			;
+			tinfl_status Status = tinfl_decompress(&Decomp, (mz_uint8 const *)_Input.f_GetArray() + nInputOfs, &nInBufSize, pDict, pDict + nDictOfs, &nDstBufSize, 0);
 
 			nInputOfs += nInBufSize;
 
@@ -153,7 +143,17 @@ namespace NMib::NCompression
 				break;
 
 			if (Status != TINFL_STATUS_HAS_MORE_OUTPUT)
-				DMibError("MiniZ decompression failed: {} (input size: {} bytes, consumed: {} bytes, output so far: {} bytes)"_f << fsg_TinflStatusStr(Status) << nInputSize << nInputOfs << Output.f_GetLen());
+			{
+				DMibError
+					(
+						"MiniZ decompression failed: {} (input size: {} bytes, consumed: {} bytes, output so far: {} bytes)"_f
+						<< fsg_TinflStatusStr(Status)
+						<< nInputSize
+						<< nInputOfs
+						<< Output.f_GetLen()
+					)
+				;
+			}
 
 			nDictOfs = (nDictOfs + nDstBufSize) & (TINFL_LZ_DICT_SIZE - 1);
 		}

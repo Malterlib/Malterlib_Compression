@@ -38,12 +38,7 @@ namespace
 
 				auto fExpectMalformedHuffman = [&](uint8 const *_pData, aint _nLen)
 					{
-						DMibExpectException
-							(
-								fg_DecompressHuffman(fMakeByteVector(_pData, _nLen))
-								, DMibErrorInstance("Malformed Huffman compressed data")
-							)
-						;
+						DMibExpectException(fg_DecompressHuffman(fMakeByteVector(_pData, _nLen)), DMibErrorInstance("Malformed Huffman compressed data"));
 					}
 				;
 
@@ -183,8 +178,10 @@ namespace
 					uint8 *pData = Source.f_GetArray();
 					aint iPos = 0;
 					for (aint i = 0; i < c_nSymbols; ++i)
+					{
 						for (int32 j = 0; j < Freq[i]; ++j)
 							pData[iPos++] = (uint8)i;
+					}
 
 					CByteVector Compressed = fg_CompressHuffman(Source);
 					CByteVector Decompressed = fg_DecompressHuffman(Compressed);
@@ -223,6 +220,7 @@ namespace
 					{
 						uint8 Data[] =
 							{
+								// malterlib-format rows
 								0x02, 0x00, 0x00, 0x00
 								, 0x00
 								, 0x01, 0x00, 0x00, 0x00
@@ -238,12 +236,7 @@ namespace
 						CByteVector Compressed = fg_CompressHuffman(fMakeByteVector(Data, sizeof(Data)));
 						Compressed.f_SetLen(Compressed.f_GetLen() - 1);
 
-						DMibExpectException
-							(
-								fg_DecompressHuffman(Compressed)
-								, DMibErrorInstance("Malformed Huffman compressed data")
-							)
-						;
+						DMibExpectException(fg_DecompressHuffman(Compressed), DMibErrorInstance("Malformed Huffman compressed data"));
 					};
 
 					DMibTestCategory("TrailingByte")
@@ -267,6 +260,7 @@ namespace
 						// Header with two nodes sharing the same ASCII value
 						uint8 Data[] =
 							{
+								// malterlib-format rows
 								// nDesLen = 2 (little-endian uint32)
 								0x02, 0x00, 0x00, 0x00
 								// nNodes - 1 = 1 (two nodes)
@@ -286,18 +280,14 @@ namespace
 					{
 						uint8 Data[] =
 							{
+								// malterlib-format rows
 								0x20, 0x00, 0x00, 0x00
 								, 0x00
 								, 0x20, 0x00, 0x00, 0x00, 'A'
 							}
 						;
 
-						DMibExpectException
-							(
-								fg_DecompressHuffman(fMakeByteVector(Data, sizeof(Data)), 31)
-								, DMibErrorInstance("Huffman decompression output exceeds maximum buffer length")
-							)
-						;
+						DMibExpectException(fg_DecompressHuffman(fMakeByteVector(Data, sizeof(Data)), 31), DMibErrorInstance("Huffman decompression output exceeds maximum buffer length"));
 					};
 				};
 			};
