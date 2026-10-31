@@ -223,6 +223,7 @@ namespace
 					{
 						uint8 Data[] =
 							{
+								// malterlib-format rows
 								0x02, 0x00, 0x00, 0x00
 								, 0x00
 								, 0x01, 0x00, 0x00, 0x00
@@ -267,6 +268,7 @@ namespace
 						// Header with two nodes sharing the same ASCII value
 						uint8 Data[] =
 							{
+								// malterlib-format rows
 								// nDesLen = 2 (little-endian uint32)
 								0x02, 0x00, 0x00, 0x00
 								// nNodes - 1 = 1 (two nodes)
@@ -286,6 +288,7 @@ namespace
 					{
 						uint8 Data[] =
 							{
+								// malterlib-format rows
 								0x20, 0x00, 0x00, 0x00
 								, 0x00
 								, 0x20, 0x00, 0x00, 0x00, 'A'

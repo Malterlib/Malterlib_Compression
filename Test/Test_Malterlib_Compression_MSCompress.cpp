@@ -423,6 +423,7 @@ namespace
 						// Control byte 0xFF = all 8 bits set = 8 literals expected
 						uint8 Data[] =
 							{
+								// malterlib-format rows
 								0x53, 0x5A, 0x44, 0x44, 0x88, 0xF0, 0x27, 0x33, 0x41, 0x00, 0x0A, 0x00, 0x00, 0x00  // header, size=10
 								, 0xFF  // control: 8 literals
 								, 0x41  // only 1 literal, truncated
@@ -443,6 +444,7 @@ namespace
 						// Control byte 0x00 = all bits clear = 8 back-references, each needing 2 bytes
 						uint8 Data[] =
 							{
+								// malterlib-format rows
 								0x53, 0x5A, 0x44, 0x44, 0x88, 0xF0, 0x27, 0x33, 0x41, 0x00, 0x0A, 0x00, 0x00, 0x00  // header, size=10
 								, 0x00  // control: 8 back-references
 								, 0x00  // only 1 byte, need 2 for a back-ref
@@ -959,6 +961,7 @@ namespace
 						// processes 1 literal then exits loop (no more data), hitting the size check
 						uint8 Data[] =
 							{
+								// malterlib-format rows
 								0x53, 0x5A, 0x44, 0x44, 0x88, 0xF0, 0x27, 0x33, 0x41, 0x00, 0x0A, 0x00, 0x00, 0x00
 								, 0xFF, 0x41
 							}
@@ -1002,6 +1005,7 @@ namespace
 						// Control byte 0x00 (8 back-refs) but only 1 data byte — truncated in carry handler
 						uint8 Data[] =
 							{
+								// malterlib-format rows
 								0x53, 0x5A, 0x44, 0x44, 0x88, 0xF0, 0x27, 0x33, 0x41, 0x00, 0x0A, 0x00, 0x00, 0x00
 								, 0x00, 0x00
 							}
