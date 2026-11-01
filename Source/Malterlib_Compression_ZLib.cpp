@@ -14,7 +14,7 @@ namespace NMib::NCompression
 	{
 		enum
 		{
-			ETempBuffer = 4*1024
+			ETempBuffer = 4 * 1024
 		};
 
 		CInternal(ECompressZlibLevel _Level, ECompressZlibType _Type)
@@ -200,7 +200,6 @@ namespace NMib::NCompression
 
 					if (Error != Z_OK && Error != Z_BUF_ERROR)
 						DMibError("Compression error");
-
 				}
 				m_Stream.next_out = nullptr;
 				m_Stream.avail_out = 0;
@@ -234,7 +233,7 @@ namespace NMib::NCompression
 		mp_pInternal = fg_Construct(Level, Type);
 	}
 
-	void CCompress_ZLib::f_FeedBytes(NStream::CBinaryStream * _pOutStream, NStream::CFilePos &_BytesWritten, void const *_pMem, umint _nBytes, ECompressZlibFlush _Flush)
+	void CCompress_ZLib::f_FeedBytes(NStream::CBinaryStream *_pOutStream, NStream::CFilePos &_BytesWritten, void const *_pMem, umint _nBytes, ECompressZlibFlush _Flush)
 	{
 		mp_pInternal->f_FeedBytes(_pOutStream, _BytesWritten, _pMem, _nBytes, _Flush);
 	}
@@ -244,7 +243,7 @@ namespace NMib::NCompression
 		mp_pInternal->f_ConsumeBytes(_pInStream, _StreamLength, _pMem, _nBytes, _Flush);
 	}
 
-	umint CCompress_ZLib::f_TryConsumeBytes(NStream::CBinaryStream *_pInStream, NStream::CFilePos _StreamLength, const void *_pMem, umint _nBytes, ECompressZlibFlush _Flush)
+	umint CCompress_ZLib::f_TryConsumeBytes(NStream::CBinaryStream *_pInStream, NStream::CFilePos _StreamLength, void const *_pMem, umint _nBytes, ECompressZlibFlush _Flush)
 	{
 		return mp_pInternal->f_TryConsumeBytes(_pInStream, _StreamLength, _pMem, _nBytes, _Flush);
 	}

@@ -44,7 +44,6 @@
 		, "ENABLE_EXPAT=0"
 		, "ENABLE_LIBB2=0"
 		, "ENABLE_WERROR=0"
-
 	]
 
 	Import.CMake_Variables =+ [

@@ -188,4 +188,3 @@ Property
 	MalterlibTests =+ "Malterlib_Compression"
 	MalterlibTestFiles_Malterlib_Compression: [type(CEntity)] = ["Test/*"->MakeAbsolute()]
 }
-

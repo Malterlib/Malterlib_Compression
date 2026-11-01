@@ -10,11 +10,8 @@
 
 namespace NMib::NCompression
 {
-	NConcurrency::TCAsyncGenerator<NContainer::CIOByteVector> fg_CompressZstandardAsync
-		(
-			NConcurrency::TCAsyncGenerator<NContainer::CIOByteVector> _InputData
-			, CZStandardCompressionOptions _Options
-		)
+	auto fg_CompressZstandardAsync(NConcurrency::TCAsyncGenerator<NContainer::CIOByteVector> _InputData, CZStandardCompressionOptions _Options)
+		-> NConcurrency::TCAsyncGenerator<NContainer::CIOByteVector>
 	{
 		using namespace NStr;
 

@@ -6,10 +6,10 @@
 
 namespace NMib::NCompression
 {
-	NContainer::CByteVector fg_CompressMiniZ(NContainer::CByteVector const& _Input);
-	NContainer::CByteVector fg_DecompressMiniZ(NContainer::CByteVector const& _Input);
+	NContainer::CByteVector fg_CompressMiniZ(NContainer::CByteVector const &_Input);
+	NContainer::CByteVector fg_DecompressMiniZ(NContainer::CByteVector const &_Input);
 }
 
 #ifndef DMibPNoShortCuts
-	using namespace NMib::NCompression;
+using namespace NMib::NCompression;
 #endif

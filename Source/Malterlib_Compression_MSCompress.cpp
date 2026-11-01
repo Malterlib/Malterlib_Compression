@@ -9,7 +9,6 @@ namespace NMib::NCompression
 {
 	namespace
 	{
-
 		void fsg_WriteSZDDHeader(uint8 *_pOutput, uint32 _OriginalSize, uint8 _FilenameHint)
 		{
 			uint32 Magic = fg_ByteSwapLE(gc_SZDDMagicSig);
