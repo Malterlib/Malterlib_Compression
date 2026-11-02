@@ -6,25 +6,25 @@
 #include "Malterlib_Compression_MiniZ.h"
 
 /*
-#define MINIZ_USE_UNALIGNED_LOADS_AND_STORES 1
+#define MINIZ_USE_UNALIGNED_LOADS_AND_STORES 1 // NOLINT(malterlib-macro-naming)
 
 #ifdef DMibPLittleEndian
-	#define MINIZ_LITTLE_ENDIAN 1
+	#define MINIZ_LITTLE_ENDIAN 1 // NOLINT(malterlib-macro-naming)
 #else
-	#define MINIZ_LITTLE_ENDIAN 0
+	#define MINIZ_LITTLE_ENDIAN 0 // NOLINT(malterlib-macro-naming)
 #endif
 
 #ifdef DArchitecture_x64
-	#define MINIZ_HAS_64BIT_REGISTERS 1
+	#define MINIZ_HAS_64BIT_REGISTERS 1 // NOLINT(malterlib-macro-naming)
 #else
-	#define MINIZ_HAS_64BIT_REGISTERS 0
+	#define MINIZ_HAS_64BIT_REGISTERS 0 // NOLINT(malterlib-macro-naming)
 #endif
 */
-#define MINIZ_NO_STDIO
-#define MINIZ_NO_TIME
-#define MINIZ_NO_ARCHIVE_APIS
-#define MINIZ_NO_ZLIB_APIS
-#define MINIZ_NO_ZLIB_COMPATIBLE_NAME
+#define MINIZ_NO_STDIO // NOLINT(malterlib-macro-naming)
+#define MINIZ_NO_TIME // NOLINT(malterlib-macro-naming)
+#define MINIZ_NO_ARCHIVE_APIS // NOLINT(malterlib-macro-naming)
+#define MINIZ_NO_ZLIB_APIS // NOLINT(malterlib-macro-naming)
+#define MINIZ_NO_ZLIB_COMPATIBLE_NAME // NOLINT(malterlib-macro-naming)
 //#define MINIZ_NO_MALLOC
 //*/
 extern "C"
