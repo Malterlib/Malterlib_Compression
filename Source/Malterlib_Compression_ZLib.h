@@ -49,9 +49,8 @@ namespace NMib::NCompression
 	};
 
 	template <typename t_CStreamType = NStream::CBinaryStreamDefault>
-	class TCBinaryStream_ZLib : public t_CStreamType
+	struct TCBinaryStream_ZLib : public t_CStreamType
 	{
-	public:
 		DMibStreamImplementOperators(TCBinaryStream_ZLib);
 
 		TCBinaryStream_ZLib(ECompressZlibLevel _Level = ECompressZlibLevel_Best);

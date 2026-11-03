@@ -18,9 +18,8 @@ namespace
 
 	constexpr uint32 gc_CompressionLevel = 1;
 
-	class CZstandard_Tests : public NMib::NTest::CTest
+	struct CZstandard_Tests : public NMib::NTest::CTest
 	{
-	public:
 		CByteVector f_MakeByteVector(uint8 const *_pData, aint _nLen)
 		{
 			CByteVector Vec;

@@ -19,9 +19,8 @@ namespace
 	using namespace NMib::NConcurrency;
 	using namespace NMib::NStream;
 
-	class CMSCompress_Tests : public NMib::NTest::CTest
+	struct CMSCompress_Tests : public NMib::NTest::CTest
 	{
-	public:
 		CByteVector f_MakeByteVector(uint8 const *_pData, aint _nLen)
 		{
 			CByteVector Vec;
