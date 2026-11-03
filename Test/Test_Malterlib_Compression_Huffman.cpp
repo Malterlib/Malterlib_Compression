@@ -46,8 +46,8 @@ namespace
 				{
 					NMib::NMisc::CRandomShiftRNG Random;
 					uint8 pTestBuffer[2048];
-					for (aint i = 0; i < 2048; ++i)
-						pTestBuffer[i] = Random.f_GetValue<uint8>();
+					for (aint iByte = 0; iByte < 2048; ++iByte)
+						pTestBuffer[iByte] = Random.f_GetValue<uint8>();
 
 					fTestRoundTrip(pTestBuffer, 2048);
 				};
@@ -61,32 +61,32 @@ namespace
 				DMibTestCategory("SingleSymbol")
 				{
 					uint8 Data[1024];
-					for (aint i = 0; i < 1024; ++i)
-						Data[i] = 0xAA;
+					for (aint iByte = 0; iByte < 1024; ++iByte)
+						Data[iByte] = 0xAA;
 					fTestRoundTrip(Data, 1024);
 				};
 
 				DMibTestCategory("TwoSymbols")
 				{
 					uint8 Data[512];
-					for (aint i = 0; i < 512; ++i)
-						Data[i] = (i & 1) ? 0xFF : 0x00;
+					for (aint iByte = 0; iByte < 512; ++iByte)
+						Data[iByte] = (iByte & 1) ? 0xFF : 0x00;
 					fTestRoundTrip(Data, 512);
 				};
 
 				DMibTestCategory("AllByteValues")
 				{
 					uint8 Data[256];
-					for (aint i = 0; i < 256; ++i)
-						Data[i] = (uint8)i;
+					for (aint iByte = 0; iByte < 256; ++iByte)
+						Data[iByte] = (uint8)iByte;
 					fTestRoundTrip(Data, 256);
 				};
 
 				DMibTestCategory("SkewedDistribution")
 				{
 					uint8 Data[1024];
-					for (aint i = 0; i < 1024; ++i)
-						Data[i] = (i < 900) ? 'A' : (uint8)(i & 0x1F);
+					for (aint iByte = 0; iByte < 1024; ++iByte)
+						Data[iByte] = (iByte < 900) ? 'A' : (uint8)(iByte & 0x1F);
 					fTestRoundTrip(Data, 1024);
 				};
 
@@ -97,8 +97,8 @@ namespace
 						DMibTestCategory("{} bytes"_f << nSize)
 						{
 							uint8 Data[16];
-							for (aint i = 0; i < nSize; ++i)
-								Data[i] = (uint8)(i * 17);
+							for (aint iByte = 0; iByte < nSize; ++iByte)
+								Data[iByte] = (uint8)(iByte * 17);
 							fTestRoundTrip(Data, nSize);
 						};
 					}
@@ -107,8 +107,8 @@ namespace
 				DMibTestCategory("CompressionEfficiency")
 				{
 					uint8 Data[4096];
-					for (aint i = 0; i < 4096; ++i)
-						Data[i] = 'X';
+					for (aint iByte = 0; iByte < 4096; ++iByte)
+						Data[iByte] = 'X';
 
 					CByteVector Source = fMakeByteVector(Data, 4096);
 					CByteVector Compressed = fg_CompressHuffman(Source);
@@ -125,16 +125,16 @@ namespace
 					constexpr aint c_nSize = 32768;
 					uint8 Data[c_nSize];
 					NMib::NMisc::CRandomShiftRNG Random;
-					for (aint i = 0; i < c_nSize; ++i)
-						Data[i] = Random.f_GetValue<uint8>();
+					for (aint iByte = 0; iByte < c_nSize; ++iByte)
+						Data[iByte] = Random.f_GetValue<uint8>();
 					fTestRoundTrip(Data, c_nSize);
 				};
 
 				DMibTestCategory("RepeatedPattern")
 				{
 					uint8 Data[2048];
-					for (aint i = 0; i < 2048; ++i)
-						Data[i] = (uint8)(i % 5);
+					for (aint iByte = 0; iByte < 2048; ++iByte)
+						Data[iByte] = (uint8)(iByte % 5);
 					fTestRoundTrip(Data, 2048);
 				};
 
@@ -166,21 +166,21 @@ namespace
 					int32 Freq[c_nSymbols];
 					Freq[0] = 1;
 					Freq[1] = 1;
-					for (aint i = 2; i < c_nSymbols; ++i)
-						Freq[i] = Freq[i - 1] + Freq[i - 2];
+					for (aint iSymbol = 2; iSymbol < c_nSymbols; ++iSymbol)
+						Freq[iSymbol] = Freq[iSymbol - 1] + Freq[iSymbol - 2];
 
 					aint nTotalLen = 0;
-					for (aint i = 0; i < c_nSymbols; ++i)
-						nTotalLen += Freq[i];
+					for (aint iSymbol = 0; iSymbol < c_nSymbols; ++iSymbol)
+						nTotalLen += Freq[iSymbol];
 
 					CByteVector Source;
 					Source.f_SetLen(nTotalLen);
 					uint8 *pData = Source.f_GetArray();
 					aint iPos = 0;
-					for (aint i = 0; i < c_nSymbols; ++i)
+					for (aint iSymbol = 0; iSymbol < c_nSymbols; ++iSymbol)
 					{
-						for (int32 j = 0; j < Freq[i]; ++j)
-							pData[iPos++] = (uint8)i;
+						for (int32 iRepeat = 0; iRepeat < Freq[iSymbol]; ++iRepeat)
+							pData[iPos++] = (uint8)iSymbol;
 					}
 
 					CByteVector Compressed = fg_CompressHuffman(Source);

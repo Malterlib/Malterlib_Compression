@@ -196,10 +196,10 @@ namespace NMib::NCompression
 
 		// Sliding window: positions 0..N-F-1 with spaces, N-F..N-1 with zero
 		uint8 Window[gc_SZDDWindowSize];
-		for (umint i = 0; i < gc_SZDDWindowSize - gc_SZDDMaxMatchLength; ++i)
-			Window[i] = 0x20;
-		for (umint i = gc_SZDDWindowSize - gc_SZDDMaxMatchLength; i < gc_SZDDWindowSize; ++i)
-			Window[i] = 0x00;
+		for (umint iWindow = 0; iWindow < gc_SZDDWindowSize - gc_SZDDMaxMatchLength; ++iWindow)
+			Window[iWindow] = 0x20;
+		for (umint iWindow = gc_SZDDWindowSize - gc_SZDDMaxMatchLength; iWindow < gc_SZDDWindowSize; ++iWindow)
+			Window[iWindow] = 0x00;
 		umint iWinPos = gc_SZDDWindowSize - gc_SZDDMaxMatchLength;
 
 		// Output buffer

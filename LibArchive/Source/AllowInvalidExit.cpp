@@ -11,4 +11,4 @@ struct CInitAllowInvalid
 	}
 };
 
-static CInitAllowInvalid g_InitAllowInvalid;
+static CInitAllowInvalid gs_InitAllowInvalid;

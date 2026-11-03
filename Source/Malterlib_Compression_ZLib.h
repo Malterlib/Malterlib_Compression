@@ -79,7 +79,7 @@ namespace NMib::NCompression
 		DMibStreamImplementProtected(TCBinaryStream_ZLib);
 
 	private:
-		static constexpr aint mc_TempBuffer = 4 * 1024;
+		static constexpr aint mcp_TempBuffer = 4 * 1024;
 
 		enum EVersion
 		{
@@ -102,7 +102,7 @@ namespace NMib::NCompression
 		NStream::CFilePos mp_FileLen;
 		NStream::CFilePos mp_CompressedLen;
 
-		uint8 mp_TempBuffer[mc_TempBuffer];
+		uint8 mp_TempBuffer[mcp_TempBuffer];
 		bool mp_bCurrentDirty;
 	};
 

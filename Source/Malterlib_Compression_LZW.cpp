@@ -123,9 +123,9 @@ namespace NMib::NCompression
 		uint32 nNextCode = 256;
 		uint32 nCurrentCode = pSrc[0];
 
-		for (umint i = 1; i < nSrcLen; ++i)
+		for (umint iSource = 1; iSource < nSrcLen; ++iSource)
 		{
-			uint8 nByte = pSrc[i];
+			uint8 nByte = pSrc[iSource];
 			uint32 nChildCode;
 
 			if (fLookup(nCurrentCode, nByte, nChildCode))

@@ -47,23 +47,23 @@ namespace NMib::NCompression
 		{
 			// Positions 0..N-F-1 are pre-filled with spaces; positions N-F..N-1
 			// (the lookahead area) are zeroed. This matches expand.exe behaviour.
-			for (umint i = 0; i < gc_SZDDWindowSize - gc_SZDDMaxMatchLength; ++i)
-				m_Window[i] = 0x20;
-			for (umint i = gc_SZDDWindowSize - gc_SZDDMaxMatchLength; i < gc_SZDDWindowSize; ++i)
-				m_Window[i] = 0x00;
+			for (umint iWindow = 0; iWindow < gc_SZDDWindowSize - gc_SZDDMaxMatchLength; ++iWindow)
+				m_Window[iWindow] = 0x20;
+			for (umint iWindow = gc_SZDDWindowSize - gc_SZDDMaxMatchLength; iWindow < gc_SZDDWindowSize; ++iWindow)
+				m_Window[iWindow] = 0x00;
 			m_iWinPos = gc_SZDDWindowSize - gc_SZDDMaxMatchLength;
 
-			for (umint i = 0; i < gc_SZDDWindowSize; ++i)
+			for (umint iWindow = 0; iWindow < gc_SZDDWindowSize; ++iWindow)
 			{
-				m_ChainNext[i] = gc_SZDDChainNil;
-				m_ChainPrev[i] = gc_SZDDChainNil;
+				m_ChainNext[iWindow] = gc_SZDDChainNil;
+				m_ChainPrev[iWindow] = gc_SZDDChainNil;
 			}
-			for (umint i = 0; i < gc_SZDDNumHashBuckets; ++i)
-				m_HashHead[i] = gc_SZDDChainNil;
+			for (umint iBucket = 0; iBucket < gc_SZDDNumHashBuckets; ++iBucket)
+				m_HashHead[iBucket] = gc_SZDDChainNil;
 
 			// Pre-fill hash chains matching the initialized window contents.
-			for (umint i = 0; i < gc_SZDDWindowSize; ++i)
-				fp_InsertHead(i, smint(m_Window[i]));
+			for (umint iWindow = 0; iWindow < gc_SZDDWindowSize; ++iWindow)
+				fp_InsertHead(iWindow, smint(m_Window[iWindow]));
 		}
 
 		/// Remove the old entry at m_iWinPos from its hash chain, write the new byte

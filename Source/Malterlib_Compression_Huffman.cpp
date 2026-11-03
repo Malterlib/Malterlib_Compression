@@ -80,14 +80,14 @@ namespace NMib::NCompression
 				// adjust parent frequency
 				pNode->m_Frequency = pNode->m_pLeft->m_Frequency + pNode->m_pRight->m_Frequency;
 				// insert parent node depending on its frequency
-				smint i;
-				for (i = iBackNode; i >= 0; i--)
+				smint iInsert;
+				for (iInsert = iBackNode; iInsert >= 0; iInsert--)
 				{
-					if (pNodes[i]->m_Frequency >= pNode->m_Frequency)
+					if (pNodes[iInsert]->m_Frequency >= pNode->m_Frequency)
 						break;
 				}
-				NMemory::fg_MemMove(pNodes + (i + 2), pNodes + (i + 1), (iBackNode - i) * sizeof(CHuffmanNode *));
-				pNodes[i + 1] = pNode;
+				NMemory::fg_MemMove(pNodes + (iInsert + 2), pNodes + (iInsert + 1), (iBackNode - iInsert) * sizeof(CHuffmanNode *));
+				pNodes[iInsert + 1] = pNode;
 				iBackNode++;
 			}
 			// set tree leaves nodes code

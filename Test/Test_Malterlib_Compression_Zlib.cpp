@@ -43,8 +43,8 @@ namespace
 				{
 					NMib::NMisc::CRandomShiftRNG Random;
 					uint8 pTestBuffer[2048];
-					for (aint i = 0; i < 2048; ++i)
-						pTestBuffer[i] = Random.f_GetValue<uint8>();
+					for (aint iByte = 0; iByte < 2048; ++iByte)
+						pTestBuffer[iByte] = Random.f_GetValue<uint8>();
 
 					fTestRoundTrip(pTestBuffer, 2048);
 				};
@@ -58,32 +58,32 @@ namespace
 				DMibTestCategory("SingleSymbol")
 				{
 					uint8 Data[1024];
-					for (aint i = 0; i < 1024; ++i)
-						Data[i] = 0xAA;
+					for (aint iByte = 0; iByte < 1024; ++iByte)
+						Data[iByte] = 0xAA;
 					fTestRoundTrip(Data, 1024);
 				};
 
 				DMibTestCategory("TwoSymbols")
 				{
 					uint8 Data[512];
-					for (aint i = 0; i < 512; ++i)
-						Data[i] = (i & 1) ? 0xFF : 0x00;
+					for (aint iByte = 0; iByte < 512; ++iByte)
+						Data[iByte] = (iByte & 1) ? 0xFF : 0x00;
 					fTestRoundTrip(Data, 512);
 				};
 
 				DMibTestCategory("AllByteValues")
 				{
 					uint8 Data[256];
-					for (aint i = 0; i < 256; ++i)
-						Data[i] = (uint8)i;
+					for (aint iByte = 0; iByte < 256; ++iByte)
+						Data[iByte] = (uint8)iByte;
 					fTestRoundTrip(Data, 256);
 				};
 
 				DMibTestCategory("SkewedDistribution")
 				{
 					uint8 Data[1024];
-					for (aint i = 0; i < 1024; ++i)
-						Data[i] = (i < 900) ? 'A' : (uint8)(i & 0x1F);
+					for (aint iByte = 0; iByte < 1024; ++iByte)
+						Data[iByte] = (iByte < 900) ? 'A' : (uint8)(iByte & 0x1F);
 					fTestRoundTrip(Data, 1024);
 				};
 
@@ -94,8 +94,8 @@ namespace
 						DMibTestCategory("{} bytes"_f << nSize)
 						{
 							uint8 Data[16];
-							for (aint i = 0; i < nSize; ++i)
-								Data[i] = (uint8)(i * 17);
+							for (aint iByte = 0; iByte < nSize; ++iByte)
+								Data[iByte] = (uint8)(iByte * 17);
 							fTestRoundTrip(Data, nSize);
 						};
 					}
@@ -104,8 +104,8 @@ namespace
 				DMibTestCategory("CompressionEfficiency")
 				{
 					uint8 Data[4096];
-					for (aint i = 0; i < 4096; ++i)
-						Data[i] = 'X';
+					for (aint iByte = 0; iByte < 4096; ++iByte)
+						Data[iByte] = 'X';
 
 					CByteVector Source = fMakeByteVector(Data, 4096);
 					CByteVector Compressed = fg_CompressZLib(Source);
@@ -122,16 +122,16 @@ namespace
 					constexpr aint c_nSize = 65536;
 					uint8 Data[c_nSize];
 					NMib::NMisc::CRandomShiftRNG Random;
-					for (aint i = 0; i < c_nSize; ++i)
-						Data[i] = Random.f_GetValue<uint8>();
+					for (aint iByte = 0; iByte < c_nSize; ++iByte)
+						Data[iByte] = Random.f_GetValue<uint8>();
 					fTestRoundTrip(Data, c_nSize);
 				};
 
 				DMibTestCategory("RepeatedPattern")
 				{
 					uint8 Data[2048];
-					for (aint i = 0; i < 2048; ++i)
-						Data[i] = (uint8)(i % 5);
+					for (aint iByte = 0; iByte < 2048; ++iByte)
+						Data[iByte] = (uint8)(iByte % 5);
 					fTestRoundTrip(Data, 2048);
 				};
 
@@ -154,8 +154,8 @@ namespace
 					DMibTestCategory("TruncatedCompressedStream")
 					{
 						uint8 Source[256];
-						for (aint i = 0; i < 256; ++i)
-							Source[i] = (uint8)i;
+						for (aint iByte = 0; iByte < 256; ++iByte)
+							Source[iByte] = (uint8)iByte;
 
 						CByteVector Compressed = fg_CompressZLib(fMakeByteVector(Source, sizeof(Source)));
 						Compressed.f_SetLen(Compressed.f_GetLen() / 2);
@@ -190,8 +190,8 @@ namespace
 				{
 					NMib::NMisc::CRandomShiftRNG Random;
 					uint8 pTestBuffer[2048];
-					for (aint i = 0; i < 2048; ++i)
-						pTestBuffer[i] = Random.f_GetValue<uint8>();
+					for (aint iByte = 0; iByte < 2048; ++iByte)
+						pTestBuffer[iByte] = Random.f_GetValue<uint8>();
 
 					fTestRoundTrip(pTestBuffer, 2048);
 				};
@@ -205,32 +205,32 @@ namespace
 				DMibTestCategory("SingleSymbol")
 				{
 					uint8 Data[1024];
-					for (aint i = 0; i < 1024; ++i)
-						Data[i] = 0xAA;
+					for (aint iByte = 0; iByte < 1024; ++iByte)
+						Data[iByte] = 0xAA;
 					fTestRoundTrip(Data, 1024);
 				};
 
 				DMibTestCategory("TwoSymbols")
 				{
 					uint8 Data[512];
-					for (aint i = 0; i < 512; ++i)
-						Data[i] = (i & 1) ? 0xFF : 0x00;
+					for (aint iByte = 0; iByte < 512; ++iByte)
+						Data[iByte] = (iByte & 1) ? 0xFF : 0x00;
 					fTestRoundTrip(Data, 512);
 				};
 
 				DMibTestCategory("AllByteValues")
 				{
 					uint8 Data[256];
-					for (aint i = 0; i < 256; ++i)
-						Data[i] = (uint8)i;
+					for (aint iByte = 0; iByte < 256; ++iByte)
+						Data[iByte] = (uint8)iByte;
 					fTestRoundTrip(Data, 256);
 				};
 
 				DMibTestCategory("SkewedDistribution")
 				{
 					uint8 Data[1024];
-					for (aint i = 0; i < 1024; ++i)
-						Data[i] = (i < 900) ? 'A' : (uint8)(i & 0x1F);
+					for (aint iByte = 0; iByte < 1024; ++iByte)
+						Data[iByte] = (iByte < 900) ? 'A' : (uint8)(iByte & 0x1F);
 					fTestRoundTrip(Data, 1024);
 				};
 
@@ -241,8 +241,8 @@ namespace
 						DMibTestCategory("{} bytes"_f << nSize)
 						{
 							uint8 Data[16];
-							for (aint i = 0; i < nSize; ++i)
-								Data[i] = (uint8)(i * 17);
+							for (aint iByte = 0; iByte < nSize; ++iByte)
+								Data[iByte] = (uint8)(iByte * 17);
 							fTestRoundTrip(Data, nSize);
 						};
 					}
@@ -251,8 +251,8 @@ namespace
 				DMibTestCategory("CompressionEfficiency")
 				{
 					uint8 Data[4096];
-					for (aint i = 0; i < 4096; ++i)
-						Data[i] = 'X';
+					for (aint iByte = 0; iByte < 4096; ++iByte)
+						Data[iByte] = 'X';
 
 					CByteVector Source = fMakeByteVector(Data, 4096);
 					CByteVector Compressed = fg_CompressGZip(Source);
@@ -268,16 +268,16 @@ namespace
 					constexpr aint c_nSize = 65536;
 					uint8 Data[c_nSize];
 					NMib::NMisc::CRandomShiftRNG Random;
-					for (aint i = 0; i < c_nSize; ++i)
-						Data[i] = Random.f_GetValue<uint8>();
+					for (aint iByte = 0; iByte < c_nSize; ++iByte)
+						Data[iByte] = Random.f_GetValue<uint8>();
 					fTestRoundTrip(Data, c_nSize);
 				};
 
 				DMibTestCategory("RepeatedPattern")
 				{
 					uint8 Data[2048];
-					for (aint i = 0; i < 2048; ++i)
-						Data[i] = (uint8)(i % 5);
+					for (aint iByte = 0; iByte < 2048; ++iByte)
+						Data[iByte] = (uint8)(iByte % 5);
 					fTestRoundTrip(Data, 2048);
 				};
 
@@ -338,8 +338,8 @@ namespace
 				{
 					NMib::NMisc::CRandomShiftRNG Random;
 					uint8 pTestBuffer[2048];
-					for (aint i = 0; i < 2048; ++i)
-						pTestBuffer[i] = Random.f_GetValue<uint8>();
+					for (aint iByte = 0; iByte < 2048; ++iByte)
+						pTestBuffer[iByte] = Random.f_GetValue<uint8>();
 
 					fTestStreamRoundTrip(pTestBuffer, 2048);
 				};
@@ -353,16 +353,16 @@ namespace
 				DMibTestCategory("SingleSymbol")
 				{
 					uint8 Data[1024];
-					for (aint i = 0; i < 1024; ++i)
-						Data[i] = 0xAA;
+					for (aint iByte = 0; iByte < 1024; ++iByte)
+						Data[iByte] = 0xAA;
 					fTestStreamRoundTrip(Data, 1024);
 				};
 
 				DMibTestCategory("AllByteValues")
 				{
 					uint8 Data[256];
-					for (aint i = 0; i < 256; ++i)
-						Data[i] = (uint8)i;
+					for (aint iByte = 0; iByte < 256; ++iByte)
+						Data[iByte] = (uint8)iByte;
 					fTestStreamRoundTrip(Data, 256);
 				};
 
@@ -371,8 +371,8 @@ namespace
 					constexpr aint c_nSize = 65536;
 					uint8 Data[c_nSize];
 					NMib::NMisc::CRandomShiftRNG Random;
-					for (aint i = 0; i < c_nSize; ++i)
-						Data[i] = Random.f_GetValue<uint8>();
+					for (aint iByte = 0; iByte < c_nSize; ++iByte)
+						Data[iByte] = Random.f_GetValue<uint8>();
 					fTestStreamRoundTrip(Data, c_nSize);
 				};
 
@@ -403,8 +403,8 @@ namespace
 				{
 					NMib::NMisc::CRandomShiftRNG Random;
 					uint8 Data[2048];
-					for (aint i = 0; i < 2048; ++i)
-						Data[i] = Random.f_GetValue<uint8>();
+					for (aint iByte = 0; iByte < 2048; ++iByte)
+						Data[iByte] = Random.f_GetValue<uint8>();
 
 					// Test all compression levels produce valid output
 					for (aint nLevel = ECompressZlibLevel_Fastest; nLevel <= ECompressZlibLevel_Best; ++nLevel)
@@ -420,8 +420,8 @@ namespace
 				{
 					// Repetitive data to see compression level differences
 					uint8 Data[4096];
-					for (aint i = 0; i < 4096; ++i)
-						Data[i] = (uint8)(i % 13);
+					for (aint iByte = 0; iByte < 4096; ++iByte)
+						Data[iByte] = (uint8)(iByte % 13);
 
 					CByteVector Source = fMakeByteVector(Data, 4096);
 
@@ -462,8 +462,8 @@ namespace
 					// but both decompress to the same original data
 					NMib::NMisc::CRandomShiftRNG Random;
 					uint8 Data[512];
-					for (aint i = 0; i < 512; ++i)
-						Data[i] = Random.f_GetValue<uint8>();
+					for (aint iByte = 0; iByte < 512; ++iByte)
+						Data[iByte] = Random.f_GetValue<uint8>();
 
 					CByteVector Source = fMakeByteVector(Data, 512);
 
@@ -522,8 +522,8 @@ namespace
 					constexpr aint c_nSize = 16384;
 					uint8 SourceData[c_nSize];
 					NMib::NMisc::CRandomShiftRNG Random;
-					for (aint i = 0; i < c_nSize; ++i)
-						SourceData[i] = Random.f_GetValue<uint8>();
+					for (aint iByte = 0; iByte < c_nSize; ++iByte)
+						SourceData[iByte] = Random.f_GetValue<uint8>();
 
 					TCBinaryStreamMemory<> BackingStream;
 
@@ -556,8 +556,8 @@ namespace
 					constexpr aint c_nChunks = 8;
 					constexpr aint c_nTotal = c_nChunkSize * c_nChunks;
 					uint8 SourceData[c_nTotal];
-					for (aint i = 0; i < c_nTotal; ++i)
-						SourceData[i] = (uint8)(i % 251);
+					for (aint iByte = 0; iByte < c_nTotal; ++iByte)
+						SourceData[iByte] = (uint8)(iByte % 251);
 
 					TCBinaryStreamMemory<> BackingStream;
 
@@ -598,8 +598,8 @@ namespace
 						DMibExpect(ZLibStream.f_GetPosition(), ==, NMib::NStream::CFilePos(0));
 
 						uint8 Data[32];
-						for (aint i = 0; i < 32; ++i)
-							Data[i] = (uint8)i;
+						for (aint iByte = 0; iByte < 32; ++iByte)
+							Data[iByte] = (uint8)iByte;
 
 						ZLibStream.f_FeedBytes(Data, 32);
 						DMibExpect(ZLibStream.f_GetPosition(), ==, NMib::NStream::CFilePos(32));
@@ -611,8 +611,8 @@ namespace
 				DMibTestCategory("CompressionLevels")
 				{
 					uint8 Data[1024];
-					for (aint i = 0; i < 1024; ++i)
-						Data[i] = (uint8)(i % 7);
+					for (aint iByte = 0; iByte < 1024; ++iByte)
+						Data[iByte] = (uint8)(iByte % 7);
 
 					for (aint nLevel = ECompressZlibLevel_Fastest; nLevel <= ECompressZlibLevel_Best; ++nLevel)
 					{
@@ -799,8 +799,8 @@ namespace
 							NMib::NStream::CFilePos BytesWritten = 0;
 							CCompress_ZLib Comp;
 							uint8 Data[64];
-							for (aint i = 0; i < 64; ++i)
-								Data[i] = (uint8)i;
+							for (aint iByte = 0; iByte < 64; ++iByte)
+								Data[iByte] = (uint8)iByte;
 							Comp.f_FeedBytes(&CompressedStream, BytesWritten, Data, sizeof(Data), ECompressZlibFlush_Finish);
 						}
 

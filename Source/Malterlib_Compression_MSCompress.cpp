@@ -147,9 +147,9 @@ namespace NMib::NCompression
 				BlockBuffer[1 + nBlockDataLen++] = Byte2;
 
 				// Update window and hash chains for all consumed bytes
-				for (umint i = 0; i < nBestLen; ++i)
+				for (umint iConsumed = 0; iConsumed < nBestLen; ++iConsumed)
 				{
-					MatchFinder.f_UpdatePosition(pSource[iSrcPos + i]);
+					MatchFinder.f_UpdatePosition(pSource[iSrcPos + iConsumed]);
 					MatchFinder.f_Advance();
 				}
 				iSrcPos += nBestLen;
@@ -213,10 +213,10 @@ namespace NMib::NCompression
 
 		// Initialize sliding window: positions 0..N-F-1 with spaces, N-F..N-1 with zero
 		uint8 Window[gc_SZDDWindowSize];
-		for (umint i = 0; i < gc_SZDDWindowSize - gc_SZDDMaxMatchLength; ++i)
-			Window[i] = 0x20;
-		for (umint i = gc_SZDDWindowSize - gc_SZDDMaxMatchLength; i < gc_SZDDWindowSize; ++i)
-			Window[i] = 0x00;
+		for (umint iWindow = 0; iWindow < gc_SZDDWindowSize - gc_SZDDMaxMatchLength; ++iWindow)
+			Window[iWindow] = 0x20;
+		for (umint iWindow = gc_SZDDWindowSize - gc_SZDDMaxMatchLength; iWindow < gc_SZDDWindowSize; ++iWindow)
+			Window[iWindow] = 0x00;
 		umint iWinPos = gc_SZDDWindowSize - gc_SZDDMaxMatchLength;
 
 		umint iInputPos = gc_SZDDHeaderSize;
@@ -251,7 +251,7 @@ namespace NMib::NCompression
 					umint nMatchPos = umint(Byte1) | (umint(Byte2 & 0xF0) << 4);
 					umint nMatchLen = umint(Byte2 & 0x0F) + gc_SZDDMinMatchLength;
 
-					for (umint i = 0; i < nMatchLen && iOutputPos < Header.m_OriginalSize; ++i)
+					for (umint iMatch = 0; iMatch < nMatchLen && iOutputPos < Header.m_OriginalSize; ++iMatch)
 					{
 						uint8 Byte = Window[nMatchPos];
 						pOutput[iOutputPos++] = Byte;
