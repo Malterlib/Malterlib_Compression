@@ -12,10 +12,7 @@ namespace NMib::NCompression
 	using namespace NStr;
 	struct CCompress_ZLib::CInternal
 	{
-		enum
-		{
-			ETempBuffer = 4 * 1024
-		};
+		static constexpr aint mc_TempBuffer = 4 * 1024;
 
 		CInternal(ECompressZlibLevel _Level, ECompressZlibType _Type)
 			: m_CompressionLevel(_Level)
@@ -51,7 +48,7 @@ namespace NMib::NCompression
 
 				m_OpenMode = 1;
 				m_Stream.next_out = m_TempBuffer;
-				m_Stream.avail_out = ETempBuffer;
+				m_Stream.avail_out = mc_TempBuffer;
 			}
 
 			m_Stream.next_in = (Bytef *)_pMem;
@@ -61,10 +58,10 @@ namespace NMib::NCompression
 			{
 				if (!m_Stream.avail_out)
 				{
-					_pOutStream->f_FeedBytes(m_TempBuffer, ETempBuffer);
-					_OutBytesWritten += ETempBuffer;
+					_pOutStream->f_FeedBytes(m_TempBuffer, mc_TempBuffer);
+					_OutBytesWritten += mc_TempBuffer;
 					m_Stream.next_out = m_TempBuffer;
-					m_Stream.avail_out = ETempBuffer;
+					m_Stream.avail_out = mc_TempBuffer;
 				}
 
 				int Error = deflate(&m_Stream, Z_NO_FLUSH);
@@ -75,16 +72,16 @@ namespace NMib::NCompression
 
 			if (_Flush == ECompressZlibFlush_Sync)
 			{
-				umint Len = ETempBuffer - m_Stream.avail_out;
+				umint Len = mc_TempBuffer - m_Stream.avail_out;
 				_pOutStream->f_FeedBytes(m_TempBuffer, Len);
 
 				do
 				{
 					m_Stream.next_out = m_TempBuffer;
-					m_Stream.avail_out = ETempBuffer;
+					m_Stream.avail_out = mc_TempBuffer;
 
 					int Error = deflate(&m_Stream, Z_SYNC_FLUSH);
-					umint Len = ETempBuffer - m_Stream.avail_out;
+					umint Len = mc_TempBuffer - m_Stream.avail_out;
 
 					_pOutStream->f_FeedBytes(m_TempBuffer, Len);
 					_OutBytesWritten += Len;
@@ -96,7 +93,7 @@ namespace NMib::NCompression
 					;
 
 				m_Stream.next_out = m_TempBuffer;
-				m_Stream.avail_out = ETempBuffer;
+				m_Stream.avail_out = mc_TempBuffer;
 			}
 			else if (_Flush == ECompressZlibFlush_Finish)
 			{
@@ -104,7 +101,7 @@ namespace NMib::NCompression
 				while (Error != Z_STREAM_END)
 				{
 					Error = deflate(&m_Stream, Z_FINISH);
-					umint Len = ETempBuffer - m_Stream.avail_out;
+					umint Len = mc_TempBuffer - m_Stream.avail_out;
 					_pOutStream->f_FeedBytes(m_TempBuffer, Len);
 					_OutBytesWritten += Len;
 
@@ -112,7 +109,7 @@ namespace NMib::NCompression
 						DMibError("Compression error: {}"_f << Error);
 
 					m_Stream.next_out = m_TempBuffer;
-					m_Stream.avail_out = ETempBuffer;
+					m_Stream.avail_out = mc_TempBuffer;
 				}
 			}
 		}
@@ -152,7 +149,7 @@ namespace NMib::NCompression
 				if (!m_Stream.avail_in)
 				{
 					m_Stream.next_in = m_TempBuffer;
-					m_Stream.avail_in = fg_Min(_InStreamLength - _pInStream->f_GetPosition(), ETempBuffer);
+					m_Stream.avail_in = fg_Min(_InStreamLength - _pInStream->f_GetPosition(), mc_TempBuffer);
 					if (m_Stream.avail_in == 0)
 					{
 						DMibLog(Error, "ZLib inflate: No available input!", 0);
@@ -180,7 +177,7 @@ namespace NMib::NCompression
 					if (!m_Stream.avail_in)
 					{
 						m_Stream.next_in = m_TempBuffer;
-						m_Stream.avail_in = fg_Min(_InStreamLength - _pInStream->f_GetPosition(), ETempBuffer);
+						m_Stream.avail_in = fg_Min(_InStreamLength - _pInStream->f_GetPosition(), mc_TempBuffer);
 						if (m_Stream.avail_in == 0)
 						{
 							DMibLog(Error, "ZLib inflate: No available input during flush sync!", 0);
@@ -212,7 +209,7 @@ namespace NMib::NCompression
 		ECompressZlibType m_Type;
 		uint32 m_OpenMode;
 		z_stream m_Stream;
-		uint8 m_TempBuffer[ETempBuffer];
+		uint8 m_TempBuffer[mc_TempBuffer];
 	};
 
 	CCompress_ZLib::CCompress_ZLib(ECompressZlibLevel _Level, ECompressZlibType _Type)
@@ -250,7 +247,7 @@ namespace NMib::NCompression
 
 	NContainer::CByteVector fg_CompressZLib(NContainer::CByteVector const &_Source)
 	{
-		NStream::CBinaryStreamMemory<> MemoryStream;
+		NStream::TCBinaryStreamMemory<> MemoryStream;
 		TCBinaryStream_ZLib<> Stream;
 
 		Stream.f_Open(&MemoryStream, NFile::EFileOpen_Write);
@@ -262,7 +259,7 @@ namespace NMib::NCompression
 
 	NContainer::CByteVector fg_DecompressZLib(NContainer::CByteVector const &_Source)
 	{
-		NStream::CBinaryStreamMemoryPtr<> StreamMemory;
+		NStream::TCBinaryStreamMemoryPtr<> StreamMemory;
 		StreamMemory.f_OpenRead(_Source.f_GetArray(), _Source.f_GetLen());
 
 		TCBinaryStream_ZLib<> Stream;
@@ -292,8 +289,8 @@ namespace NMib::NCompression
 
 	NContainer::CByteVector fg_CompressGZip(NContainer::CByteVector const &_SourceData, ECompressZlibLevel _Level)
 	{
-		NStream::CBinaryStreamMemoryConstRef<> SourceStream(_SourceData);
-		NStream::CBinaryStreamMemory<> DestStream;
+		NStream::TCBinaryStreamMemoryConstRef<> SourceStream(_SourceData);
+		NStream::TCBinaryStreamMemory<> DestStream;
 		fg_CompressGZip(SourceStream, DestStream, _Level);
 
 		return DestStream.f_MoveVector();
@@ -359,8 +356,8 @@ namespace NMib::NCompression
 
 	NContainer::CByteVector fg_DecompressGZip(NContainer::CByteVector const &_SourceData)
 	{
-		NStream::CBinaryStreamMemoryConstRef<> SourceStream(_SourceData);
-		NStream::CBinaryStreamMemory<> DestStream;
+		NStream::TCBinaryStreamMemoryConstRef<> SourceStream(_SourceData);
+		NStream::TCBinaryStreamMemory<> DestStream;
 		fg_DecompressGZip(SourceStream, DestStream);
 
 		return DestStream.f_MoveVector();

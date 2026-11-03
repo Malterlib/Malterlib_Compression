@@ -309,10 +309,10 @@ namespace
 
 						CByteVector CompressedData;
 						{
-							CBinaryStreamMemoryPtr<> SourceStream;
+							TCBinaryStreamMemoryPtr<> SourceStream;
 							SourceStream.f_OpenRead(Source);
 
-							CBinaryStreamMemory<> DestinationStream;
+							TCBinaryStreamMemory<> DestinationStream;
 
 							fg_CompressGZip(SourceStream, DestinationStream, _Level);
 							CompressedData = DestinationStream.f_MoveVectorOptimized();
@@ -320,10 +320,10 @@ namespace
 
 						CByteVector DecompressedData;
 						{
-							CBinaryStreamMemoryPtr<> SourceStream;
+							TCBinaryStreamMemoryPtr<> SourceStream;
 							SourceStream.f_OpenRead(CompressedData);
 
-							CBinaryStreamMemory<> DestinationStream;
+							TCBinaryStreamMemory<> DestinationStream;
 
 							fg_DecompressGZip(SourceStream, DestinationStream);
 							DecompressedData = DestinationStream.f_MoveVectorOptimized();
@@ -380,18 +380,18 @@ namespace
 				{
 					CByteVector Source;
 
-					CBinaryStreamMemoryPtr<> SourceStream;
+					TCBinaryStreamMemoryPtr<> SourceStream;
 					SourceStream.f_OpenRead(Source);
 
-					CBinaryStreamMemory<> DestinationStream;
+					TCBinaryStreamMemory<> DestinationStream;
 
 					fg_CompressGZip(SourceStream, DestinationStream);
 					CByteVector CompressedData = DestinationStream.f_MoveVectorOptimized();
 
-					CBinaryStreamMemoryPtr<> CompressedStream;
+					TCBinaryStreamMemoryPtr<> CompressedStream;
 					CompressedStream.f_OpenRead(CompressedData);
 
-					CBinaryStreamMemory<> DecompressedStream;
+					TCBinaryStreamMemory<> DecompressedStream;
 
 					fg_DecompressGZip(CompressedStream, DecompressedStream);
 					CByteVector DecompressedData = DecompressedStream.f_MoveVectorOptimized();
@@ -427,18 +427,18 @@ namespace
 
 					CByteVector CompressedFastest;
 					{
-						CBinaryStreamMemoryPtr<> Src;
+						TCBinaryStreamMemoryPtr<> Src;
 						Src.f_OpenRead(Source);
-						CBinaryStreamMemory<> Dst;
+						TCBinaryStreamMemory<> Dst;
 						fg_CompressGZip(Src, Dst, ECompressZlibLevel_Fastest);
 						CompressedFastest = Dst.f_MoveVectorOptimized();
 					}
 
 					CByteVector CompressedBest;
 					{
-						CBinaryStreamMemoryPtr<> Src;
+						TCBinaryStreamMemoryPtr<> Src;
 						Src.f_OpenRead(Source);
-						CBinaryStreamMemory<> Dst;
+						TCBinaryStreamMemory<> Dst;
 						fg_CompressGZip(Src, Dst, ECompressZlibLevel_Best);
 						CompressedBest = Dst.f_MoveVectorOptimized();
 					}
@@ -490,7 +490,7 @@ namespace
 				{
 					uint8 Data[] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
 
-					CBinaryStreamMemory<> BackingStream;
+					TCBinaryStreamMemory<> BackingStream;
 
 					// Write compressed data
 					{
@@ -525,7 +525,7 @@ namespace
 					for (aint i = 0; i < c_nSize; ++i)
 						SourceData[i] = Random.f_GetValue<uint8>();
 
-					CBinaryStreamMemory<> BackingStream;
+					TCBinaryStreamMemory<> BackingStream;
 
 					{
 						TCBinaryStream_ZLib<> ZLibStream;
@@ -559,7 +559,7 @@ namespace
 					for (aint i = 0; i < c_nTotal; ++i)
 						SourceData[i] = (uint8)(i % 251);
 
-					CBinaryStreamMemory<> BackingStream;
+					TCBinaryStreamMemory<> BackingStream;
 
 					{
 						TCBinaryStream_ZLib<> ZLibStream;
@@ -589,7 +589,7 @@ namespace
 
 				DMibTestCategory("StreamPosition")
 				{
-					CBinaryStreamMemory<> BackingStream;
+					TCBinaryStreamMemory<> BackingStream;
 
 					{
 						TCBinaryStream_ZLib<> ZLibStream;
@@ -618,7 +618,7 @@ namespace
 					{
 						DMibTestCategory("Level {}"_f << nLevel)
 						{
-							CBinaryStreamMemory<> BackingStream;
+							TCBinaryStreamMemory<> BackingStream;
 
 							{
 								TCBinaryStream_ZLib<> ZLibStream((ECompressZlibLevel)nLevel);
@@ -649,7 +649,7 @@ namespace
 				{
 					DMibTestCategory("ReadFromWriteOnlyStream")
 					{
-						CBinaryStreamMemory<> BackingStream;
+						TCBinaryStreamMemory<> BackingStream;
 						TCBinaryStream_ZLib<> ZLibStream;
 						ZLibStream.f_Open(&BackingStream, NMib::NFile::EFileOpen_Write);
 
@@ -661,7 +661,7 @@ namespace
 					DMibTestCategory("WriteToReadOnlyStream")
 					{
 						// Create a valid compressed stream first
-						CBinaryStreamMemory<> BackingStream;
+						TCBinaryStreamMemory<> BackingStream;
 						{
 							TCBinaryStream_ZLib<> Writer;
 							Writer.f_Open(&BackingStream, NMib::NFile::EFileOpen_Write);
@@ -681,7 +681,7 @@ namespace
 
 					DMibTestCategory("ReadPastEndOfFile")
 					{
-						CBinaryStreamMemory<> BackingStream;
+						TCBinaryStreamMemory<> BackingStream;
 						{
 							TCBinaryStream_ZLib<> Writer;
 							Writer.f_Open(&BackingStream, NMib::NFile::EFileOpen_Write);
@@ -701,7 +701,7 @@ namespace
 
 					DMibTestCategory("SetLengthNotSupported")
 					{
-						CBinaryStreamMemory<> BackingStream;
+						TCBinaryStreamMemory<> BackingStream;
 						TCBinaryStream_ZLib<> ZLibStream;
 						ZLibStream.f_Open(&BackingStream, NMib::NFile::EFileOpen_Write);
 
@@ -711,7 +711,7 @@ namespace
 
 					DMibTestCategory("InvalidStreamVersion")
 					{
-						CBinaryStreamMemory<> BackingStream;
+						TCBinaryStreamMemory<> BackingStream;
 
 						// Write a header with an invalid version number
 						uint64 FileLen = uint64(10) | 0x8000000000000000UL;
@@ -735,7 +735,7 @@ namespace
 
 					DMibTestCategory("OpenWithReadAndWrite")
 					{
-						CBinaryStreamMemory<> BackingStream;
+						TCBinaryStreamMemory<> BackingStream;
 						TCBinaryStream_ZLib<> ZLibStream;
 
 						DMibExpectException
@@ -748,14 +748,14 @@ namespace
 
 					DMibTestCategory("CompressAndDecompressInSameSession")
 					{
-						CBinaryStreamMemory<> OutStream;
+						TCBinaryStreamMemory<> OutStream;
 						NMib::NStream::CFilePos BytesWritten = 0;
 
 						CCompress_ZLib Compressor;
 						uint8 Data[] = {1, 2, 3, 4};
 						Compressor.f_FeedBytes(&OutStream, BytesWritten, Data, sizeof(Data), ECompressZlibFlush_Finish);
 
-						CBinaryStreamMemory<> InStream;
+						TCBinaryStreamMemory<> InStream;
 						uint8 Buf[4];
 						DMibExpectException
 							(
@@ -768,7 +768,7 @@ namespace
 					DMibTestCategory("DecompressAndCompressInSameSession")
 					{
 						// First create valid compressed data
-						CBinaryStreamMemory<> CompressedStream;
+						TCBinaryStreamMemory<> CompressedStream;
 						{
 							NMib::NStream::CFilePos BytesWritten = 0;
 							CCompress_ZLib Comp;
@@ -781,7 +781,7 @@ namespace
 						uint8 Buf[4];
 						Decompressor.f_ConsumeBytes(&CompressedStream, 0, Buf, sizeof(Buf), ECompressZlibFlush_None);
 
-						CBinaryStreamMemory<> OutStream;
+						TCBinaryStreamMemory<> OutStream;
 						NMib::NStream::CFilePos BytesWritten = 0;
 						DMibExpectException
 							(
@@ -794,7 +794,7 @@ namespace
 					DMibTestCategory("RanOutOfCompressedData")
 					{
 						// Create valid compressed data for a large payload
-						CBinaryStreamMemory<> CompressedStream;
+						TCBinaryStreamMemory<> CompressedStream;
 						{
 							NMib::NStream::CFilePos BytesWritten = 0;
 							CCompress_ZLib Comp;
@@ -815,7 +815,7 @@ namespace
 
 					DMibTestCategory("GarbageDataDirectDecompress")
 					{
-						CBinaryStreamMemory<> GarbageStream;
+						TCBinaryStreamMemory<> GarbageStream;
 						uint8 Garbage[] = {0xFF, 0xFE, 0xFD, 0xFC, 0xFB, 0xFA, 0xF9, 0xF8};
 						GarbageStream.f_FeedBytes(Garbage, sizeof(Garbage));
 						GarbageStream.f_SetPosition(0);

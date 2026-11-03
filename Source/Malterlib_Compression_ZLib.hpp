@@ -138,7 +138,7 @@ namespace NMib::NCompression
 		while (_nBytes)
 		{
 			aint Pos = fp_PrepareBlock(mp_FilePos, true);
-			aint ThisTime = fg_Min(_nBytes, (umint)ETempBuffer - Pos);
+			aint ThisTime = fg_Min(_nBytes, (umint)mc_TempBuffer - Pos);
 			NMemory::fg_MemCopy(mp_TempBuffer + Pos, pMem, ThisTime);
 
 			mp_FilePos += ThisTime;
@@ -162,7 +162,7 @@ namespace NMib::NCompression
 		while (_nBytes)
 		{
 			aint Pos = fp_PrepareBlock(mp_FilePos, false);
-			aint ThisTime = fg_Min(_nBytes, (umint)ETempBuffer - Pos);
+			aint ThisTime = fg_Min(_nBytes, (umint)mc_TempBuffer - Pos);
 			NMemory::fg_MemCopy(pMem, mp_TempBuffer + Pos, ThisTime);
 
 			mp_FilePos += ThisTime;
@@ -237,12 +237,12 @@ namespace NMib::NCompression
 	template <typename t_CStreamType>
 	void TCBinaryStream_ZLib<t_CStreamType>::fp_WriteChunk(bool _bFlush)
 	{
-		umint nBytes = fg_Min(mp_FileLen - mp_LastChunk, ETempBuffer);
+		umint nBytes = fg_Min(mp_FileLen - mp_LastChunk, mc_TempBuffer);
 		if (nBytes)
 		{
 			NMib::NStream::CFilePos nBytesWritten;
 			mp_Compressor.f_FeedBytes(mp_pStream, nBytesWritten, mp_TempBuffer, nBytes, _bFlush ? ECompressZlibFlush_Finish : ECompressZlibFlush_None);
-			if (nBytes != ETempBuffer && !_bFlush)
+			if (nBytes != mc_TempBuffer && !_bFlush)
 				DMibErrorFile("Internal error");
 			mp_LastChunk += nBytes;
 		}
@@ -251,7 +251,7 @@ namespace NMib::NCompression
 	template <typename t_CStreamType>
 	void TCBinaryStream_ZLib<t_CStreamType>::fp_ReadChunk()
 	{
-		umint nBytes = fg_Min(mp_FileLen - mp_LastChunk, ETempBuffer);
+		umint nBytes = fg_Min(mp_FileLen - mp_LastChunk, mc_TempBuffer);
 		if (nBytes)
 		{
 			mp_LastChunk += nBytes;
@@ -264,31 +264,31 @@ namespace NMib::NCompression
 	{
 		if (_bWrite)
 		{
-			if (_Pos >= mp_LastChunk && _Pos < mp_LastChunk + ETempBuffer)
-				return _Pos % ETempBuffer;
+			if (_Pos >= mp_LastChunk && _Pos < mp_LastChunk + mc_TempBuffer)
+				return _Pos % mc_TempBuffer;
 
 			if (_Pos < mp_LastChunk)
 				DMibErrorFile("Cannot seek backwards in stream");
 
-			NStream::CFilePos TargetPos = NMib::fg_AlignDown(_Pos, ETempBuffer);
+			NStream::CFilePos TargetPos = NMib::fg_AlignDown(_Pos, mc_TempBuffer);
 			while (mp_LastChunk < TargetPos)
 				fp_WriteChunk(false);
 
-			return _Pos % ETempBuffer;
+			return _Pos % mc_TempBuffer;
 		}
 		else
 		{
-			if (_Pos >= (mp_LastChunk - ETempBuffer) && _Pos < mp_LastChunk)
-				return _Pos % ETempBuffer;
+			if (_Pos >= (mp_LastChunk - mc_TempBuffer) && _Pos < mp_LastChunk)
+				return _Pos % mc_TempBuffer;
 
-			if (_Pos < (mp_LastChunk - ETempBuffer))
+			if (_Pos < (mp_LastChunk - mc_TempBuffer))
 				DMibErrorFile("Cannot seek backwards in stream");
 
-			NStream::CFilePos TargetPos = fg_Min(NMib::fg_AlignDown(_Pos, ETempBuffer) + ETempBuffer, mp_FileLen);
+			NStream::CFilePos TargetPos = fg_Min(NMib::fg_AlignDown(_Pos, mc_TempBuffer) + mc_TempBuffer, mp_FileLen);
 			while (mp_LastChunk < TargetPos)
 				fp_ReadChunk();
 
-			return _Pos % ETempBuffer;
+			return _Pos % mc_TempBuffer;
 		}
 	}
 }
