@@ -35,9 +35,9 @@ namespace NMib::NCompression
 			COrdering_Partial operator () (CHuffmanNode &_Elem1, CHuffmanNode &_Elem2) const;
 		};
 
-		auto fg_PopNode(CHuffmanNode *_pNodes[], umint _iIndex, bool _bRight) -> CHuffmanNode *
+		auto fg_PopNode(CHuffmanNode *_Nodes[], umint _iIndex, bool _bRight) -> CHuffmanNode *
 		{
-			CHuffmanNode *pNode = _pNodes[_iIndex];
+			CHuffmanNode *pNode = _Nodes[_iIndex];
 			pNode->m_Code = _bRight;
 			pNode->m_CodeLength = 1;
 			return pNode;
@@ -57,13 +57,13 @@ namespace NMib::NCompression
 
 		umint fg_GetHuffmanTree(CHuffmanNode _Nodes[], bool _bSetCodes)
 		{
-			CHuffmanNode *pNodes[256];
+			CHuffmanNode *NodeQueue[256];
 			CHuffmanNode *pNode;
 
 			// add used ascii to Huffman queue
 			umint nNodes = 0;
 			for (umint iCount = 0; iCount < 256 && _Nodes[iCount].m_Frequency; iCount++)
-				pNodes[nNodes++] = &_Nodes[iCount];
+				NodeQueue[nNodes++] = &_Nodes[iCount];
 			umint iParentNode = nNodes;
 			smint iBackNode = smint(nNodes) - 1;
 
@@ -72,9 +72,9 @@ namespace NMib::NCompression
 				// parent node
 				pNode = &_Nodes[iParentNode++];
 				// pop first child
-				pNode->m_pLeft = fg_PopNode(pNodes, iBackNode--, false);
+				pNode->m_pLeft = fg_PopNode(NodeQueue, iBackNode--, false);
 				// pop second child
-				pNode->m_pRight = fg_PopNode(pNodes, iBackNode--, true);
+				pNode->m_pRight = fg_PopNode(NodeQueue, iBackNode--, true);
 				// adjust parent of the two popped nodes
 				pNode->m_pLeft->m_pParent = pNode->m_pRight->m_pParent = pNode;
 				// adjust parent frequency
@@ -83,11 +83,11 @@ namespace NMib::NCompression
 				smint iInsert;
 				for (iInsert = iBackNode; iInsert >= 0; iInsert--)
 				{
-					if (pNodes[iInsert]->m_Frequency >= pNode->m_Frequency)
+					if (NodeQueue[iInsert]->m_Frequency >= pNode->m_Frequency)
 						break;
 				}
-				NMemory::fg_MemMove(pNodes + (iInsert + 2), pNodes + (iInsert + 1), (iBackNode - iInsert) * sizeof(CHuffmanNode *));
-				pNodes[iInsert + 1] = pNode;
+				NMemory::fg_MemMove(NodeQueue + (iInsert + 2), NodeQueue + (iInsert + 1), (iBackNode - iInsert) * sizeof(CHuffmanNode *));
+				NodeQueue[iInsert + 1] = pNode;
 				iBackNode++;
 			}
 			// set tree leaves nodes code
@@ -256,7 +256,7 @@ namespace NMib::NCompression
 
 		// initialize Huffman nodes with frequency and ascii
 		CHuffmanNode Nodes[511];
-		bool bSeenAscii[256] = {};
+		bool SeenAscii[256] = {};
 		umint iSrc = sizeof(uint32) + sizeof(uint8);
 		uint64 nTotalFrequency = 0;
 		for (umint iCount = 0; iCount < nNodes; iCount++)
@@ -273,9 +273,9 @@ namespace NMib::NCompression
 			iSrc += sizeof(uint32);
 
 			Node.m_ByAscii = *(pSrc + iSrc);
-			if (bSeenAscii[Node.m_ByAscii])
+			if (SeenAscii[Node.m_ByAscii])
 				fThrowMalformed();
-			bSeenAscii[Node.m_ByAscii] = true;
+			SeenAscii[Node.m_ByAscii] = true;
 			iSrc += sizeof(uint8);
 		}
 		if (nTotalFrequency != nDesLen)

@@ -45,11 +45,11 @@ namespace
 				DMibTestCategory("Random")
 				{
 					NMib::NMisc::CRandomShiftRNG Random;
-					uint8 pTestBuffer[2048];
+					uint8 TestBuffer[2048];
 					for (aint iByte = 0; iByte < 2048; ++iByte)
-						pTestBuffer[iByte] = Random.f_GetValue<uint8>();
+						TestBuffer[iByte] = Random.f_GetValue<uint8>();
 
-					fTestRoundTrip(pTestBuffer, 2048);
+					fTestRoundTrip(TestBuffer, 2048);
 				};
 
 				DMibTestCategory("SingleByte")
