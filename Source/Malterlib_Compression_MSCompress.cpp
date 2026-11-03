@@ -9,7 +9,7 @@ namespace NMib::NCompression
 {
 	namespace
 	{
-		void fsg_WriteSZDDHeader(uint8 *_pOutput, uint32 _OriginalSize, uint8 _FilenameHint)
+		void fg_WriteSZDDHeader(uint8 *_pOutput, uint32 _OriginalSize, uint8 _FilenameHint)
 		{
 			uint32 Magic = fg_ByteSwapLE(gc_SZDDMagicSig);
 			NMemory::fg_MemCopy(_pOutput + 0, &Magic, 4);
@@ -33,7 +33,7 @@ namespace NMib::NCompression
 			uint32 m_OriginalSize;
 		};
 
-		CSZDDHeader fsg_ReadSZDDHeader(uint8 const *_pInput, umint _InputLen)
+		CSZDDHeader fg_ReadSZDDHeader(uint8 const *_pInput, umint _InputLen)
 		{
 			using namespace NStr;
 
@@ -81,7 +81,7 @@ namespace NMib::NCompression
 	{
 		using namespace NStr;
 
-		fsg_ReadSZDDHeader(_CompressedData.f_GetArray(), _CompressedData.f_GetLen());
+		fg_ReadSZDDHeader(_CompressedData.f_GetArray(), _CompressedData.f_GetLen());
 		return _CompressedData[9];
 	}
 
@@ -105,7 +105,7 @@ namespace NMib::NCompression
 		Output.f_SetLen(nMaxCompressed);
 		uint8 *pOutput = Output.f_GetArray();
 
-		fsg_WriteSZDDHeader(pOutput, uint32(nSourceLen), _Options.m_FilenameHint);
+		fg_WriteSZDDHeader(pOutput, uint32(nSourceLen), _Options.m_FilenameHint);
 
 		if (nSourceLen == 0)
 		{
@@ -199,7 +199,7 @@ namespace NMib::NCompression
 		uint8 const *pInput = _Source.f_GetArray();
 		umint nInputLen = _Source.f_GetLen();
 
-		CSZDDHeader Header = fsg_ReadSZDDHeader(pInput, nInputLen);
+		CSZDDHeader Header = fg_ReadSZDDHeader(pInput, nInputLen);
 
 		if (Header.m_OriginalSize == 0)
 			return {};

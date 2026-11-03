@@ -43,7 +43,7 @@ namespace NMib::NCompression
 
 	namespace
 	{
-		NStr::CStr fsg_TdeflStatusStr(tdefl_status _Status)
+		NStr::CStr fg_TdeflStatusStr(tdefl_status _Status)
 		{
 			switch (_Status)
 			{
@@ -55,7 +55,7 @@ namespace NMib::NCompression
 			return CStr(CStr::CFormat("unknown status ({})") << (int)_Status);
 		}
 
-		NStr::CStr fsg_TinflStatusStr(tinfl_status _Status)
+		NStr::CStr fg_TinflStatusStr(tinfl_status _Status)
 		{
 			switch (_Status)
 			{
@@ -95,11 +95,11 @@ namespace NMib::NCompression
 
 		tdefl_status InitStatus = tdefl_init(pComp, fReceiveData, &Output, TDEFL_DEFAULT_MAX_PROBES);
 		if (InitStatus != TDEFL_STATUS_OKAY)
-			DMibError("MiniZ compression initialization failed: {}"_f << fsg_TdeflStatusStr(InitStatus));
+			DMibError("MiniZ compression initialization failed: {}"_f << fg_TdeflStatusStr(InitStatus));
 
 		tdefl_status CompressStatus = tdefl_compress_buffer(pComp, _Input.f_GetArray(), (size_t)_Input.f_GetLen(), TDEFL_FINISH);
 		if (CompressStatus != TDEFL_STATUS_DONE)
-			DMibError("MiniZ compression failed: {} (input size: {} bytes)"_f << fsg_TdeflStatusStr(CompressStatus) << _Input.f_GetLen());
+			DMibError("MiniZ compression failed: {} (input size: {} bytes)"_f << fg_TdeflStatusStr(CompressStatus) << _Input.f_GetLen());
 
 		return fg_Move(Output);
 	}
@@ -147,7 +147,7 @@ namespace NMib::NCompression
 				DMibError
 					(
 						"MiniZ decompression failed: {} (input size: {} bytes, consumed: {} bytes, output so far: {} bytes)"_f
-						<< fsg_TinflStatusStr(Status)
+						<< fg_TinflStatusStr(Status)
 						<< nInputSize
 						<< nInputOfs
 						<< Output.f_GetLen()
