@@ -12,198 +12,14 @@ namespace NMib::NCompression
 	using namespace NStr;
 	struct CCompress_ZLib::CInternal
 	{
+		CInternal(ECompressZlibLevel _Level, ECompressZlibType _Type);
+		~CInternal();
+
+		void f_FeedBytes(NStream::CBinaryStream *_pOutStream, NStream::CFilePos &_OutBytesWritten, void const *_pMem, umint _nBytes, ECompressZlibFlush _Flush);
+		void f_ConsumeBytes(NStream::CBinaryStream *_pInStream, NStream::CFilePos _InStreamLength, void const *_pMem, umint _nBytes, ECompressZlibFlush _Flush);
+		umint f_TryConsumeBytes(NStream::CBinaryStream *_pInStream, NStream::CFilePos _InStreamLength, void const *_pMem, umint _nBytes, ECompressZlibFlush _Flush);
+
 		static constexpr aint mc_TempBuffer = 4 * 1024;
-
-		CInternal(ECompressZlibLevel _Level, ECompressZlibType _Type)
-			: m_CompressionLevel(_Level)
-			, m_OpenMode(0)
-			, m_Type(_Type)
-		{
-			NMemory::fg_MemClear(m_Stream);
-		}
-
-		~CInternal()
-		{
-			if (m_OpenMode == 1)
-				deflateEnd(&m_Stream);
-			else if (m_OpenMode == 2)
-				inflateEnd(&m_Stream);
-		}
-
-		void f_FeedBytes(NStream::CBinaryStream *_pOutStream, NStream::CFilePos &_OutBytesWritten, void const *_pMem, umint _nBytes, ECompressZlibFlush _Flush)
-		{
-			if (m_OpenMode != 1)
-			{
-				if (m_OpenMode != 0)
-					DMibError("ZLib cannot compress and decompress in same session.");
-
-				int Error;
-				if (m_Type == ECompressZlibType_GZip)
-					Error = deflateInit2(&m_Stream, m_CompressionLevel, Z_DEFLATED, MAX_WBITS + 16, DEF_MEM_LEVEL, 0);
-				else
-					Error = deflateInit(&m_Stream, m_CompressionLevel);
-
-				if (Error != Z_OK)
-					DMibError("inflateInit failed. ErrorCode: {}"_f << Error);
-
-				m_OpenMode = 1;
-				m_Stream.next_out = m_TempBuffer;
-				m_Stream.avail_out = mc_TempBuffer;
-			}
-
-			m_Stream.next_in = (Bytef *)_pMem;
-			m_Stream.avail_in = _nBytes;
-
-			while (m_Stream.avail_in)
-			{
-				if (!m_Stream.avail_out)
-				{
-					_pOutStream->f_FeedBytes(m_TempBuffer, mc_TempBuffer);
-					_OutBytesWritten += mc_TempBuffer;
-					m_Stream.next_out = m_TempBuffer;
-					m_Stream.avail_out = mc_TempBuffer;
-				}
-
-				int Error = deflate(&m_Stream, Z_NO_FLUSH);
-
-				if (Error != Z_OK && Error != Z_BUF_ERROR)
-					DMibError("Compression error: {}"_f << Error);
-			}
-
-			if (_Flush == ECompressZlibFlush_Sync)
-			{
-				umint Len = mc_TempBuffer - m_Stream.avail_out;
-				_pOutStream->f_FeedBytes(m_TempBuffer, Len);
-
-				do
-				{
-					m_Stream.next_out = m_TempBuffer;
-					m_Stream.avail_out = mc_TempBuffer;
-
-					int Error = deflate(&m_Stream, Z_SYNC_FLUSH);
-					umint Len = mc_TempBuffer - m_Stream.avail_out;
-
-					_pOutStream->f_FeedBytes(m_TempBuffer, Len);
-					_OutBytesWritten += Len;
-
-					if (Error != Z_OK && Error != Z_BUF_ERROR)
-						DMibError("Compression error: {}"_f << Error);
-				}
-				while (m_Stream.avail_out == 0)
-					;
-
-				m_Stream.next_out = m_TempBuffer;
-				m_Stream.avail_out = mc_TempBuffer;
-			}
-			else if (_Flush == ECompressZlibFlush_Finish)
-			{
-				int Error = Z_OK;
-				while (Error != Z_STREAM_END)
-				{
-					Error = deflate(&m_Stream, Z_FINISH);
-					umint Len = mc_TempBuffer - m_Stream.avail_out;
-					_pOutStream->f_FeedBytes(m_TempBuffer, Len);
-					_OutBytesWritten += Len;
-
-					if (Error != Z_OK && Error != Z_BUF_ERROR && Error != Z_STREAM_END)
-						DMibError("Compression error: {}"_f << Error);
-
-					m_Stream.next_out = m_TempBuffer;
-					m_Stream.avail_out = mc_TempBuffer;
-				}
-			}
-		}
-
-		void f_ConsumeBytes(NStream::CBinaryStream *_pInStream, NStream::CFilePos _InStreamLength, void const *_pMem, umint _nBytes, ECompressZlibFlush _Flush)
-		{
-			if (f_TryConsumeBytes(_pInStream, _InStreamLength, _pMem, _nBytes, _Flush) != _nBytes)
-				DMibError("Ran out of compressed data");
-		}
-
-		umint f_TryConsumeBytes(NStream::CBinaryStream *_pInStream, NStream::CFilePos _InStreamLength, void const *_pMem, umint _nBytes, ECompressZlibFlush _Flush)
-		{
-			if (m_OpenMode != 2)
-			{
-				if (m_OpenMode != 0)
-					DMibError("ZLib cannot compress and decompress in same session.");
-
-				int Error;
-				if (m_Type == ECompressZlibType_GZip)
-					Error = inflateInit2(&m_Stream, MAX_WBITS + 16);
-				else
-					Error = inflateInit(&m_Stream);
-
-				if (Error != Z_OK)
-					DMibError("inflateInit failed. ErrorCode: {}"_f << Error);
-				m_OpenMode = 2;
-			}
-
-			if (_InStreamLength == 0)
-				_InStreamLength = _pInStream->f_GetLength();
-
-			m_Stream.next_out = (Bytef *)_pMem;
-			m_Stream.avail_out = _nBytes;
-
-			while (m_Stream.avail_out)
-			{
-				if (!m_Stream.avail_in)
-				{
-					m_Stream.next_in = m_TempBuffer;
-					m_Stream.avail_in = fg_Min(_InStreamLength - _pInStream->f_GetPosition(), mc_TempBuffer);
-					if (m_Stream.avail_in == 0)
-					{
-						DMibLog(Error, "ZLib inflate: No available input!", 0);
-						break;
-					}
-					_pInStream->f_ConsumeBytes(m_Stream.next_in, m_Stream.avail_in);
-				}
-
-				int Error = inflate(&m_Stream, Z_NO_FLUSH);
-
-				if (Error == Z_STREAM_END)
-					break;
-
-				if (Error != Z_OK && Error != Z_BUF_ERROR)
-					DMibError("Compression error: {}"_f << Error);
-			}
-
-			umint Return = _nBytes - m_Stream.avail_out;
-
-			if (_Flush == ECompressZlibFlush_Sync)
-			{
-				Bytef Temp[1024];
-				while (_InStreamLength - _pInStream->f_GetPosition())
-				{
-					if (!m_Stream.avail_in)
-					{
-						m_Stream.next_in = m_TempBuffer;
-						m_Stream.avail_in = fg_Min(_InStreamLength - _pInStream->f_GetPosition(), mc_TempBuffer);
-						if (m_Stream.avail_in == 0)
-						{
-							DMibLog(Error, "ZLib inflate: No available input during flush sync!", 0);
-							break;
-						}
-						_pInStream->f_ConsumeBytes(m_Stream.next_in, m_Stream.avail_in);
-					}
-
-					m_Stream.next_out = Temp;
-					m_Stream.avail_out = 1024;
-					int Error = inflate(&m_Stream, Z_NO_FLUSH);
-
-					DMibCheck(m_Stream.avail_out == 1024);
-
-					if (Error == Z_STREAM_END)
-						break;
-
-					if (Error != Z_OK && Error != Z_BUF_ERROR)
-						DMibError("Compression error");
-				}
-				m_Stream.next_out = nullptr;
-				m_Stream.avail_out = 0;
-			}
-
-			return Return;
-		}
 
 		ECompressZlibLevel m_CompressionLevel;
 		ECompressZlibType m_Type;
@@ -211,6 +27,197 @@ namespace NMib::NCompression
 		z_stream m_Stream;
 		uint8 m_TempBuffer[mc_TempBuffer];
 	};
+
+	CCompress_ZLib::CInternal::CInternal(ECompressZlibLevel _Level, ECompressZlibType _Type)
+		: m_CompressionLevel(_Level)
+		, m_OpenMode(0)
+		, m_Type(_Type)
+	{
+		NMemory::fg_MemClear(m_Stream);
+	}
+
+	CCompress_ZLib::CInternal::~CInternal()
+	{
+		if (m_OpenMode == 1)
+			deflateEnd(&m_Stream);
+		else if (m_OpenMode == 2)
+			inflateEnd(&m_Stream);
+	}
+
+	void CCompress_ZLib::CInternal::f_FeedBytes(NStream::CBinaryStream *_pOutStream, NStream::CFilePos &_OutBytesWritten, void const *_pMem, umint _nBytes, ECompressZlibFlush _Flush)
+	{
+		if (m_OpenMode != 1)
+		{
+			if (m_OpenMode != 0)
+				DMibError("ZLib cannot compress and decompress in same session.");
+
+			int Error;
+			if (m_Type == ECompressZlibType_GZip)
+				Error = deflateInit2(&m_Stream, m_CompressionLevel, Z_DEFLATED, MAX_WBITS + 16, DEF_MEM_LEVEL, 0);
+			else
+				Error = deflateInit(&m_Stream, m_CompressionLevel);
+
+			if (Error != Z_OK)
+				DMibError("inflateInit failed. ErrorCode: {}"_f << Error);
+
+			m_OpenMode = 1;
+			m_Stream.next_out = m_TempBuffer;
+			m_Stream.avail_out = mc_TempBuffer;
+		}
+
+		m_Stream.next_in = (Bytef *)_pMem;
+		m_Stream.avail_in = _nBytes;
+
+		while (m_Stream.avail_in)
+		{
+			if (!m_Stream.avail_out)
+			{
+				_pOutStream->f_FeedBytes(m_TempBuffer, mc_TempBuffer);
+				_OutBytesWritten += mc_TempBuffer;
+				m_Stream.next_out = m_TempBuffer;
+				m_Stream.avail_out = mc_TempBuffer;
+			}
+
+			int Error = deflate(&m_Stream, Z_NO_FLUSH);
+
+			if (Error != Z_OK && Error != Z_BUF_ERROR)
+				DMibError("Compression error: {}"_f << Error);
+		}
+
+		if (_Flush == ECompressZlibFlush_Sync)
+		{
+			umint Len = mc_TempBuffer - m_Stream.avail_out;
+			_pOutStream->f_FeedBytes(m_TempBuffer, Len);
+
+			do
+			{
+				m_Stream.next_out = m_TempBuffer;
+				m_Stream.avail_out = mc_TempBuffer;
+
+				int Error = deflate(&m_Stream, Z_SYNC_FLUSH);
+				umint Len = mc_TempBuffer - m_Stream.avail_out;
+
+				_pOutStream->f_FeedBytes(m_TempBuffer, Len);
+				_OutBytesWritten += Len;
+
+				if (Error != Z_OK && Error != Z_BUF_ERROR)
+					DMibError("Compression error: {}"_f << Error);
+			}
+			while (m_Stream.avail_out == 0)
+				;
+
+			m_Stream.next_out = m_TempBuffer;
+			m_Stream.avail_out = mc_TempBuffer;
+		}
+		else if (_Flush == ECompressZlibFlush_Finish)
+		{
+			int Error = Z_OK;
+			while (Error != Z_STREAM_END)
+			{
+				Error = deflate(&m_Stream, Z_FINISH);
+				umint Len = mc_TempBuffer - m_Stream.avail_out;
+				_pOutStream->f_FeedBytes(m_TempBuffer, Len);
+				_OutBytesWritten += Len;
+
+				if (Error != Z_OK && Error != Z_BUF_ERROR && Error != Z_STREAM_END)
+					DMibError("Compression error: {}"_f << Error);
+
+				m_Stream.next_out = m_TempBuffer;
+				m_Stream.avail_out = mc_TempBuffer;
+			}
+		}
+	}
+
+	void CCompress_ZLib::CInternal::f_ConsumeBytes(NStream::CBinaryStream *_pInStream, NStream::CFilePos _InStreamLength, void const *_pMem, umint _nBytes, ECompressZlibFlush _Flush)
+	{
+		if (f_TryConsumeBytes(_pInStream, _InStreamLength, _pMem, _nBytes, _Flush) != _nBytes)
+			DMibError("Ran out of compressed data");
+	}
+
+	umint CCompress_ZLib::CInternal::f_TryConsumeBytes(NStream::CBinaryStream *_pInStream, NStream::CFilePos _InStreamLength, void const *_pMem, umint _nBytes, ECompressZlibFlush _Flush)
+	{
+		if (m_OpenMode != 2)
+		{
+			if (m_OpenMode != 0)
+				DMibError("ZLib cannot compress and decompress in same session.");
+
+			int Error;
+			if (m_Type == ECompressZlibType_GZip)
+				Error = inflateInit2(&m_Stream, MAX_WBITS + 16);
+			else
+				Error = inflateInit(&m_Stream);
+
+			if (Error != Z_OK)
+				DMibError("inflateInit failed. ErrorCode: {}"_f << Error);
+			m_OpenMode = 2;
+		}
+
+		if (_InStreamLength == 0)
+			_InStreamLength = _pInStream->f_GetLength();
+
+		m_Stream.next_out = (Bytef *)_pMem;
+		m_Stream.avail_out = _nBytes;
+
+		while (m_Stream.avail_out)
+		{
+			if (!m_Stream.avail_in)
+			{
+				m_Stream.next_in = m_TempBuffer;
+				m_Stream.avail_in = fg_Min(_InStreamLength - _pInStream->f_GetPosition(), mc_TempBuffer);
+				if (m_Stream.avail_in == 0)
+				{
+					DMibLog(Error, "ZLib inflate: No available input!", 0);
+					break;
+				}
+				_pInStream->f_ConsumeBytes(m_Stream.next_in, m_Stream.avail_in);
+			}
+
+			int Error = inflate(&m_Stream, Z_NO_FLUSH);
+
+			if (Error == Z_STREAM_END)
+				break;
+
+			if (Error != Z_OK && Error != Z_BUF_ERROR)
+				DMibError("Compression error: {}"_f << Error);
+		}
+
+		umint Return = _nBytes - m_Stream.avail_out;
+
+		if (_Flush == ECompressZlibFlush_Sync)
+		{
+			Bytef Temp[1024];
+			while (_InStreamLength - _pInStream->f_GetPosition())
+			{
+				if (!m_Stream.avail_in)
+				{
+					m_Stream.next_in = m_TempBuffer;
+					m_Stream.avail_in = fg_Min(_InStreamLength - _pInStream->f_GetPosition(), mc_TempBuffer);
+					if (m_Stream.avail_in == 0)
+					{
+						DMibLog(Error, "ZLib inflate: No available input during flush sync!", 0);
+						break;
+					}
+					_pInStream->f_ConsumeBytes(m_Stream.next_in, m_Stream.avail_in);
+				}
+
+				m_Stream.next_out = Temp;
+				m_Stream.avail_out = 1024;
+				int Error = inflate(&m_Stream, Z_NO_FLUSH);
+
+				DMibCheck(m_Stream.avail_out == 1024);
+
+				if (Error == Z_STREAM_END)
+					break;
+
+				if (Error != Z_OK && Error != Z_BUF_ERROR)
+					DMibError("Compression error");
+			}
+			m_Stream.next_out = nullptr;
+			m_Stream.avail_out = 0;
+		}
+
+		return Return;
+	}
 
 	CCompress_ZLib::CCompress_ZLib(ECompressZlibLevel _Level, ECompressZlibType _Type)
 		: mp_pInternal(fg_Construct(_Level, _Type))
