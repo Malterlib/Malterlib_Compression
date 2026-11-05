@@ -79,8 +79,6 @@ namespace NMib::NCompression
 		DMibStreamImplementProtected(TCBinaryStream_ZLib);
 
 	private:
-		static constexpr aint mcp_TempBuffer = 4 * 1024;
-
 		enum EVersion
 		{
 			EVersion_0         = 0
@@ -91,6 +89,8 @@ namespace NMib::NCompression
 		void fp_WriteChunk(bool _bFlush);
 		void fp_ReadChunk();
 		aint fp_PrepareBlock(NStream::CFilePos _Pos, bool _bWrite);
+
+		static constexpr aint mcp_TempBuffer = 4 * 1024;
 
 		CCompress_ZLib mp_Compressor;
 		NStream::CBinaryStream *mp_pStream;

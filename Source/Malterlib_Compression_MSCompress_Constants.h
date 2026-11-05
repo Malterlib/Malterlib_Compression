@@ -35,6 +35,11 @@ namespace NMib::NCompression
 	/// O(WindowSize * MaxMatchLength) of a plain linear scan.
 	struct CSZDDMatchFinder
 	{
+		void f_Init();
+		void f_UpdatePosition(uint8 _FirstByte);
+		void f_FindMatch(uint8 const *_pLookahead, umint _nLookaheadLen, smint &o_MatchPosition, smint &o_MatchLength);
+		void f_Advance();
+
 		uint8 m_Window[gc_SZDDWindowSize];
 		umint m_iWinPos;
 
@@ -42,11 +47,6 @@ namespace NMib::NCompression
 		smint m_ChainNext[gc_SZDDWindowSize];
 		smint m_ChainPrev[gc_SZDDWindowSize]; // gc_SZDDChainNil = head of chain
 		smint m_HashHead[gc_SZDDNumHashBuckets];
-
-		void f_Init();
-		void f_UpdatePosition(uint8 _FirstByte);
-		void f_FindMatch(uint8 const *_pLookahead, umint _nLookaheadLen, smint &o_MatchPosition, smint &o_MatchLength);
-		void f_Advance();
 
 	private:
 		void fp_InsertHead(umint _iPos, smint _iBucket);

@@ -5,10 +5,12 @@
 
 struct CInitAllowInvalid
 {
-	CInitAllowInvalid()
-	{
-		NMib::NSys::fg_Process_AllowInvalidExit(true);
-	}
+	CInitAllowInvalid();
 };
+
+CInitAllowInvalid::CInitAllowInvalid()
+{
+	NMib::NSys::fg_Process_AllowInvalidExit(true);
+}
 
 static CInitAllowInvalid gs_InitAllowInvalid;
