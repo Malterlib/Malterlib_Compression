@@ -24,7 +24,7 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 	Target.Type "StaticLibrary"
 	Target.BaseName "libzstd_libzstd_static"
 	Target.BaseFileName "libzstd_static"
-	%Group "Source"
+	%Group "opt"
 	{
 		%Group "lib"
 		{
@@ -459,7 +459,7 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 	Target.Type "ConsoleExecutable"
 	Target.BaseName "programs_zstd"
 	Target.BaseFileName "zstd"
-	%Group "Source"
+	%Group "opt"
 	{
 		%Group "programs"
 		{
@@ -852,7 +852,7 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 	Target.Type "ConsoleExecutable"
 	Target.BaseName "programs_zstd-frugal"
 	Target.BaseFileName "zstd-frugal"
-	%Group "Source"
+	%Group "opt"
 	{
 		%Group "programs"
 		{
