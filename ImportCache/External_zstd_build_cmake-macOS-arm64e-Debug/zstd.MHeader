@@ -6,11 +6,13 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 		!!Compile.Type "C"
 		SearchPath += [
 			`@('.'->MakeAbsolute())/lib`->MakeAbsolute(),
-			`@(CMakeIntermediateDirectory)/External_zstd_build_cmake`->MakeAbsolute(),
+			`@(CMakeIntermediateDirectory)/External_zstd_build_cmake/lib`->MakeAbsolute(),
 			`@('../../../../External/zstd/build/cmake'->MakeAbsolute())/lib`->MakeAbsolute()
 		]
 		PreprocessorDefines += [
+			"DEBUGLEVEL=1",
 			"XXH_NAMESPACE=ZSTD_",
+			"ZSTD_DISABLE_ASM",
 			"ZSTD_LEGACY_SUPPORT=5",
 			"ZSTD_MULTITHREAD"
 		]
@@ -24,7 +26,7 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 	Target.Type "StaticLibrary"
 	Target.BaseName "libzstd_libzstd_static"
 	Target.BaseFileName "libzstd_static"
-	%Group "opt"
+	%Group "External"
 	{
 		%Group "lib"
 		{
@@ -434,7 +436,7 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 		!!Compile.Type "C"
 		SearchPath += [
 			`@('.'->MakeAbsolute())/programs`->MakeAbsolute(),
-			`@(CMakeIntermediateDirectory)/External_zstd_build_cmake`->MakeAbsolute(),
+			`@(CMakeIntermediateDirectory)/External_zstd_build_cmake/programs`->MakeAbsolute(),
 			`@('../../../../External/zstd/build/cmake'->MakeAbsolute())/programs`->MakeAbsolute(),
 			`@('../../../..'->MakeAbsolute())/External/zstd/programs`->MakeAbsolute(),
 			`@('../../../..'->MakeAbsolute())/External/zstd/lib`->MakeAbsolute(),
@@ -445,6 +447,7 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 			`@('../../../..'->MakeAbsolute())/External/zstd/lib/legacy`->MakeAbsolute()
 		]
 		PreprocessorDefines += [
+			"DEBUGLEVEL=1",
 			"XXH_NAMESPACE=ZSTD_",
 			"ZSTD_LEGACY_SUPPORT=5",
 			"ZSTD_MULTITHREAD"
@@ -459,7 +462,7 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 	Target.Type "ConsoleExecutable"
 	Target.BaseName "programs_zstd"
 	Target.BaseFileName "zstd"
-	%Group "opt"
+	%Group "External"
 	{
 		%Group "programs"
 		{
@@ -556,6 +559,7 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 	%Dependency "Com_programs_zstd"
 	{
 		Dependency.Link false
+		Dependency.Stage "Compile"
 	}
 }
 %Target "Tool_programs_unzstd"
@@ -603,6 +607,7 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 	%Dependency "Com_programs_zstd"
 	{
 		Dependency.Link false
+		Dependency.Stage "Compile"
 	}
 }
 %Target "Tool_programs_zstd.1"
@@ -771,6 +776,7 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 	%Dependency "Tool_programs_zstd.1"
 	{
 		Dependency.Link false
+		Dependency.Stage "Compile"
 	}
 }
 %Target "Tool_programs_unzstd.1"
@@ -816,6 +822,7 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 	%Dependency "Tool_programs_zstd.1"
 	{
 		Dependency.Link false
+		Dependency.Stage "Compile"
 	}
 }
 %Target "Com_programs_zstd-frugal"
@@ -825,7 +832,7 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 		!!Compile.Type "C"
 		SearchPath += [
 			`@('.'->MakeAbsolute())/programs`->MakeAbsolute(),
-			`@(CMakeIntermediateDirectory)/External_zstd_build_cmake`->MakeAbsolute(),
+			`@(CMakeIntermediateDirectory)/External_zstd_build_cmake/programs`->MakeAbsolute(),
 			`@('../../../../External/zstd/build/cmake'->MakeAbsolute())/programs`->MakeAbsolute(),
 			`@('../../../..'->MakeAbsolute())/External/zstd/programs`->MakeAbsolute(),
 			`@('../../../..'->MakeAbsolute())/External/zstd/lib`->MakeAbsolute(),
@@ -836,6 +843,7 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 			`@('../../../..'->MakeAbsolute())/External/zstd/lib/legacy`->MakeAbsolute()
 		]
 		PreprocessorDefines += [
+			"DEBUGLEVEL=1",
 			"XXH_NAMESPACE=ZSTD_",
 			"ZSTD_LEGACY_SUPPORT=5",
 			"ZSTD_NOBENCH",
@@ -852,7 +860,7 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 	Target.Type "ConsoleExecutable"
 	Target.BaseName "programs_zstd-frugal"
 	Target.BaseFileName "zstd-frugal"
-	%Group "opt"
+	%Group "External"
 	{
 		%Group "programs"
 		{
@@ -925,5 +933,6 @@ Property.CMakeOutputPath_zstd: string = `@('.'->MakeAbsolute())`->MakeAbsolute()
 	%Dependency "Com_programs_zstd"
 	{
 		Dependency.Link false
+		Dependency.Stage "Compile"
 	}
 }

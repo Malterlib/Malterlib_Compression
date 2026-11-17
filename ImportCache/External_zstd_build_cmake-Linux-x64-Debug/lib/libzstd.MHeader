@@ -6,10 +6,11 @@ Property.CMakeOutputPath_libzstd: string = `@('..'->MakeAbsolute())`->MakeAbsolu
 		!!Compile.Type "C"
 		SearchPath += [
 			`@('..'->MakeAbsolute())/lib`->MakeAbsolute(),
-			`@(CMakeIntermediateDirectory)/External_zstd_build_cmake`->MakeAbsolute(),
+			`@(CMakeIntermediateDirectory)/External_zstd_build_cmake/lib`->MakeAbsolute(),
 			`@('../../../../../External/zstd/build/cmake'->MakeAbsolute())/lib`->MakeAbsolute()
 		]
 		PreprocessorDefines += [
+			"DEBUGLEVEL=1",
 			"XXH_NAMESPACE=ZSTD_",
 			"ZSTD_LEGACY_SUPPORT=5",
 			"ZSTD_MULTITHREAD"
@@ -20,7 +21,7 @@ Property.CMakeOutputPath_libzstd: string = `@('..'->MakeAbsolute())`->MakeAbsolu
 		!!Compile.Type "Assembler"
 		SearchPath += [
 			`@('..'->MakeAbsolute())/lib`->MakeAbsolute(),
-			`@(CMakeIntermediateDirectory)/External_zstd_build_cmake`->MakeAbsolute(),
+			`@(CMakeIntermediateDirectory)/External_zstd_build_cmake/lib`->MakeAbsolute(),
 			`@('../../../../../External/zstd/build/cmake'->MakeAbsolute())/lib`->MakeAbsolute()
 		]
 		PreprocessorDefines += [
@@ -38,7 +39,7 @@ Property.CMakeOutputPath_libzstd: string = `@('..'->MakeAbsolute())`->MakeAbsolu
 	Target.Type "StaticLibrary"
 	Target.BaseName "libzstd_libzstd_static"
 	Target.BaseFileName "libzstd_static"
-	%Group "Source"
+	%Group "External"
 	{
 		%Group "lib"
 		{

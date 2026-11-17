@@ -6,7 +6,7 @@ Property.CMakeOutputPath_programs: string = `@('..'->MakeAbsolute())`->MakeAbsol
 		!!Compile.Type "C"
 		SearchPath += [
 			`@('..'->MakeAbsolute())/programs`->MakeAbsolute(),
-			`@(CMakeIntermediateDirectory)/External_zstd_build_cmake`->MakeAbsolute(),
+			`@(CMakeIntermediateDirectory)/External_zstd_build_cmake/programs`->MakeAbsolute(),
 			`@('../../../../../External/zstd/build/cmake'->MakeAbsolute())/programs`->MakeAbsolute(),
 			`@('../../../../..'->MakeAbsolute())/External/zstd/programs`->MakeAbsolute(),
 			`@('../../../../..'->MakeAbsolute())/External/zstd/lib`->MakeAbsolute(),
@@ -17,9 +17,12 @@ Property.CMakeOutputPath_programs: string = `@('..'->MakeAbsolute())`->MakeAbsol
 			`@('../../../../..'->MakeAbsolute())/External/zstd/lib/legacy`->MakeAbsolute()
 		]
 		PreprocessorDefines += [
+			"NDEBUG",
+			"WIN32",
 			"XXH_NAMESPACE=ZSTD_",
 			"ZSTD_LEGACY_SUPPORT=5",
-			"ZSTD_MULTITHREAD"
+			"ZSTD_MULTITHREAD",
+			"_WINDOWS"
 		]
 	}
 	Property.MalterlibTargetNameType "Normal"
@@ -31,7 +34,7 @@ Property.CMakeOutputPath_programs: string = `@('..'->MakeAbsolute())`->MakeAbsol
 	Target.Type "ConsoleExecutable"
 	Target.BaseName "programs_zstd"
 	Target.BaseFileName "zstd"
-	%Group "C:/"
+	%Group "External"
 	{
 		%Group "programs"
 		{

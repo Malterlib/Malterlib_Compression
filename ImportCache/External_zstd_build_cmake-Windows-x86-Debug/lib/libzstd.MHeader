@@ -6,15 +6,19 @@ Property.CMakeOutputPath_libzstd: string = `@('..'->MakeAbsolute())`->MakeAbsolu
 		!!Compile.Type "C"
 		SearchPath += [
 			`@('..'->MakeAbsolute())/lib`->MakeAbsolute(),
-			`@(CMakeIntermediateDirectory)/External_zstd_build_cmake`->MakeAbsolute(),
+			`@(CMakeIntermediateDirectory)/External_zstd_build_cmake/lib`->MakeAbsolute(),
 			`@('../../../../../External/zstd/build/cmake'->MakeAbsolute())/lib`->MakeAbsolute()
 		]
 		PreprocessorDefines += [
+			"DEBUGLEVEL=1",
+			"WIN32",
 			"XXH_NAMESPACE=ZSTD_",
+			"ZSTD_DISABLE_ASM",
 			"ZSTD_HEAPMODE=0",
 			"ZSTD_LEGACY_SUPPORT=5",
 			"ZSTD_MULTITHREAD",
-			"_CRT_SECURE_NO_WARNINGS"
+			"_CRT_SECURE_NO_WARNINGS",
+			"_WINDOWS"
 		]
 	}
 	Property.MalterlibTargetNameType "Normal"
@@ -26,7 +30,7 @@ Property.CMakeOutputPath_libzstd: string = `@('..'->MakeAbsolute())`->MakeAbsolu
 	Target.Type "StaticLibrary"
 	Target.BaseName "libzstd_libzstd_static"
 	Target.BaseFileName "libzstd_static"
-	%Group "C:/"
+	%Group "External"
 	{
 		%Group "lib"
 		{

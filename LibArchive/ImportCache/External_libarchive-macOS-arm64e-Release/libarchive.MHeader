@@ -24,7 +24,7 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 						Compile
 						{
 							Type "Custom"
-							Custom_CommandLine `@(`@('../../../../..'->MakeAbsolute())/Binaries/Malterlib/macOS/arm64/ctest`->MakeAbsolute()->EscapeHost()) -DMODEL=Experimental -S CMakeFiles/CTestScript.cmake -V`
+							Custom_CommandLine `MToolCTest -DMODEL=Experimental -S CMakeFiles/CTestScript.cmake -V`
 							AllowNonExisting true
 							Disabled false
 							Custom_WorkingDirectory `@('.'->MakeAbsolute())`->MakeAbsolute()
@@ -62,7 +62,7 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 						Compile
 						{
 							Type "Custom"
-							Custom_CommandLine `@(`@('../../../../..'->MakeAbsolute())/Binaries/Malterlib/macOS/arm64/ctest`->MakeAbsolute()->EscapeHost()) -DMODEL=Nightly -S CMakeFiles/CTestScript.cmake -V`
+							Custom_CommandLine `MToolCTest -DMODEL=Nightly -S CMakeFiles/CTestScript.cmake -V`
 							AllowNonExisting true
 							Disabled false
 							Custom_WorkingDirectory `@('.'->MakeAbsolute())`->MakeAbsolute()
@@ -100,7 +100,7 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 						Compile
 						{
 							Type "Custom"
-							Custom_CommandLine `@(`@('../../../../..'->MakeAbsolute())/Binaries/Malterlib/macOS/arm64/ctest`->MakeAbsolute()->EscapeHost()) -DMODEL=Continuous -S CMakeFiles/CTestScript.cmake -V`
+							Custom_CommandLine `MToolCTest -DMODEL=Continuous -S CMakeFiles/CTestScript.cmake -V`
 							AllowNonExisting true
 							Disabled false
 							Custom_WorkingDirectory `@('.'->MakeAbsolute())`->MakeAbsolute()
@@ -126,6 +126,7 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 		]
 		PreprocessorDefines += [
 			"HAVE_CONFIG_H",
+			"NDEBUG",
 			"__LIBARCHIVE_ENABLE_VISIBILITY",
 			"archive_EXPORTS"
 		]
@@ -161,9 +162,9 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 		{
 			Compile.Disabled true
 		}
-		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_crc32.h`
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_crc32.c`
 		{
-			Compile.Disabled true
+			Compile.Type "C"
 		}
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_cryptor.c`
 		{
@@ -230,6 +231,10 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 			Compile.Type "C"
 		}
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_hmac_private.h`
+		{
+			Compile.Disabled true
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_integer.h`
 		{
 			Compile.Disabled true
 		}
@@ -549,6 +554,14 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 		{
 			Compile.Disabled true
 		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_umask.c`
+		{
+			Compile.Type "C"
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_umask_private.h`
+		{
+			Compile.Disabled true
+		}
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_util.c`
 		{
 			Compile.Type "C"
@@ -748,6 +761,10 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_write_set_passphrase.c`
 		{
 			Compile.Type "C"
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_xml_private.h`
+		{
+			Compile.Disabled true
 		}
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_xxhash.h`
 		{
@@ -797,6 +814,7 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 		PreprocessorDefines += [
 			"HAVE_CONFIG_H",
 			"LIBARCHIVE_STATIC",
+			"NDEBUG",
 			"__LIBARCHIVE_ENABLE_VISIBILITY"
 		]
 	}
@@ -831,9 +849,9 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 		{
 			Compile.Disabled true
 		}
-		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_crc32.h`
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_crc32.c`
 		{
-			Compile.Disabled true
+			Compile.Type "C"
 		}
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_cryptor.c`
 		{
@@ -900,6 +918,10 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 			Compile.Type "C"
 		}
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_hmac_private.h`
+		{
+			Compile.Disabled true
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_integer.h`
 		{
 			Compile.Disabled true
 		}
@@ -1219,6 +1241,14 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 		{
 			Compile.Disabled true
 		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_umask.c`
+		{
+			Compile.Type "C"
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_umask_private.h`
+		{
+			Compile.Disabled true
+		}
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_util.c`
 		{
 			Compile.Type "C"
@@ -1418,6 +1448,10 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_write_set_passphrase.c`
 		{
 			Compile.Type "C"
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_xml_private.h`
+		{
+			Compile.Disabled true
 		}
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive/archive_xxhash.h`
 		{
@@ -1468,6 +1502,7 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 		PreprocessorDefines += [
 			"HAVE_CONFIG_H",
 			"LIBARCHIVE_STATIC",
+			"NDEBUG",
 			"__LIBARCHIVE_ENABLE_VISIBILITY"
 		]
 	}
@@ -1529,7 +1564,23 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 		{
 			Compile.Disabled true
 		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive_fe/lafe_explicit_bzero.c`
+		{
+			Compile.Type "C"
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive_fe/lafe_explicit_bzero.h`
+		{
+			Compile.Disabled true
+		}
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive_fe/lafe_platform.h`
+		{
+			Compile.Disabled true
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive_fe/lafe_setmode.c`
+		{
+			Compile.Type "C"
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive_fe/lafe_setmode.h`
 		{
 			Compile.Disabled true
 		}
@@ -1567,6 +1618,7 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 		PreprocessorDefines += [
 			"HAVE_CONFIG_H",
 			"LIBARCHIVE_STATIC",
+			"NDEBUG",
 			"__LIBARCHIVE_ENABLE_VISIBILITY"
 		]
 	}
@@ -1597,14 +1649,6 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 		{
 			Compile.Type "C"
 		}
-		%File `@('../../../../../External/libarchive'->MakeAbsolute())/unzip/la_getline.c`
-		{
-			Compile.Type "C"
-		}
-		%File `@('../../../../../External/libarchive'->MakeAbsolute())/unzip/la_getline.h`
-		{
-			Compile.Disabled true
-		}
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/unzip/la_queue.h`
 		{
 			Compile.Disabled true
@@ -1617,6 +1661,30 @@ Property.CMakeOutputPath_libarchive: string = `@('.'->MakeAbsolute())`->MakeAbso
 			Compile.Type "C"
 		}
 		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive_fe/lafe_err.h`
+		{
+			Compile.Disabled true
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive_fe/lafe_explicit_bzero.c`
+		{
+			Compile.Type "C"
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive_fe/lafe_explicit_bzero.h`
+		{
+			Compile.Disabled true
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive_fe/lafe_fnmatch.c`
+		{
+			Compile.Type "C"
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive_fe/lafe_fnmatch.h`
+		{
+			Compile.Disabled true
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive_fe/lafe_getline.c`
+		{
+			Compile.Type "C"
+		}
+		%File `@('../../../../../External/libarchive'->MakeAbsolute())/libarchive_fe/lafe_getline.h`
 		{
 			Compile.Disabled true
 		}
