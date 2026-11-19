@@ -98,7 +98,7 @@
 			DependencyInjectionGroups =+ "{Malterlib}/{Lib_libzstd_libzstd_static}/{TargetInjection}"
 		}
 
-		%Group "opt"
+		%Group "External"
 		{
 			%Group "lib"
 			{
